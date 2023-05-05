@@ -12,8 +12,5 @@ export default defineConfig({
       apiVersion: '2021-11-15',
       useCdn: true
     }
-
-
   )],
- 
 });

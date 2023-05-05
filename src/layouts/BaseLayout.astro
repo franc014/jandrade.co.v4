@@ -1,0 +1,99 @@
+---
+import { useSanityClient } from "astro-sanity";
+import Header from "../components/Header.astro";
+
+const confQuery = `
+*[_type=='siteConfiguration'][0]
+  			{
+  				'mainNav':nav_items[]->,
+				'siteOwner':site_name
+ 			}
+`;
+
+const { mainNav } = await useSanityClient().fetch(confQuery);
+
+export interface Props {
+  title: string;
+}
+const { title } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <Header nav={mainNav} />
+    <slot />
+  </body>
+</html>
+<style is:global>
+  @tailwind base;
+  @tailwind components;
+
+  .wrapper {
+    @apply container mx-auto lg:px-20 px-10 xl:px-32 2xl:px-64;
+  }
+
+  @font-face {
+    font-family: WorkSans;
+    font-weight: bold;
+    font-display: swap;
+    src: url("/fonts/WorkSans-Bold.ttf") format("truetype"),
+      url("/fonts/WorkSans-Bold.woff") format("truetype"),
+      url("/fonts/WorkSans-Bold.woff2") format("truetype");
+  }
+  @font-face {
+    font-family: WorkSans;
+    font-weight: bold;
+    font-display: swap;
+    font-style: italic;
+    src: url("/fonts/WorkSans-BoldItalic.ttf") format("truetype"),
+      url("/fonts/WorkSans-BoldItalic.woff") format("truetype"),
+      url("/fonts/WorkSans-BoldItalic.woff2") format("truetype");
+  }
+  @font-face {
+    font-family: WorkSans;
+    font-weight: normal;
+    font-display: swap;
+    font-style: normal;
+    src: url("/fonts/WorkSans-Regular.ttf") format("truetype"),
+      url("/fonts/WorkSans-Regular.woff") format("truetype"),
+      url("/fonts/WorkSans-Regular.woff2") format("truetype");
+  }
+  @font-face {
+    font-family: WorkSans;
+    font-weight: normal;
+    font-display: swap;
+    font-style: italic;
+    src: url("/fonts/WorkSans-Italic.ttf") format("truetype"),
+      url("/fonts/WorkSans-Italic.woff") format("truetype"),
+      url("/fonts/WorkSans-Italic.woff2") format("truetype");
+  }
+
+  @font-face {
+    font-family: "JetBrainsMono";
+    font-weight: normal;
+    font-display: swap;
+    font-style: italic;
+    src: url("/fonts/JetBrainsMono-MediumItalic.ttf") format("truetype"),
+      url("/fonts/JetBrainsMono-MediumItalic.woff") format("truetype"),
+      url("/fonts/JetBrainsMono-MediumItalic.woff2") format("truetype");
+  }
+  @font-face {
+    font-family: "JetBrainsMono";
+    font-weight: normal;
+    font-display: swap;
+    font-style: normal;
+    src: url("/fonts/JetBrainsMono-Medium.ttf") format("truetype"),
+      url("/fonts/JetBrainsMono-Medium.woff") format("truetype"),
+      url("/fonts/JetBrainsMono-Medium.woff2") format("truetype");
+  }
+
+  @tailwind utilities;
+</style>

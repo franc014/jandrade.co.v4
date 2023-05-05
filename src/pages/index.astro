@@ -1,6 +1,5 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import Card from "../components/Card.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
 
 import { useSanityClient } from "astro-sanity";
 import PortableText from "../components/PortableText.astro";
@@ -16,10 +15,10 @@ const homeQuery = `
 const bio = await useSanityClient().fetch(homeQuery);
 ---
 
-<Layout title="Welcome to Astro.">
-  <main>
+<BaseLayout title="Welcome to Astro.">
+  <main class="wrapper">
     <PortableText portableText={bio.short_bio} />
-    <img src={urlForImage(bio.photo)} alt="" />
+
     <h1 class="text-teal-400 text-5xl font-bold">
       Welcome to <span class="text-gradient">Astro</span>
     </h1>
@@ -28,30 +27,8 @@ const bio = await useSanityClient().fetch(homeQuery);
       />
       <strong>Code Challenge:</strong> Tweak the "Welcome to Astro" message above.
     </p>
-    <ul role="list" class="link-card-grid">
-      <Card
-        href="https://docs.astro.build/"
-        title="Documentation"
-        body="Learn how Astro works and explore the official API docs."
-      />
-      <Card
-        href="https://astro.build/integrations/"
-        title="Integrations"
-        body="Supercharge your project with new frameworks and libraries."
-      />
-      <Card
-        href="https://astro.build/themes/"
-        title="Themes"
-        body="Explore a galaxy of community-built starter themes."
-      />
-      <Card
-        href="https://astro.build/chat/"
-        title="Community"
-        body="Come say hi to our amazing Discord community. ❤️"
-      />
-    </ul>
   </main>
-</Layout>
+</BaseLayout>
 
 <style>
   main {
