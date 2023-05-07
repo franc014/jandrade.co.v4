@@ -1,32 +1,30 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-
-import { useSanityClient } from "astro-sanity";
 import PortableText from "../components/PortableText.astro";
-import { urlForImage } from "../sanity/urlForImage";
-const homeQuery = `
-*[_type=='biography']{
-				short_bio,
-				photo{asset->{url}},
-				resume{asset->{url}},
-			}[0]
-`;
+import SocialBar from "../components/SocialBar.astro";
+import { getBiography, getSocialLinks } from "../sanity/util";
 
-const bio = await useSanityClient().fetch(homeQuery);
+const bio = await getBiography();
+const socialLinks = await getSocialLinks();
+
+import BioIllustration from "../components/BioIllustration.astro";
 ---
 
 <BaseLayout title="Welcome to Astro.">
-  <main class="wrapper">
-    <PortableText portableText={bio.short_bio} />
-
-    <h1 class="text-teal-400 text-5xl font-bold">
-      Welcome to <span class="text-gradient">Astro</span>
-    </h1>
-    <p class="instructions">
-      To get started, open the directory <code>src/pages</code> in your project.<br
-      />
-      <strong>Code Challenge:</strong> Tweak the "Welcome to Astro" message above.
-    </p>
+  <main class="wrapper py-20">
+    <section class="bio-grid pb-10">
+      <div class="md:w-[97%] lg:max-w-lg">
+        <PortableText portableText={bio.short_bio} />
+      </div>
+      <div class="w-3/4 md:w-5/6 lg:w-9/12 xl:w-8/12 mx-auto">
+        <div class="xl:-mt-8 2xl:-mt-12">
+          <BioIllustration />
+        </div>
+        <div class="mt-6">
+          <SocialBar resume={bio.resume.asset.url} socialLinks={socialLinks} />
+        </div>
+      </div>
+    </section>
   </main>
 </BaseLayout>
 
@@ -72,5 +70,38 @@ const bio = await useSanityClient().fetch(homeQuery);
     grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
     gap: 1rem;
     padding: 0;
+  }
+
+  .section-grid {
+    display: grid;
+    --columns: 2;
+    grid-template-columns: repeat(var(--columns), minmax(200px, 1fr));
+    gap: 4rem;
+    justify-items: center;
+  }
+
+  @media (max-width: 800px) {
+    .section-grid {
+      --columns: 1;
+    }
+  }
+
+  .bio-grid {
+    --columns: 2;
+    display: grid;
+    grid-template-columns: repeat(var(--columns), minmax(340px, 1fr));
+    gap: 4rem;
+  }
+  @media (max-width: 800px) {
+    .bio-grid {
+      --columns: 1;
+      gap: 0.5rem;
+      margin: 0;
+    }
+  }
+  .tech-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(20px, 1fr));
   }
 </style>

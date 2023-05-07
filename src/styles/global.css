@@ -1,0 +1,175 @@
+ @tailwind base;
+ @tailwind components;
+
+
+ .wrapper {
+     @apply container mx-auto lg:px-20 xl:px-32 2xl:px-64;
+ }
+
+ @font-face {
+     font-family: WorkSans;
+     font-weight: bold;
+     font-display: swap;
+     src: url("/fonts/WorkSans-Bold.ttf") format("truetype"),
+         url("/fonts/WorkSans-Bold.woff") format("truetype"),
+         url("/fonts/WorkSans-Bold.woff2") format("truetype");
+ }
+
+ @font-face {
+     font-family: WorkSans;
+     font-weight: bold;
+     font-display: swap;
+     font-style: italic;
+     src: url("/fonts/WorkSans-BoldItalic.ttf") format("truetype"),
+         url("/fonts/WorkSans-BoldItalic.woff") format("truetype"),
+         url("/fonts/WorkSans-BoldItalic.woff2") format("truetype");
+ }
+
+ @font-face {
+     font-family: WorkSans;
+     font-weight: normal;
+     font-display: swap;
+     font-style: normal;
+     src: url("/fonts/WorkSans-Regular.ttf") format("truetype"),
+         url("/fonts/WorkSans-Regular.woff") format("truetype"),
+         url("/fonts/WorkSans-Regular.woff2") format("truetype");
+ }
+
+ @font-face {
+     font-family: WorkSans;
+     font-weight: normal;
+     font-display: swap;
+     font-style: italic;
+     src: url("/fonts/WorkSans-Italic.ttf") format("truetype"),
+         url("/fonts/WorkSans-Italic.woff") format("truetype"),
+         url("/fonts/WorkSans-Italic.woff2") format("truetype");
+ }
+
+ @font-face {
+     font-family: "JetBrainsMono";
+     font-weight: normal;
+     font-display: swap;
+     font-style: italic;
+     src: url("/fonts/JetBrainsMono-MediumItalic.ttf") format("truetype"),
+         url("/fonts/JetBrainsMono-MediumItalic.woff") format("truetype"),
+         url("/fonts/JetBrainsMono-MediumItalic.woff2") format("truetype");
+ }
+
+ @font-face {
+     font-family: "JetBrainsMono";
+     font-weight: normal;
+     font-display: swap;
+     font-style: normal;
+     src: url("/fonts/JetBrainsMono-Medium.ttf") format("truetype"),
+         url("/fonts/JetBrainsMono-Medium.woff") format("truetype"),
+         url("/fonts/JetBrainsMono-Medium.woff2") format("truetype");
+ }
+
+ :root {
+     --site-gradient: radial-gradient(circle,
+             #009fb7,
+             #0bb6ab,
+             #64c88f,
+             #afd470,
+             #fed766);
+
+     --card-gradient: linear-gradient(to left top,
+             #272727,
+             #363942,
+             #3f4d60,
+             #3f647d,
+             #357c99,
+             #1890a6,
+             #00a3ac,
+             #0bb6ab,
+             #52c497,
+             #8acf7f,
+             #c3d66b,
+             #fed766);
+
+     --button-gradient: radial-gradient(circle,
+             #fed766,
+             #afd470,
+             #64c88f,
+             #0bb6ab,
+             #009fb7);
+     --bg-pattern: url(/images/curtain.svg);
+     --pattern-size: 5.125rem;
+ }
+
+ body {
+     @apply bg-white-canvas font-sans;
+ }
+
+ h1 {
+     @apply text-3xl font-bold font-sans2 mb-6 tracking-wide text-gray-normal;
+ }
+
+ h2 {
+     @apply text-xl font-bold font-sans2 text-gray-light;
+ }
+
+ p {
+     @apply mt-8 text-lg text-gray-light md:leading-8;
+ }
+
+ .card {
+     position: relative;
+     padding: 1px;
+     border: 1px solid transparent;
+     background-clip: padding-box;
+ }
+
+ .card::before {
+     border-radius: inherit;
+     content: "";
+     position: absolute;
+     top: 0;
+     left: 0;
+     bottom: 0;
+     right: 0;
+     margin: -1px;
+     background-image: var(--card-gradient);
+     z-index: -1;
+ }
+
+ .card::after {
+     @apply shadow-2xl;
+     content: "";
+     position: absolute;
+     top: 9px;
+     left: 10px;
+
+     right: 0;
+
+     width: 100%;
+     height: 100%;
+     z-index: -2;
+
+     background-image: var(--bg-pattern), var(--site-gradient);
+     background-repeat: repeat;
+     background-size: 2rem;
+     border: 1px solid #a4a4a4;
+ }
+
+ p.card-title {
+     @apply text-gray-light font-bold;
+ }
+
+
+
+ svg.icon {
+     @apply w-3 mr-2 fill-current text-accent;
+ }
+
+ svg.social-icon {
+     @apply w-5 fill-current text-gray-light;
+ }
+
+ .gradient {
+     background-image: var(--bg-pattern), var(--site-gradient);
+     background-size: var(--pattern-size);
+     background-position: top left;
+     background-clip: content-box;
+ }
+  @tailwind utilities;  

@@ -1,0 +1,43 @@
+---
+import Circle from "./icons/Circle.astro";
+import GithubIcon from "./icons/GithubIcon.astro";
+import LinkedInIcon from "./icons/LinkedInIcon.astro";
+import LinkButton from "./LinkButton.astro";
+
+const { socialLinks, resume } = Astro.props;
+---
+
+<div class="flex items-center justify-between">
+  <div class="flex justify-between items-center">
+    {
+      socialLinks.map((item) => {
+        if (item.icon_name === "git-hub-icon") {
+          return (
+            <Circle>
+              <a href={item.link}>
+                <GithubIcon />
+              </a>
+            </Circle>
+          );
+        } else if (item.icon_name === "linked-in-icon") {
+          return (
+            <Circle>
+              <a href={item.link}>
+                <LinkedInIcon />
+              </a>
+            </Circle>
+          );
+        }
+      })
+    }
+  </div>
+  <div class="ml-4">
+    <LinkButton link={resume} name="Resume" size="sm">
+      <svg class="icon" viewBox="0 0 20 20">
+        <polygon
+          points="9 16.172 2.929 10.101 1.515 11.515 10 20 10.707 19.293 18.485 11.515 17.071 10.101 11 16.172 11 0 9 0"
+        ></polygon>
+      </svg>
+    </LinkButton>
+  </div>
+</div>
