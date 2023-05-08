@@ -2,12 +2,24 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import PortableText from "../components/PortableText.astro";
 import SocialBar from "../components/SocialBar.astro";
-import { getBiography, getSocialLinks } from "../sanity/util";
+import {
+  getBiography,
+  getSocialLinks,
+  getServices,
+  getTechnologies,
+} from "../sanity/util";
 
 const bio = await getBiography();
 const socialLinks = await getSocialLinks();
+const services = await getServices();
+const techSection = await getTechnologies();
 
 import BioIllustration from "../components/BioIllustration.astro";
+import LinkButton from "../components/LinkButton.astro";
+import Service from "../components/Service.astro";
+import TechnoItem from "../components/TechnoItem.astro";
+
+console.log(techSection.technologies);
 ---
 
 <BaseLayout title="Welcome to Astro.">
@@ -23,6 +35,50 @@ import BioIllustration from "../components/BioIllustration.astro";
         <div class="mt-6">
           <SocialBar resume={bio.resume.asset.url} socialLinks={socialLinks} />
         </div>
+      </div>
+    </section>
+
+    <section class="pt-16">
+      <div class="section-grid pb-20">
+        {
+          services.map((service) => {
+            return (
+              <div class="shadow-2xl  py-10 px-8 rounded shadow-white-touch border border-slate-200 ">
+                <Service service={service} />
+              </div>
+            );
+          })
+        }
+      </div>
+      <div
+        class="tech-grid flex justify-around pb-20 md:w-3/4 mx-auto items-center"
+      >
+        {
+          techSection.technologies.map((technology) => {
+            return (
+              <div class="flex flex-col justify-between items-center  ">
+                <TechnoItem keyText={technology.name}>
+                  <img
+                    slot="tech-logo"
+                    class="object-fit w-12 h-12 "
+                    src={technology.icon.asset.url}
+                    alt={technology.name}
+                  />
+                </TechnoItem>
+              </div>
+            );
+          })
+        }
+      </div>
+      <div class="justify-center flex mx-auto">
+        <LinkButton link="/contact" name="Let's get in touch" size="md">
+          <svg
+            class="icon"
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"><path d="M10 7H2v6h8v5l8-8-8-8v5z"></path></svg
+          >
+        </LinkButton>
       </div>
     </section>
   </main>

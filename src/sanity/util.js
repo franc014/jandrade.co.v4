@@ -16,3 +16,26 @@ export async function getSocialLinks() {
     `;
     return await useSanityClient().fetch(socialLinksQuery);
 }
+
+export async function getServices() {
+    const servicesQuery = `
+       *[_type=="serviceExcerpt"]
+    `;
+    return await useSanityClient().fetch(servicesQuery);
+}
+
+export async function getTechnologies() {
+    const technlogiesQuery = `
+       *[_type=='technologiesSection']{
+			title,
+			intro,
+			closingThoughts,
+			technologies[]{
+				name,
+				techType->{name},
+				icon{asset->{url}}
+			},
+			sectionIcon}[0]
+    `;
+    return await useSanityClient().fetch(technlogiesQuery);
+}
