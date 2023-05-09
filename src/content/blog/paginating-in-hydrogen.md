@@ -1,6 +1,8 @@
 ---
 title: Paginating Resources in Shopify Hydrogen
 tags: ["shopify", "hydrogen"]
+excerpt: "Your custom store with Hydrogen as it would be with any other technology will have listings of products, collections, blog posts, etc. It will probably have many resources that will need to be paginated. Let's learn how to implement lazy-load pagination within Hydrogen."
+pubDate: 2022-10-25 00:00
 ---
 
 # Paginating Resources in Shopify Hydrogen

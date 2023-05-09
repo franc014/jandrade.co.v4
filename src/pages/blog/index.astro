@@ -1,0 +1,29 @@
+---
+import Post from "../../components/Post.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+const posts = (await getCollection("blog")).sort((a, b) => {
+  return a.data.pubDate.valueOf() - b.data.pubDate.valueOf();
+});
+---
+
+<BaseLayout title="Blog">
+  <main class="wrapper py-20">
+    <section>
+      <h1>Blog index</h1>
+      <div class="posts">
+        {posts.map((post) => <Post post={post} />)}
+      </div>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  .posts div {
+    @apply border-b border-slate-200 mt-12;
+  }
+
+  .posts div:last-of-type {
+    @apply border-b-0;
+  }
+</style>
