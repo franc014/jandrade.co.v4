@@ -99,9 +99,13 @@
      @apply bg-white-canvas font-sans;
  }
 
- h1 {
-     @apply text-3xl font-bold font-sans2 mb-6 tracking-wide text-gray-normal;
- }
+
+
+h1 {
+    @apply text-3xl font-bold font-sans2 mb-6 tracking-wide text-gray-normal;
+}
+
+
 
  h2 {
      @apply text-xl font-bold font-sans2 text-gray-light;
