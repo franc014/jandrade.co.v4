@@ -39,3 +39,22 @@ export async function getTechnologies() {
     `;
     return await useSanityClient().fetch(technlogiesQuery);
 }
+
+export async function getFullBiography() {
+    const bioQuery = `
+    *[_type=='biography'][0]{
+            full_bio,
+			photo{asset->{url}},
+			resume{asset->{url}},
+        }`;
+    
+    return await useSanityClient().fetch(bioQuery);
+}
+
+export async function getProjects() {
+    const projectsQuery = `
+        *[_type=="project"]
+    `;
+    
+    return await useSanityClient().fetch(projectsQuery);
+}
