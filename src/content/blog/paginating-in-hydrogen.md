@@ -5,8 +5,6 @@ excerpt: "Your custom store with Hydrogen as it would be with any other technolo
 pubDate: 2022-10-25 00:00
 ---
 
-# Paginating Resources in Shopify Hydrogen
-
 As in any Web application, paginating the data we're fetching from the backend is crucial for its performance. In a Hydrogen application, there's no exception to this pattern, but we need to rely on the Storefront Graphql API. In this post, I'm going to describe the steps that could be considered to paginate products, collections or any other resource in Shopify, and how to create the User Interface that uses that pagination.
 
 ## Paginating in the Server Side with Graphql
@@ -15,9 +13,9 @@ It should be always a requirement to paginate results in the Server Side. That's
 
 Our queries that fetch data such as products or collections, should have the next parts:
 
-1. A **first** parameter: the number of items we want to get on each page.
-2. A **after** paramter: corresponding to the **cursor** we need for the next round of paginated results
-3. Besides the resurces we'are fetching; products, for example, we need to query the **pageInfo** field which is present on all **connections**. When you get that list of products, you will notice that you need to specify the **edges** field. The list of edges you get back, is the connection.
+1.  A **first** parameter: the number of items we want to get on each page.
+2.  A **after** paramter: corresponding to the **cursor** we need for the next round of paginated results
+3.  Besides the resurces we'are fetching; products, for example, we need to query the **pageInfo** field which is present on all **connections**. When you get that list of products, you will notice that you need to specify the **edges** field. The list of edges you get back, is the connection.
 
 **Note:** With the paramters first and after, we'll be building a **forward** pagination. If you need implement a backwards pagination mechanism, you can alter your query using the **last** and **before** parameters instead of **first** and **after**.
 
@@ -26,6 +24,36 @@ For the first paginated results, you don't need to specify the cursor. For the n
 ### First paginated results
 
 **ALL_PRODUCTS_QUERY** in index.server.jsx
+
+```javascript
+
+
+<astro:script>
+  export default {
+    props: ['componentName'],
+    components: {
+      // You can define the available components here
+      ComponentA: () => import('./ComponentA.astro'),
+      ComponentB: () => import('./ComponentB.astro'),
+    },
+  }
+</astro:script>
+
+<astro:template>
+  <div>
+    <component :is="componentName" />
+  </div>
+</astro:template>
+
+</astro:script>
+
+<astro:template>
+  <div>
+    <component :is="componentName" />
+  </div>
+</astro:template>
+
+```
 
 Note that by the **pageInfo** field, you get the **hasNextPage** and **endCursor** properties. The **hasNextPage** property, is of a boolean type that tells you if there are more pages to fetch and the encCursor is the actual cursor you'll need to use in the next iteration. If you need a backwards pagination, you can use **hasPreviousPage** and **startCursor** fields. A pagination query would be similar to:
 

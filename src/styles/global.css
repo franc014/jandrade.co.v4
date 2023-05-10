@@ -176,4 +176,22 @@ h1 {
      background-position: top left;
      background-clip: content-box;
  }
-  @tailwind utilities;  
+
+ article ol {
+    list-style: arabic;
+    @apply ml-11 my-4
+ }
+
+ article ol li{
+    @apply my-2 text-lg text-gray-normal
+ }
+
+ article a {
+     background-color: lightgreen;
+ }
+
+ pre {
+    @apply px-8 pb-12;
+ }
+
+@tailwind utilities;  
