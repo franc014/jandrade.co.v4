@@ -4,7 +4,7 @@
   const dispatch = createEventDispatcher();
 
   let loading = false;
-  let hey = "hey";
+
   let data = {
     email: "",
     name: "",
@@ -13,7 +13,6 @@
   };
 
   async function sendContact() {
-    console.log("hey");
     loading = true;
     const sendEmail = await fetch("/api/contact.json", {
       method: "POST",
@@ -22,9 +21,10 @@
         "Content-Type": "application/json",
       },
     });
-    /* const res = await sendEmail.json(); */
 
-    /* if (sendEmail.status === 400) {
+    const res = await sendEmail.json();
+
+    if (sendEmail.status === 400) {
       dispatch("emailSent", {
         error: true,
         status: sendEmail.status,
@@ -36,7 +36,7 @@
         status: sendEmail.status,
         message: res.message,
       });
-    } */
+    }
 
     loading = false;
     data = {
@@ -50,7 +50,6 @@
 
 <form on:submit|preventDefault={sendContact}>
   <input type="hidden" name="masterLenina" bind:value={data.masterLenina} />
-  <span>{data.email}</span>
   <fieldset class="flex flex-col">
     <label for="email" class="mb-8">
       Email:

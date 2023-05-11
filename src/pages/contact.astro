@@ -1,5 +1,5 @@
 ---
-import ContactForm from "../components/svelte/ContactForm.svelte";
+import Contact from "../components/svelte/Contact.svelte";
 import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 
@@ -25,7 +25,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       class="my-8 p-12 rounded-md shadow-lg md:w-5/6 text-gray-normal bg-white-canvas card"
     >
       <p class="my-0 pb-10 italic font-bold">You may also drop me a line...</p>
-      <ContactForm client:only="svelte" />
+      <Contact client:only="svelte" />
     </div>
   </main>
 </BaseLayout>

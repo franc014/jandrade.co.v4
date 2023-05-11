@@ -16,10 +16,9 @@ export default {
       black: colors.black,
       white: colors.white,
       slate: colors.slate,
-      emerald: colors.emerald,
-      indigo: colors.indigo,
-      yellow: colors.yellow,
-      current: 'currentColor',
+      lime: colors.lime,
+      red: colors.red,
+    
       base: {
         normal: '#009FB7',
         light:'#00c7b8'
