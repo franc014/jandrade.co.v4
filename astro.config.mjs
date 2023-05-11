@@ -2,6 +2,8 @@ import { defineConfig } from 'astro/config';
 
 import tailwind from '@astrojs/tailwind';
 import sanity from "astro-sanity";
+import svelte from '@astrojs/svelte';
+  
 import nightOwl from './src/styles/night_owl.json';
 //import cobalt2 from './src/styles/cobalt2.json';
 
@@ -23,5 +25,6 @@ export default defineConfig({
       apiVersion: '2023-05-01',
       useCdn: true
     }
-  )],
+    ), svelte()],
+  output: 'server'
 });

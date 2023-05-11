@@ -1,0 +1,40 @@
+---
+import ContactForm from "../components/svelte/ContactForm.svelte";
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="Francisco Andrade | About">
+  <main class="wrapper py-20">
+    <h1>Contact</h1>
+    <p>
+      I believe we can build together really great Web experiences. Let's get in
+      touch! 🙂
+    </p>
+    <div class="flex gap-2 mb-16 mt-4 items-center">
+      <svg
+        class="w-6 inline-block"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 20 20"
+        ><path
+          d="M18 2a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4c0-1.1.9-2 2-2h16zm-4.37 9.1L20 16v-2l-5.12-3.9L20 6V4l-10 8L0 4v2l5.12 4.1L0 14v2l6.37-4.9L10 14l3.63-2.9z"
+        ></path></svg
+      >
+      <span class="font-bold">Email:</span> jfandtec@gmail.com
+    </div>
+    <div
+      class="my-8 p-12 rounded-md shadow-lg md:w-5/6 text-gray-normal bg-white-canvas card"
+    >
+      <p class="my-0 pb-10 italic font-bold">You may also drop me a line...</p>
+      <ContactForm client:only="svelte" />
+    </div>
+  </main>
+</BaseLayout>
+
+<style>
+  /* .resSuccess {
+    @apply bg-lime-600 border  text-white-canvas p-4 rounded text-sm shadow-md;
+  }
+  .resError {
+    @apply bg-red-500 border  text-white-canvas p-4 rounded text-sm shadow-md;
+  } */
+</style>
