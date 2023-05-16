@@ -23,7 +23,7 @@ import TechnoItem from "../components/TechnoItem.astro";
 <BaseLayout title="Francisco Andrade | Web Developer">
   <main class="wrapper py-20">
     <section class="bio-grid pb-10">
-      <div class="md:w-[97%] lg:max-w-lg">
+      <div class="md:w-[97%] lg:max-w-lg place-self-center">
         <PortableText portableText={bio.short_bio} />
       </div>
       <div class="w-3/4 md:w-5/6 lg:w-9/12 xl:w-8/12 mx-auto">
@@ -37,11 +37,12 @@ import TechnoItem from "../components/TechnoItem.astro";
     </section>
 
     <section class="pt-16">
+      <h2 class="mb-16">Services</h2>
       <div class="section-grid pb-20">
         {
           services.map((service) => {
             return (
-              <div class="shadow-2xl  py-10 px-8 rounded shadow-white-touch border border-slate-200 ">
+              <div class="shadow-lg  py-10 px-8 rounded shadow-slate-100 border border-slate-300 ">
                 <Service service={service} />
               </div>
             );
@@ -79,6 +80,11 @@ import TechnoItem from "../components/TechnoItem.astro";
         </LinkButton>
       </div>
     </section>
+
+    <section class="pt-16">
+      <h2 class="mb-16">Testimonials</h2>
+    </section>
+    <!-- page decoration -->
     <svg
       class="absolute w-24 -z-10 top-3 left-0"
       xmlns="http://www.w3.org/2000/svg"

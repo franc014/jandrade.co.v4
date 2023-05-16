@@ -6,7 +6,7 @@ const { service } = Astro.props;
 ---
 
 <ServiceIcon iconName={service.icon_name} />
-<h2>{service.title}</h2>
+<h3 class="mb-2 mt-4">{service.title}</h3>
 <PortableText portableText={service.description} />
 
 <style>

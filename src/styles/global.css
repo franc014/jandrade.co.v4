@@ -102,13 +102,17 @@
 
 
 h1 {
-    @apply text-3xl font-bold font-sans2 mb-6 tracking-wide text-gray-normal;
+    @apply text-5xl font-bold font-sans2 mb-6 tracking-wide text-gray-normal;
 }
 
 
 
  h2 {
-     @apply text-xl font-bold font-sans2 text-gray-light;
+     @apply text-3xl font-bold font-sans2 text-gray-light;
+ }
+
+ h3 {
+     @apply text-xl font-bold font-sans2 tracking-wide text-gray-light;
  }
 
  p {
