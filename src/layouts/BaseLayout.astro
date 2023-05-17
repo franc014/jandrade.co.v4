@@ -7,11 +7,15 @@ const confQuery = `
 *[_type=='siteConfiguration'][0]
   			{
   				'mainNav':nav_items[]->,
-				'siteOwner':site_name
- 			}
+				  'siteOwner':site_name
+ 			} 
 `;
 
 const { mainNav } = await useSanityClient().fetch(confQuery);
+
+const orderedMainNav = mainNav.sort((a, b) => {
+  return a.nav_order - b.nav_order;
+});
 
 export interface Props {
   title: string;
@@ -29,7 +33,7 @@ const { title } = Astro.props;
   </head>
   <body>
     <div class="bg-accent gradient w-full h-3"></div>
-    <Header nav={mainNav} />
+    <Header nav={orderedMainNav} />
     <slot />
     <footer class="flex items-center justify-center bg-accent gradient">
       <p

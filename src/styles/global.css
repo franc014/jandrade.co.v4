@@ -102,7 +102,7 @@
 
 
 h1 {
-    @apply text-5xl font-bold font-sans2 mb-6 tracking-wide text-gray-normal;
+    @apply text-4xl font-bold font-sans2 mb-6 tracking-wide text-gray-normal;
 }
 
 
@@ -117,6 +117,23 @@ h1 {
 
  p {
      @apply mt-8 text-lg text-gray-light md:leading-8;
+ }
+ 
+
+ .service ul li{
+    @apply  text-lg text-gray-light/90 my-4;
+    display: grid;
+    grid-template-columns: 40px 1fr;
+   
+ }
+ .service ul li:before {
+    content: url(images/cube.svg);
+    width: 40px;
+    height: 40px;
+ }
+
+ .service ul li:first-child {
+     @apply mt-8;
  }
 
  .card {

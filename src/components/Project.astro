@@ -15,7 +15,7 @@ const projectImage = urlForImage(project.image.asset);
   </div>
   <div class="flex flex-col gap-2">
     <h2 class="text-2xl">{project.title}</h2>
-    <h3>Technologies</h3>
+    <h3 class="technlogies">Technologies</h3>
     <div class="technologies">
       {project.technologies.map((technology) => <span>{technology}</span>)}
     </div>
@@ -43,8 +43,8 @@ const projectImage = urlForImage(project.image.asset);
     </div>
 
     <style>
-      h3 {
-        @apply mb-0 mt-6 text-sm rounded bg-gray-light text-accent p-1  w-28 text-center -skew-x-12;
+      .technlogies {
+        @apply mb-0 mt-6 text-sm rounded bg-gray-light text-accent p-1  w-28 text-center -skew-x-12 font-normal;
       }
       .project {
         --columns: auto-fit;

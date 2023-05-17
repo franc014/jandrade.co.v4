@@ -19,7 +19,7 @@ export async function getSocialLinks() {
 
 export async function getServices() {
     const servicesQuery = `
-       *[_type=="serviceExcerpt"]
+       *[_type=="serviceExcerpt"] 
     `;
     return await useSanityClient().fetch(servicesQuery);
 }
