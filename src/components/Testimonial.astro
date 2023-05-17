@@ -1,36 +1,50 @@
+---
+import PortableText from "./PortableText.astro";
+const { text, author } = Astro.props;
+import { urlForImage } from "../sanity/urlForImage";
+console.log(urlForImage(author.photo).url());
+---
+
 <div
-  class="flex flex-col rounded-md shadow shadow-gray-light/50 border border-gray-normal/20 p-6"
+  class="flex flex-col justify-between rounded-md shadow-sm shadow-gray-light border border-gray-normal/10 p-6 testimonial-card"
 >
   <div class="testimonial mb-8">
-    <p>
-      "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tempora, quo
-      voluptatem. Id veniam earum odio tempore, tenetur consequuntur dolore
-      optio vel assumenda quod hic quis excepturi pariatur nobis? Dicta,
-      exercitationem"
-    </p>
+    <quote>
+      <PortableText portableText={text} />
+    </quote>
   </div>
-  <div class="flex items-center bg-accent/10 p-1 rounded gap-2">
+  <div class="author bg-accent/20 p-2 rounded">
     <picture class="rounded-full p-0">
       <img
-        class="rounded-full w-28"
-        src="/images/ana_zambrano.jpeg"
-        alt="Ana Zambrano"
+        class="rounded-full w-16"
+        src={urlForImage(author.photo).url()}
+        alt="nop"
       />
     </picture>
     <div>
-      <h3 class="text-sm">Ana Zambrano</h3>
+      <h3 class="text-sm">{author.name}</h3>
       <p class="text-xs m-0">
-        title Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim
-        maiores cum vel
+        {author.title}
       </p>
     </div>
   </div>
 </div>
 
 <style>
-  .testimonial p {
-    @apply text-lg font-sans tracking-wide m-0;
+  .testimonial-card:nth-of-type(2n + 1) {
+    /* transform: skew(-1deg); */
   }
+
+  .testimonial-card {
+    /* transform: skew(1deg); */
+  }
+  .testimonial quote p {
+    @apply text-lg font-sans tracking-wide m-0 p-0;
+  }
+
   .author {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    align-items: center;
   }
 </style>

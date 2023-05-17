@@ -58,3 +58,11 @@ export async function getProjects() {
     
     return await useSanityClient().fetch(projectsQuery);
 }
+
+export async function getTestimonials() {
+    const testimonialsQuery = `
+        *[_type=="testimonial"]
+    `;
+    
+    return await useSanityClient().fetch(testimonialsQuery);
+}

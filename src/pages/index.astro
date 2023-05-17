@@ -7,12 +7,14 @@ import {
   getSocialLinks,
   getServices,
   getTechnologies,
+  getTestimonials,
 } from "../sanity/util";
 
 const bio = await getBiography();
 const socialLinks = await getSocialLinks();
 const services = await getServices();
 const techSection = await getTechnologies();
+const testimonials = await getTestimonials();
 
 import BioIllustration from "../components/BioIllustration.astro";
 import LinkButton from "../components/LinkButton.astro";
@@ -22,9 +24,9 @@ import Testimonial from "../components/Testimonial.astro";
 ---
 
 <BaseLayout title="Francisco Andrade | Web Developer">
-  <main class="wrapper py-20">
+  <main class="wrapper py-10">
     <section class="bio-grid pb-10">
-      <div class="md:w-[97%] lg:max-w-lg place-self-center">
+      <div class="md:w-[97%] lg:max-w-lg place-self-center home-cta">
         <PortableText portableText={bio.short_bio} />
       </div>
       <div class="w-3/4 md:w-5/6 lg:w-9/12 xl:w-8/12 mx-auto">
@@ -85,9 +87,20 @@ import Testimonial from "../components/Testimonial.astro";
     <section class="pt-16">
       <h2 class="mb-16">Testimonials</h2>
       <div class="grid grid-cols-2 gap-8">
-        <Testimonial />
-        <Testimonial />
-        <Testimonial />
+        <p>
+          Here are some kind words from clients and colleagues I've had the
+          pleasure of working with:
+        </p>
+        {
+          testimonials.map((testimonial) => {
+            const author = {
+              name: testimonial.author,
+              title: testimonial.author_title,
+              photo: testimonial.author_photo,
+            };
+            return <Testimonial text={testimonial.text} author={author} />;
+          })
+        }
       </div>
     </section>
     <!-- page decoration -->
@@ -278,12 +291,6 @@ import Testimonial from "../components/Testimonial.astro";
   </main>
 
   <style>
-    main {
-      margin: auto;
-      padding: 1.5rem;
-      max-width: 60ch;
-    }
-
     .text-gradient {
       background-image: var(--accent-gradient);
       -webkit-background-clip: text;
@@ -335,7 +342,7 @@ import Testimonial from "../components/Testimonial.astro";
       --columns: 2;
       display: grid;
       grid-template-columns: repeat(var(--columns), minmax(340px, 1fr));
-      gap: 4rem;
+      gap: 2rem;
     }
     @media (max-width: 800px) {
       .bio-grid {

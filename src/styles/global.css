@@ -118,6 +118,10 @@ h1 {
  p {
      @apply mt-8 text-lg text-gray-light md:leading-8;
  }
+
+ .home-cta p {
+     @apply text-xl tracking-wide;
+ }
  
 
  .service ul li{
