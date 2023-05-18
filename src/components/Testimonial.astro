@@ -5,7 +5,7 @@ import { urlForImage } from "../sanity/urlForImage";
 ---
 
 <div
-  class="flex flex-col justify-between rounded-md shadow-sm shadow-gray-light border border-gray-normal/10 p-6 testimonial-card"
+  class="bg-white flex flex-col justify-between rounded-md shadow-sm shadow-gray-light border border-gray-normal/10 p-6 testimonial-card"
 >
   <div class="testimonial mb-8">
     <quote>
@@ -31,11 +31,11 @@ import { urlForImage } from "../sanity/urlForImage";
 
 <style>
   .testimonial-card:nth-of-type(2n + 1) {
-    /* transform: skew(-1deg); */
+    transform: skew(-1deg);
   }
 
   .testimonial-card {
-    /* transform: skew(1deg); */
+    transform: skew(1deg);
   }
   .testimonial quote p {
     @apply text-lg font-sans tracking-wide m-0 p-0;

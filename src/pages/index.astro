@@ -21,10 +21,11 @@ import LinkButton from "../components/LinkButton.astro";
 import Service from "../components/Service.astro";
 import TechnoItem from "../components/TechnoItem.astro";
 import Testimonial from "../components/Testimonial.astro";
+import ServicesOrnament from "../components/ServicesOrnament.astro";
 ---
 
 <BaseLayout title="Francisco Andrade | Web Developer">
-  <main class="wrapper py-10">
+  <main class="wrapper py-14">
     <section class="bio-grid pb-10">
       <div class="md:w-[97%] lg:max-w-lg place-self-center home-cta">
         <PortableText portableText={bio.short_bio} />
@@ -39,7 +40,8 @@ import Testimonial from "../components/Testimonial.astro";
       </div>
     </section>
 
-    <section class="pt-10">
+    <section class="pt-2 relative">
+      <ServicesOrnament />
       <h2 class="mb-16">Services</h2>
       <div class="pb-20">
         {
