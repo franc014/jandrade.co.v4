@@ -53,7 +53,7 @@
          url("/fonts/JetBrainsMono-MediumItalic.woff2") format("truetype");
  }
 
- @font-face {
+@font-face {
      font-family: "JetBrainsMono";
      font-weight: normal;
      font-display: swap;
@@ -61,7 +61,38 @@
      src: url("/fonts/JetBrainsMono-Medium.ttf") format("truetype"),
          url("/fonts/JetBrainsMono-Medium.woff") format("truetype"),
          url("/fonts/JetBrainsMono-Medium.woff2") format("truetype");
+}
+
+ @font-face {
+     font-family: BauPro;
+     font-weight: bold;
+     font-display: swap;
+     src: url("/fonts/BauPro-Bold.ttf") format("truetype"),
+         url("/fonts/BauPro-Bold.woff") format("truetype"),
+         url("/fonts/BauPro-Bold.woff2") format("truetype");
  }
+
+
+ @font-face {
+     font-family: BauPro;
+     font-weight: normal;
+     font-display: swap;
+     font-style: normal;
+     src: url("/fonts/BauPro.ttf") format("truetype"),
+         url("/fonts/BauPro.woff") format("truetype"),
+         url("/fonts/BauPro.woff2") format("truetype");
+ }
+
+  @font-face {
+      font-family: FugueRegular;
+      font-weight: bold;
+      font-display: swap;
+      src: url("/fonts/Fugue-Regular.ttf") format("truetype"),
+          url("/fonts/Fugue-Regular.woff") format("truetype"),
+          url("/fonts/Fugue-Regular.woff2") format("truetype");
+  }
+
+
 
  :root {
      --site-gradient: radial-gradient(circle,
@@ -96,23 +127,32 @@
  }
 
  body {
-     @apply bg-white-canvas font-sans;
+     @apply bg-white-canvas font-sans3;
  }
 
 
 
 h1 {
-    @apply text-4xl font-bold font-sans2 mb-6 tracking-wide text-gray-normal;
+    @apply text-4xl font-bold font-sans4 mb-6 tracking-wide text-gray-normal;
 }
 
 
 
  h2 {
-     @apply text-3xl font-bold font-sans2 text-gray-light;
+     @apply text-3xl font-bold font-sans4 text-gray-light;
+ }
+
+ h2.underlined_title {
+     @apply flex flex-col max-w-fit;
+ }
+
+ h2.underlined_title::after {
+     content: url(/images/underline.svg);
+     @apply -mt-3 -ml-2  ;
  }
 
  h3 {
-     @apply text-xl font-bold font-sans2 tracking-wide text-gray-light;
+     @apply text-xl font-bold font-sans4 tracking-wide text-gray-light;
  }
 
  p {

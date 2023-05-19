@@ -7,6 +7,8 @@ export default {
       fontFamily: {
       sans: ['WorkSans', 'Inter','sans-serif'],
       sans2: ['Inter', 'sans-serif'],
+      sans3: ['BauPro', 'sans-serif'],
+      sans4: ['FugueRegular', 'sans-serif'],
       mono:['JetBrainsMono','sans-serif']
       },
     },
