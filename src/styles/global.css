@@ -126,6 +126,10 @@
      --pattern-size: 5.125rem;
  }
 
+ ::selection {
+    @apply bg-accent;
+ }
+
  body {
      @apply bg-white-canvas font-sans3;
  }
@@ -165,7 +169,7 @@ h1 {
  
 
  .service ul li{
-    @apply  text-lg text-gray-light/90 my-4 font-sans2;
+    @apply  text-lg text-gray-light/90 my-4 font-sans3;
     display: grid;
     grid-template-columns: 40px 1fr;
    
@@ -228,7 +232,7 @@ h1 {
 }
 
  svg.icon {
-     @apply w-3 mr-2 fill-current text-accent;
+     @apply w-3 mr-2 fill-current;
  }
 
  svg.social-icon {
