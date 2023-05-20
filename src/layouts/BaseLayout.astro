@@ -2,9 +2,9 @@
 import "../styles/global.css";
 import { useSanityClient } from "astro-sanity";
 import Header from "../components/Header.astro";
-import PageOrnamentLines from "../components/PageOrnamentLines.astro";
+/* import PageOrnamentLines from "../components/PageOrnamentLines.astro";
 import PageOrnament from "../components/PageOrnament.astro";
-import Overlay from "../components/Overlay.astro";
+import Overlay from "../components/Overlay.astro"; */
 
 const confQuery = `
 *[_type=='siteConfiguration'][0]
@@ -35,10 +35,7 @@ const { title } = Astro.props;
     <title>{title}</title>
   </head>
   <body class="relative">
-    <PageOrnamentLines placement="bottom-0 right-0" />
-
     <!-- <PageOrnament placement="bottom-0 right-0 rotate-180" /> -->
-
     <div class="bg-accent gradient w-full h-3"></div>
     <Header nav={orderedMainNav} />
     <slot />

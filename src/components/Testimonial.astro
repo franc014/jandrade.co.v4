@@ -5,14 +5,16 @@ import { urlForImage } from "../sanity/urlForImage";
 ---
 
 <div
-  class="bg-white flex flex-col justify-between rounded-md shadow-sm shadow-gray-light border border-gray-normal/10 p-6 testimonial-card"
+  class="bg-white flex flex-col justify-between rounded shadow-xl shadow-gray-bold/50 border border-accent p-6 testimonial-card"
 >
   <div class="testimonial mb-8">
     <quote>
       <PortableText portableText={text} />
     </quote>
   </div>
-  <div class="author bg-accent/20 p-2 rounded">
+  <div
+    class="author bg-white-canvas shadow-lg border border-slate-200 shadow-slate-100 p-2 rounded"
+  >
     <picture class="rounded-full p-0">
       <img
         class="rounded-full w-16"
@@ -31,11 +33,12 @@ import { urlForImage } from "../sanity/urlForImage";
 
 <style>
   .testimonial-card:nth-of-type(2n + 1) {
-    transform: skew(-1deg);
+    transform: skew(2deg);
   }
 
   .testimonial-card {
-    transform: skew(1deg);
+    transform: skew(-2deg);
+    @apply bg-white-canvas;
   }
   .testimonial quote p {
     @apply text-lg font-sans tracking-wide m-0 p-0;

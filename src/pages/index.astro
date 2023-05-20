@@ -27,9 +27,10 @@ import Overlay from "../components/Overlay.astro";
 
 <BaseLayout title="Francisco Andrade | Web Developer">
   <main class="">
-    <section class="pt-12 pb-4 relative">
+    <section class="pt-12 pb-14 relative">
       <Overlay />
       <PageOrnament placement="-top-24 left-0" />
+
       <div class="bio-grid wrapper">
         <div class="md:w-[97%] lg:max-w-lg place-self-center home-cta">
           <PortableText portableText={bio.short_bio} />
@@ -48,68 +49,74 @@ import Overlay from "../components/Overlay.astro";
       </div>
     </section>
 
-    <section class="wrapper relative">
-      <h2 class="underlined_title mb-2">Services</h2>
-      <div class="pb-20">
-        {
-          services.map((service) => {
-            return (
-              <div class=" mb-10 w-5/6 service ">
-                <Service service={service} />
-              </div>
-            );
-          })
-        }
-      </div>
-      <div
-        class="tech-grid flex justify-around pb-20 md:w-3/4 mx-auto items-center"
-      >
-        {
-          techSection.technologies.map((technology) => {
-            return (
-              <div class="flex flex-col justify-between items-center  ">
-                <TechnoItem keyText={technology.name}>
-                  <img
-                    slot="tech-logo"
-                    class="object-fit w-12 h-12 "
-                    src={technology.icon.asset.url}
-                    alt={technology.name}
-                  />
-                </TechnoItem>
-              </div>
-            );
-          })
-        }
-      </div>
-      <div class="justify-center flex mx-auto">
-        <LinkButton link="/contact" name="Let's get in touch" size="md">
-          <svg
-            class="icon"
-            slot="icon"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"><path d="M10 7H2v6h8v5l8-8-8-8v5z"></path></svg
-          >
-        </LinkButton>
+    <section class="py-12 relative services">
+      <div class="wrapper">
+        <h2 class="underlined_title mb-2">Services</h2>
+        <div class="pb-20">
+          {
+            services.map((service) => {
+              return (
+                <div class=" mb-10 w-5/6 service ">
+                  <Service service={service} />
+                </div>
+              );
+            })
+          }
+        </div>
+        <div
+          class="tech-grid flex justify-around pb-20 md:w-3/4 mx-auto items-center"
+        >
+          {
+            techSection.technologies.map((technology) => {
+              return (
+                <div class="flex flex-col justify-between items-center  ">
+                  <TechnoItem keyText={technology.name}>
+                    <img
+                      slot="tech-logo"
+                      class="object-fit w-12 h-12 "
+                      src={technology.icon.asset.url}
+                      alt={technology.name}
+                    />
+                  </TechnoItem>
+                </div>
+              );
+            })
+          }
+        </div>
+        <div class="justify-center flex mx-auto">
+          <LinkButton link="/contact" name="Let's get in touch" size="md">
+            <svg
+              class="icon"
+              slot="icon"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+              ><path d="M10 7H2v6h8v5l8-8-8-8v5z"></path></svg
+            >
+          </LinkButton>
+        </div>
       </div>
     </section>
 
-    <section class="wrapper py-16">
-      <h2 class="mb-16 underlined_title">Testimonials</h2>
-      <div class="grid grid-cols-2 gap-8">
-        <p>
-          Here are some kind words from clients and colleagues I've had the
-          pleasure of working with:
-        </p>
-        {
-          testimonials.map((testimonial) => {
-            const author = {
-              name: testimonial.author,
-              title: testimonial.author_title,
-              photo: testimonial.author_photo,
-            };
-            return <Testimonial text={testimonial.text} author={author} />;
-          })
-        }
+    <section class="py-16 testimonials relative">
+      <PageOrnament placement="bottom-0 right-0 z-20 -rotate-180" />
+      <div class="wrapper">
+        <h2 class="underlined_title">Testimonials</h2>
+        <div class="grid grid-cols-2 gap-8">
+          <p class="text-2xl">
+            Some kind words from colleagues I've had the pleasure of working
+            with
+          </p>
+          {
+            testimonials.map((testimonial) => {
+              const author = {
+                name: testimonial.author,
+                title: testimonial.author_title,
+                photo: testimonial.author_photo,
+              };
+              return <Testimonial text={testimonial.text} author={author} />;
+            })
+          }
+        </div>
       </div>
     </section>
 
@@ -117,14 +124,29 @@ import Overlay from "../components/Overlay.astro";
   </main>
 </BaseLayout>
 <style>
-  /* .banner {
-    opacity: 0.4;
-    background-image: linear-gradient(
-      to bottom in oklab,
-      #fefdfa 0%,
-      #eff1f3 100%
+  .testimonials {
+    background-image: radial-gradient(
+      500px circle at 1% -20%,
+      #fefdfb 12% 12%,
+      #fed867 111% 152%,
+      95%,
+      #262626 117% 117%
     );
-  } */
+  }
+  .services {
+    position: relative;
+  }
+  .services::after {
+    content: "";
+    position: absolute;
+    opacity: 0.03;
+    background-image: url(/images/hexagons.svg);
+    background-repeat: space;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
   .text-gradient {
     background-image: var(--accent-gradient);
     -webkit-background-clip: text;
