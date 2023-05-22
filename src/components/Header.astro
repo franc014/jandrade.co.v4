@@ -4,7 +4,7 @@ const { nav } = Astro.props;
 
 <header class="wrapper">
   <div
-    class="md:flex md:justify-between md:items-baseline text-lg pt-8 pb-5 md:pb-0 border-b border-gray-lighter/50"
+    class="md:flex md:justify-between md:items-baseline text-lg pt-8 pb-5 md:pb-0 border-b border-gray-lighter/30"
   >
     <h1
       class="md:text-left text-center text-2xl tracking-tighter italic font-bold font-mono"
@@ -15,11 +15,15 @@ const { nav } = Astro.props;
       <ul class="flex flex-wrap justify-center md:justify-between gap-2">
         {
           nav.map((item) => {
+            const linkPath = `/${item.page_link}`;
+
             return (
               <li class="mr-4 ">
                 <a
-                  class="text-gray-normal relative block h-full font-mono"
-                  href={`/${item.page_link}`}
+                  class={`text-gray-normal relative block h-full font-mono ${
+                    Astro.url.pathname === linkPath ? "active" : ""
+                  }`}
+                  href={linkPath}
                 >
                   {item.text}
                 </a>
