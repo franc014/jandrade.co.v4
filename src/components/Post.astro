@@ -8,7 +8,9 @@ import ArticleMeta from "./ArticleMeta.astro";
   <!-- <img class="w-8" src="/images/file-text.png" alt="post icon" /> -->
   <div class="post-content">
     <h2 class="mb-4"><a href={`/blog/${post.slug}`}>{post.data.title}</a></h2>
-    {post.data.excerpt}
+    <div class="excerpt">
+      {post.data.excerpt}
+    </div>
     <ArticleMeta post={post.data} overrideClasses={["text-sm"]} />
   </div>
 </div>
@@ -17,5 +19,8 @@ import ArticleMeta from "./ArticleMeta.astro";
   .post {
     @apply py-4 grid gap-2;
     grid-template-columns: 1fr;
+  }
+  .excerpt {
+    @apply text-gray-light/80 text-lg;
   }
 </style>

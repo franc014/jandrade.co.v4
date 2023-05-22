@@ -10,7 +10,7 @@ const posts = (await getCollection("blog")).sort((a, b) => {
 <BaseLayout title="Blog">
   <main class="wrapper py-20">
     <section>
-      <h1>Blog index</h1>
+      <h1 class="underlined_title mb-2">Blog index</h1>
       <div class="posts">
         {posts.map((post) => <Post post={post} />)}
       </div>
@@ -20,7 +20,7 @@ const posts = (await getCollection("blog")).sort((a, b) => {
 
 <style>
   .posts {
-    @apply border-b border-slate-200 mt-12;
+    @apply border-b border-slate-200;
   }
 
   .posts div:last-of-type {

@@ -122,7 +122,10 @@
              #64c88f,
              #0bb6ab,
              #009fb7);
-     --bg-pattern: url(/images/curtain.svg);
+
+      --button-gradient: linear-gradient(to right, #272727 34% 0%, 36%, #fed766 32% 68%, 44%, #009fb7 100%);       
+     
+    --bg-pattern: url(/images/curtain.svg);
      --pattern-size: 5.125rem;
  }
 
@@ -138,6 +141,14 @@
 
 h1 {
     @apply text-4xl font-bold font-sans4 mb-6 tracking-wide text-gray-normal;
+}
+h1.underlined_title {
+    @apply flex flex-col max-w-fit;
+}
+
+h1.underlined_title::after {
+    content: url(/images/underline.svg);
+    @apply -mt-3 -ml-2;
 }
 
 
@@ -156,7 +167,7 @@ h1 {
  }
 
  h3 {
-     @apply text-xl font-bold font-sans4 tracking-wide text-gray-light;
+     @apply text-2xl font-bold font-sans4 tracking-wide text-gray-light;
  }
 
  p {

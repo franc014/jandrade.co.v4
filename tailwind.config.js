@@ -19,6 +19,7 @@ export default {
       white: colors.white,
       slate: colors.slate,
       lime: colors.lime,
+      red: colors.red,
     
       base: {
         normal: '#009FB7',

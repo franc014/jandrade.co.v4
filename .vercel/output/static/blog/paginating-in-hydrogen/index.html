@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <title>Blog Post</title>
+  <link rel="stylesheet" href="/_astro/about.8b8a3b6e.css" /></head>
+  <body class="relative">
+    <!-- <PageOrnament placement="bottom-0 right-0 rotate-180" /> -->
+    <div class="bg-accent gradient w-full h-3"></div>
+    <header class="wrapper astro-3EF6KSR2">
+  <div class="md:flex md:justify-between md:items-baseline text-lg pt-8 pb-5 md:pb-0 border-b border-gray-lighter/50 astro-3EF6KSR2">
+    <h1 class="md:text-left text-center text-2xl tracking-tighter italic font-bold font-mono astro-3EF6KSR2">
+      <a href="/" class="astro-3EF6KSR2">Francisco Andrade</a>
+    </h1>
+    <nav class="astro-3EF6KSR2">
+      <ul class="flex flex-wrap justify-center md:justify-between gap-2 astro-3EF6KSR2">
+        <li class="mr-4  astro-3EF6KSR2">
+                <a class="text-gray-normal relative block h-full font-mono astro-3EF6KSR2" href="/about">
+                  About
+                </a>
+              </li><li class="mr-4  astro-3EF6KSR2">
+                <a class="text-gray-normal relative block h-full font-mono astro-3EF6KSR2" href="/blog">
+                  Blog
+                </a>
+              </li><li class="mr-4  astro-3EF6KSR2">
+                <a class="text-gray-normal relative block h-full font-mono astro-3EF6KSR2" href="/projects">
+                  Projects
+                </a>
+              </li><li class="mr-4  astro-3EF6KSR2">
+                <a class="text-gray-normal relative block h-full font-mono astro-3EF6KSR2" href="/contact">
+                  Contact
+                </a>
+              </li>
+      </ul>
+    </nav>
+  </div>
+</header>
+    
+  <main class="wrapper py-20">
+    <article class="w-5/6">
+      <h1>Paginating Resources in Shopify Hydrogen</h1>
+<div class="mt-4 border-b border-white-touch my-12 flex justify-between items-baseline pb-8">
+  <p class="italic undefined">
+  <span class="text-gray-light">Published at:</span>
+  <span class="text-gray-bold">October 25, 2022</span>
+</p>
+  <a href="/blog">Back to Blog index</a>
+</div>
+<p>As in any Web application, paginating the data we’re fetching from the backend is crucial for its performance. In a Hydrogen application, there’s no exception to this pattern, but we need to rely on the Storefront Graphql API. In this post, I’m going to describe the steps that could be considered to paginate products, collections or any other resource in Shopify, and how to create the User Interface that uses that pagination.</p>
+<h2 id="paginating-in-the-server-side-with-graphql">Paginating in the Server Side with Graphql</h2>
+<p>It should be always a requirement to paginate results in the Server Side. That’s why the majority of API’s in frameworks like Hydrogen, already include in their data schemas a mechanism to extract paginated rows from the database. This implementation is a <strong>cursor-based</strong> pagination; the Shopify Engineering team has adpted this paradigm over <strong>offset-based</strong> pagination because it improves the performance of queries, and of course our applications.</p>
+<p>Our queries that fetch data such as products or collections, should have the next parts:</p>
+<ol>
+<li>A <strong>first</strong> parameter: the number of items we want to get on each page.</li>
+<li>A <strong>after</strong> paramter: corresponding to the <strong>cursor</strong> we need for the next round of paginated results</li>
+<li>Besides the resurces we’are fetching; products, for example, we need to query the <strong>pageInfo</strong> field which is present on all <strong>connections</strong>. When you get that list of products, you will notice that you need to specify the <strong>edges</strong> field. The list of edges you get back, is the connection.</li>
+</ol>
+<p><strong>Note:</strong> With the paramters first and after, we’ll be building a <strong>forward</strong> pagination. If you need implement a backwards pagination mechanism, you can alter your query using the <strong>last</strong> and <strong>before</strong> parameters instead of <strong>first</strong> and <strong>after</strong>.</p>
+<p>For the first paginated results, you don’t need to specify the cursor. For the next paginated results, you should use the cursor that is extracted in the pageInfo field. Let’s see what I mean:</p>
+<h3 id="first-paginated-results">First paginated results</h3>
+<p><strong>ALL_PRODUCTS_QUERY</strong> in index.server.jsx</p>
+<pre is:raw="" class="astro-code Night Owl" style="background-color: #011627; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0"><code><span class="line"></span>
+<span class="line"></span>
+<span class="line"><span style="color: #7FDBCA">&#x3C;</span><span style="color: #CAECE6">astro</span><span style="color: #7FDBCA">:</span><span style="color: #CAECE6">script</span><span style="color: #7FDBCA">></span></span>
+<span class="line"><span style="color: #D6DEEB">  export default </span><span style="color: #D3423E">{</span></span>
+<span class="line"><span style="color: #D6DEEB">    </span><span style="color: #D7DBE0">props</span><span style="color: #D6DEEB">: [</span><span style="color: #D9F5DD">'</span><span style="color: #ECC48D">componentName</span><span style="color: #D9F5DD">'</span><span style="color: #D6DEEB">],</span></span>
+<span class="line"><span style="color: #D6DEEB">    </span><span style="color: #D7DBE0">components</span><span style="color: #D6DEEB">: {</span></span>
+<span class="line"><span style="color: #D6DEEB">      </span><span style="color: #637777">//</span><span style="color: #637777; font-style: italic"> You can define the available components here</span></span>
+<span class="line"><span style="color: #D6DEEB">      </span><span style="color: #82AAFF; font-style: italic">ComponentA</span><span style="color: #D6DEEB">: </span><span style="color: #D9F5DD">()</span><span style="color: #D6DEEB"> </span><span style="color: #C792EA">=></span><span style="color: #D6DEEB"> </span><span style="color: #7FDBCA">import</span><span style="color: #D6DEEB">(</span><span style="color: #D9F5DD">'</span><span style="color: #ECC48D">./ComponentA.astro</span><span style="color: #D9F5DD">'</span><span style="color: #D6DEEB">),</span></span>
+<span class="line"><span style="color: #D6DEEB">      </span><span style="color: #82AAFF; font-style: italic">ComponentB</span><span style="color: #D6DEEB">: </span><span style="color: #D9F5DD">()</span><span style="color: #D6DEEB"> </span><span style="color: #C792EA">=></span><span style="color: #D6DEEB"> </span><span style="color: #7FDBCA">import</span><span style="color: #D6DEEB">(</span><span style="color: #D9F5DD">'</span><span style="color: #ECC48D">./ComponentB.astro</span><span style="color: #D9F5DD">'</span><span style="color: #D6DEEB">),</span></span>
+<span class="line"><span style="color: #D6DEEB">    },</span></span>
+<span class="line"><span style="color: #D6DEEB">  </span><span style="color: #D3423E">}</span></span>
+<span class="line"><span style="color: #7FDBCA">&#x3C;/</span><span style="color: #CAECE6">astro</span><span style="color: #7FDBCA">:</span><span style="color: #CAECE6">script</span><span style="color: #7FDBCA">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #7FDBCA">&#x3C;</span><span style="color: #CAECE6">astro</span><span style="color: #7FDBCA">:</span><span style="color: #CAECE6">template</span><span style="color: #7FDBCA">></span></span>
+<span class="line"><span style="color: #D6DEEB">  </span><span style="color: #7FDBCA">&#x3C;</span><span style="color: #CAECE6">div</span><span style="color: #7FDBCA">></span></span>
+<span class="line"><span style="color: #D6DEEB">    </span><span style="color: #7FDBCA">&#x3C;</span><span style="color: #CAECE6">component</span><span style="color: #7FDBCA"> </span><span style="color: #FFFFFF">:is="componentName"</span><span style="color: #7FDBCA"> /></span></span>
+<span class="line"><span style="color: #D6DEEB">  </span><span style="color: #7FDBCA">&#x3C;/</span><span style="color: #CAECE6">div</span><span style="color: #7FDBCA">></span></span>
+<span class="line"><span style="color: #7FDBCA">&#x3C;/</span><span style="color: #CAECE6">astro</span><span style="color: #7FDBCA">:</span><span style="color: #CAECE6">template</span><span style="color: #7FDBCA">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C792EA">&#x3C;/</span><span style="color: #D6DEEB">astro:</span><span style="color: #D7DBE0">script</span><span style="color: #C792EA">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #7FDBCA">&#x3C;</span><span style="color: #CAECE6">astro</span><span style="color: #7FDBCA">:</span><span style="color: #CAECE6">template</span><span style="color: #7FDBCA">></span></span>
+<span class="line"><span style="color: #D6DEEB">  </span><span style="color: #7FDBCA">&#x3C;</span><span style="color: #CAECE6">div</span><span style="color: #7FDBCA">></span></span>
+<span class="line"><span style="color: #D6DEEB">    </span><span style="color: #7FDBCA">&#x3C;</span><span style="color: #CAECE6">component</span><span style="color: #7FDBCA"> </span><span style="color: #FFFFFF">:is="componentName"</span><span style="color: #7FDBCA"> /></span></span>
+<span class="line"><span style="color: #D6DEEB">  </span><span style="color: #7FDBCA">&#x3C;/</span><span style="color: #CAECE6">div</span><span style="color: #7FDBCA">></span></span>
+<span class="line"><span style="color: #7FDBCA">&#x3C;/</span><span style="color: #CAECE6">astro</span><span style="color: #7FDBCA">:</span><span style="color: #CAECE6">template</span><span style="color: #7FDBCA">></span></span>
+<span class="line"></span></code></pre>
+<p>Note that by the <strong>pageInfo</strong> field, you get the <strong>hasNextPage</strong> and <strong>endCursor</strong> properties. The <strong>hasNextPage</strong> property, is of a boolean type that tells you if there are more pages to fetch and the encCursor is the actual cursor you’ll need to use in the next iteration. If you need a backwards pagination, you can use <strong>hasPreviousPage</strong> and <strong>startCursor</strong> fields. A pagination query would be similar to:</p>
+<h3 id="next-paginated-results">Next paginated results</h3>
+<p><strong>PAGINATED_PRODUCTS_QUERY</strong> in index.server.jsx</p>
+<p>This time we do use the after parameter, which receives the cursor we fetch in the previous fetch in the pageInfo field. Everytime we hit a <strong>Load More</strong> or <strong>Next</strong> button, we will pass the cursor to the pagination query to extract the next paginated items.</p>
+<p>All right, we now have the graphql ready to paginate the products, so it’s time to define where we should place these queries to build the pagination interface.</p>
+<h2 id="rendering-the-initial-paginated-items">Rendering the initial paginated items</h2>
+<p>I created an index.server.jsx file under the products folder. This will be route or page that will list all the paginated products:</p>
+<p>function ProductsPage() in index.server.jsx</p>
+<p>The ProductsList.client.jsx component will render the first results, but also a ”<strong>Load More</strong>” button that when clicked will call an API route to fetch the next paginated results:</p>
+<p>Markup of <strong>ProductsList.client.jsx</strong> component</p>
+<h1 id="the-api-route-we-use-to-fetch-the-next-paginated-items">The API route we use to fetch the next paginated items</h1>
+<p>You might’ve noticed that the ProductsList is a client component, which means we can’t use the useShopQuery hook as we did in the index.server.jsx file. To retrieve the next paginated items, when the Load More button is hit, we have to rely on an API route.
+We can define the index.server.jsx file as the API route and for that we should export a function called <strong>api()</strong>:</p>
+<p><code>export async function api(request, { queryShop }) {</code></p>
+<p>The queryShop is a function we employ to query the Shopify store the paginated products. We pass the cursor from the previous pagination in the payload from the client:</p>
+<p>const payload = await request.json();</p>
+<p>In fact, in the ProductsList component, the function <strong>fetchProducts</strong> (we employ a useCallback() hook) fetches the results from the route api (/products) in index.server.jsx, passing the cursor in the body. This function is called every time the More Button is clicked.
+Another advantage of using a client component is that the useState hook is available to us to be able to update the pagination data and information (to see if there are more pages coming in the next iteration) and use it to display the actual product items and setting up a “loading” message in the Load More button.</p>
+<h2 id="using-usecallback-to-improve-performance">Using useCallback to improve performance</h2>
+<p>Generally, fetching data is an operation that drains the resources, making an application not only work poorly but perform totally unresponsive. useCallback is a hook that allows us to “momoize” a heavy load operation; in this case is the fetching of products. Of course paginating items is the first strategy to improve its performance, but memoizing it should give us an optimisation boost.</p>
+<h2 id="fetching-while-scrolling-using-intersection-observer">Fetching while scrolling using Intersection Observer</h2>
+<p>Another interesting feature to try is to render the paginated results while the user scrolls down the page. My example uses Intersection Observer to call the fetchProducts function, every time the screen “intersects” with the Load More button div wrapper, for which a moreButtonRef was created. This ref is used inside a useEffect hook, where the Intersection Observer is set up to observe it.</p>
+<h1 id="links">Links</h1>
+<p><a href="https://www.shopify.com/partners/blog/graphql-pagination">https://www.shopify.com/partners/blog/graphql-pagination</a></p>
+    </article>
+  </main>
+
+    <footer class="flex items-center justify-center bg-accent gradient relative">
+      <p class="opacity-90 text-accent font-mono tracking-wide w-full flex text-center items-center justify-center bg-gray-bold p-2 mt-0">
+        Built by Francisco Andrade A. &copy; 2023
+      </p>
+    </footer>
+  </body>
+</html>
