@@ -11,12 +11,12 @@ const { nav } = Astro.props;
     >
       <a href="/">Francisco Andrade</a>
     </h1>
-    <nav>
-      <ul class="flex md:justify-between gap-2">
+    <nav class="">
+      <ul class="flex flex-wrap md:justify-between gap-2">
         {
           nav.map((item) => {
             return (
-              <li class="mr-4 group">
+              <li class="mr-4 ">
                 <a
                   class="text-gray-normal relative block h-full font-mono"
                   href={`/${item.page_link}`}

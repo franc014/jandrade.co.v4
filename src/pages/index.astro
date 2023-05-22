@@ -27,17 +27,19 @@ import Separator from "../components/Separator.astro";
 ---
 
 <BaseLayout title="Francisco Andrade | Web Developer">
+  <PageOrnament placement="-top-24 left-0" />
   <main class="">
     <section class="pt-12 pb-14 relative">
       <Overlay />
-      <PageOrnament placement="-top-24 left-0" />
 
       <div class="bio-grid wrapper">
         <div class="md:w-[97%] lg:max-w-lg place-self-center home-cta">
           <PortableText portableText={bio.short_bio} />
         </div>
-        <div class="w-3/4 md:w-5/6 lg:w-9/12 xl:w-8/12 mx-auto">
-          <div class="xl:-mt-8 2xl:-mt-12">
+        <div class="md:w-5/6 lg:w-9/12 xl:w-8/12 md:mx-auto">
+          <div
+            class="xl:-mt-8 2xl:-mt-12 hidden w-1/2 md:w-3/4 lg:w-full md:mx-auto md:block"
+          >
             <BioIllustration />
           </div>
           <div class="mt-6">
@@ -57,7 +59,7 @@ import Separator from "../components/Separator.astro";
           {
             services.map((service) => {
               return (
-                <div class=" mb-10 w-5/6 service ">
+                <div class="mb-10 md:w-5/6 service ">
                   <Service service={service} />
                 </div>
               );
@@ -104,7 +106,7 @@ import Separator from "../components/Separator.astro";
         <h2 class="underlined_title selection:bg-base-normal/40">
           Testimonials
         </h2>
-        <div class="grid grid-cols-2 gap-8">
+        <div class="flex flex-col md:grid grid-cols-2 gap-8">
           <p class="text-2xl selection:bg-base-normal/40">
             Some kind words from colleagues I've had the pleasure of working
             with
@@ -148,7 +150,7 @@ import Separator from "../components/Separator.astro";
     background-image: radial-gradient(
       500px circle at 1% -20%,
       #fefdfb 12% 12%,
-      #fed867 111% 152%,
+      #fed867 111% 182%,
       95%,
       #262626 117% 117%
     );
@@ -216,21 +218,27 @@ import Separator from "../components/Separator.astro";
   }
 
   .bio-grid {
-    --columns: 2;
-    display: grid;
-    grid-template-columns: repeat(var(--columns), minmax(340px, 1fr));
-    gap: 2rem;
+    @apply flex flex-col;
   }
-  @media (max-width: 800px) {
+  @media (min-width: 801px) {
     .bio-grid {
-      --columns: 1;
-      gap: 0.5rem;
-      margin: 0;
+      --columns: 2;
+      display: grid;
+      grid-template-columns: repeat(var(--columns), minmax(340px, 1fr));
+      gap: 2rem;
     }
   }
   .tech-grid {
     display: grid;
     gap: 1rem;
     grid-template-columns: repeat(auto-fit, minmax(20px, 1fr));
+  }
+
+  @media (max-width: 800px) {
+    .tech-grid {
+      display: grid;
+      gap: 4rem;
+      grid-template-columns: 1fr 1fr;
+    }
   }
 </style>
