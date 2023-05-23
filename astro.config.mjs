@@ -5,7 +5,7 @@ import svelte from '@astrojs/svelte';
 import nightOwl from './src/styles/night_owl.json';
 
 
-import vercel from "@astrojs/vercel/edge";
+import vercel from "@astrojs/vercel/serverless";
 
 // https://astro.build/config
 export default defineConfig({
