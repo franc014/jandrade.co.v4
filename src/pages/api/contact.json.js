@@ -61,7 +61,7 @@ export const post = async ({ request }) => {
       return new Response(JSON.stringify({
         message: error
       }), {
-        status: 500
+        status: 400
       })
     
     }
