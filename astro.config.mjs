@@ -27,7 +27,5 @@ export default defineConfig({
     useCdn: true
   }), svelte()],
   output: 'server',
-  adapter: vercel({
-    imageService: true
-  })
+  adapter: vercel()
 });
