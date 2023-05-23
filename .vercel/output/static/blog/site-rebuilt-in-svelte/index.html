@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <title>Blog Post</title>
+  <link rel="stylesheet" href="/_astro/about.aaad6d6b.css" /></head>
+  <body class="relative">
+    <!-- <PageOrnament placement="bottom-0 right-0 rotate-180" /> -->
+    <div class="bg-accent gradient w-full h-3"></div>
+    <header class="wrapper astro-3EF6KSR2">
+  <div class="md:flex md:justify-between md:items-baseline text-lg pt-8 pb-5 md:pb-0 border-b border-gray-lighter/30 astro-3EF6KSR2">
+    <h1 class="md:text-left text-center text-2xl tracking-tighter italic font-bold font-mono astro-3EF6KSR2">
+      <a href="/" class="astro-3EF6KSR2">Francisco Andrade</a>
+    </h1>
+    <nav class="astro-3EF6KSR2">
+      <ul class="flex flex-wrap justify-center md:justify-between gap-2 astro-3EF6KSR2">
+        <li class="mr-4  astro-3EF6KSR2">
+                <a class="text-gray-normal relative block h-full font-mono  astro-3EF6KSR2" href="/about">
+                  About
+                </a>
+              </li><li class="mr-4  astro-3EF6KSR2">
+                <a class="text-gray-normal relative block h-full font-mono  astro-3EF6KSR2" href="/projects">
+                  Projects
+                </a>
+              </li><li class="mr-4  astro-3EF6KSR2">
+                <a class="text-gray-normal relative block h-full font-mono  astro-3EF6KSR2" href="/contact">
+                  Contact
+                </a>
+              </li>
+      </ul>
+    </nav>
+  </div>
+</header>
+    
+  <main class="wrapper py-20">
+    <article class="w-5/6" contenteditable="">
+      <h1>I rebuilt my Web Site with Sveltekit</h1>
+<div class="mt-4 border-b border-white-touch my-12 flex justify-between items-baseline pb-8">
+  <p class="italic undefined">
+  <span class="text-gray-light">Published on:</span>
+  <span class="text-gray-bold">April 4, 2022</span>
+</p>
+  <a href="/blog">Back to the Blog index</a>
+</div>
+<p>By late 2021 I had heard good things about a new Javascript Framerok called Svelte. I had also seen this presentation from its author, an engaging, exciting one, which motivates you to jump in and learn all the great features it has to offer. So that’s what I did. I followed its tutorial and to practice more, I translated to Svelte some pure Javascript examples I had implemented before.</p>
+<p>Those examples were compiled in a Web App built with Sveltekit, which is a Svelte meta-framework, as NextJs is for React.
+Confirming that Sveltekit is an amazing Metaframework to build Web Apps, and as I love discovering and working with new and useful tools, I decided to rebuild my Web Site (built before with Gatsby). In this post, I’ll show you as much as I can, how this process went, and some learnings along the way.</p>
+<h2 id="design--develop-decisions">Design / Develop Decisions</h2>
+<p>My first thought to migrate my Web Site from Gatsby to Svelte was I had to keep some structure, specifically the component abstractions built with React. As both platforms are component-oriented tools, I knew this wasn’t a really hard challenge. One can easily map the React components to Svelte. Of course, Svelte components are equipped with nice features that make our work more enjoyable than other frameworks.
+I also wanted to keep other tools like Tailwind for the UI building, and Sanity as a CMS. Here are some insights about making them work with Sveltekit seamlessly.</p>
+<h3 id="tailwind-for-building-the-ui">Tailwind for building the UI</h3>
+<p>You may already know that Tailwind can be installed as a PostCSS plugin. The instructions in the Tailwind docs show us that we must install Tailwind as a dev dependency as well as postCSS and Autoprefixer. But, as Sveltekit comes packed with postCSS we can just make:</p>
+<p><code>npm install -D tailwindcss autoprefixer</code></p>
+<p>After this, we must create a postCSS config file (postcss.config.cjs), adding Tailwind and Autoprefixer as plugins:</p>
+<pre is:raw="" class="astro-code Night Owl" style="background-color: #011627; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0"><code><span class="line"><span style="color: #C5E478">module</span><span style="color: #C792EA; font-style: italic">.</span><span style="color: #C5E478">exports</span><span style="color: #D6DEEB"> </span><span style="color: #C792EA">=</span><span style="color: #D6DEEB"> {</span></span>
+<span class="line"><span style="color: #D6DEEB">  plugins: {</span></span>
+<span class="line"><span style="color: #D6DEEB">    autoprefixer: {},</span></span>
+<span class="line"><span style="color: #D6DEEB">    tailwindcss: {},</span></span>
+<span class="line"><span style="color: #D6DEEB">  },</span></span>
+<span class="line"><span style="color: #D6DEEB">};</span></span></code></pre>
+<p>And also, a Tailwind config file is used to extend the basic theme configuration:</p>
+<pre is:raw="" class="astro-code Night Owl" style="background-color: #011627; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0"><code><span class="line"><span style="color: #C5E478">module</span><span style="color: #C792EA; font-style: italic">.</span><span style="color: #C5E478">exports</span><span style="color: #D6DEEB"> </span><span style="color: #C792EA">=</span><span style="color: #D6DEEB"> {</span></span>
+<span class="line"><span style="color: #D6DEEB">	</span><span style="color: #637777">//</span><span style="color: #637777; font-style: italic"> add this section</span></span>
+<span class="line"><span style="color: #D6DEEB">	content: [</span></span>
+<span class="line"><span style="color: #D6DEEB">		</span><span style="color: #D9F5DD">'</span><span style="color: #ECC48D">./src/**/*.html</span><span style="color: #D9F5DD">'</span><span style="color: #D6DEEB">,</span></span>
+<span class="line"><span style="color: #D6DEEB">		</span><span style="color: #D9F5DD">'</span><span style="color: #ECC48D">./src/**/*.svelte</span><span style="color: #D9F5DD">'</span></span>
+<span class="line"><span style="color: #D6DEEB">	],</span></span>
+<span class="line"><span style="color: #D6DEEB">	theme: {</span></span>
+<span class="line"><span style="color: #D6DEEB">		extend: {</span></span>
+<span class="line"><span style="color: #D6DEEB">		</span><span style="color: #637777">//</span><span style="color: #637777; font-style: italic"> here we extend the tailwind basic theme...</span></span>
+<span class="line"><span style="color: #D6DEEB">	},</span></span>
+<span class="line"><span style="color: #D6DEEB">}</span></span>
+<span class="line"><span style="color: #7FDBCA">...</span></span></code></pre>
+<p>To test this integration, first, we create a global.css file inside the <strong>src</strong> directory. Here we place the basic tailwind directives that enable us to use Tailwind throughout our application, and if we want, we can set up global styles under the @layer directive:</p>
+<pre is:raw="" class="astro-code Night Owl" style="background-color: #011627; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0"><code><span class="line"><span style="color: #C792EA">@</span><span style="color: #C792EA; font-style: italic">tailwind</span><span style="color: #D6DEEB"> base;</span></span>
+<span class="line"><span style="color: #C792EA">@</span><span style="color: #C792EA; font-style: italic">tailwind</span><span style="color: #D6DEEB"> components;</span></span>
+<span class="line"><span style="color: #C792EA">@</span><span style="color: #C792EA; font-style: italic">tailwind</span><span style="color: #D6DEEB"> utilities;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C792EA">@</span><span style="color: #C792EA; font-style: italic">layer</span><span style="color: #D6DEEB"> base {</span></span>
+<span class="line"><span style="color: #D6DEEB">  </span><span style="color: #C792EA">@</span><span style="color: #C792EA; font-style: italic">font-face</span><span style="color: #D6DEEB"> {</span></span>
+<span class="line"><span style="color: #D6DEEB">    </span><span style="color: #80CBC4">font-family</span><span style="color: #D6DEEB">: WorkSans;</span></span>
+<span class="line"><span style="color: #D6DEEB">    </span><span style="color: #80CBC4">font-weight</span><span style="color: #D6DEEB">: </span><span style="color: #FF6363">bold</span><span style="color: #D6DEEB">;</span></span>
+<span class="line"><span style="color: #D6DEEB">    </span><span style="color: #80CBC4">font-display</span><span style="color: #D6DEEB">: </span><span style="color: #FF6363">swap</span><span style="color: #D6DEEB">;</span></span>
+<span class="line"><span style="color: #D6DEEB">    </span><span style="color: #80CBC4">src</span><span style="color: #D6DEEB">: </span><span style="color: #C5E478">url</span><span style="color: #D6DEEB">(</span><span style="color: #D9F5DD">"</span><span style="color: #ECC48D">/fonts/WorkSans-Bold.ttf</span><span style="color: #D9F5DD">"</span><span style="color: #D6DEEB">) </span><span style="color: #C5E478">format</span><span style="color: #D6DEEB">(</span><span style="color: #D9F5DD">"</span><span style="color: #ECC48D">truetype</span><span style="color: #D9F5DD">"</span><span style="color: #D6DEEB">);</span></span>
+<span class="line"><span style="color: #D6DEEB">  }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #D6DEEB">  </span><span style="color: #C792EA">@</span><span style="color: #C792EA; font-style: italic">font-face</span><span style="color: #D6DEEB"> {</span></span>
+<span class="line"><span style="color: #D6DEEB">    </span><span style="color: #80CBC4">font-family</span><span style="color: #D6DEEB">: WorkSans;</span></span>
+<span class="line"><span style="color: #D6DEEB">    </span><span style="color: #80CBC4">font-weight</span><span style="color: #D6DEEB">: </span><span style="color: #FF6363">bold</span><span style="color: #D6DEEB">;</span></span>
+<span class="line"><span style="color: #D6DEEB">    </span><span style="color: #80CBC4">font-display</span><span style="color: #D6DEEB">: </span><span style="color: #FF6363">swap</span><span style="color: #D6DEEB">;</span></span>
+<span class="line"><span style="color: #D6DEEB">    </span><span style="color: #80CBC4">font-style</span><span style="color: #D6DEEB">: </span><span style="color: #FF6363">italic</span><span style="color: #D6DEEB">;</span></span>
+<span class="line"><span style="color: #D6DEEB">    </span><span style="color: #80CBC4">src</span><span style="color: #D6DEEB">: </span><span style="color: #C5E478">url</span><span style="color: #D6DEEB">(</span><span style="color: #D9F5DD">"</span><span style="color: #ECC48D">/fonts/WorkSans-BoldItalic.ttf</span><span style="color: #D9F5DD">"</span><span style="color: #D6DEEB">) </span><span style="color: #C5E478">format</span><span style="color: #D6DEEB">(</span><span style="color: #D9F5DD">"</span><span style="color: #ECC48D">truetype</span><span style="color: #D9F5DD">"</span><span style="color: #D6DEEB">);</span></span>
+<span class="line"><span style="color: #D6DEEB">  }</span></span>
+<span class="line"><span style="color: #D6DEEB">  //</span><span style="color: #C792EA; font-style: italic">..</span><span style="color: #C5E478">.</span><span style="color: #C5E478; font-style: italic">More</span><span style="color: #C792EA; font-style: italic"> global styles</span></span>
+<span class="line"><span style="color: #C792EA; font-style: italic">}</span></span></code></pre>
+<p>Then, we reference the <code>global.css</code> file in our page layout component which must be prefixed with a double underscore. We name it <code>__layout.svelte</code>:</p>
+<pre is:raw="" class="astro-code Night Owl" style="background-color: #011627; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0"><code><span class="line"><span style="color: #7FDBCA">&#x3C;</span><span style="color: #CAECE6">script</span><span style="color: #7FDBCA">></span></span>
+<span class="line"><span style="color: #637777">//</span><span style="color: #637777; font-style: italic"> Some Svelte components</span></span>
+<span class="line"><span style="color: #C792EA; font-style: italic">import</span><span style="color: #D6DEEB"> Header </span><span style="color: #C792EA; font-style: italic">from</span><span style="color: #D6DEEB"> </span><span style="color: #D9F5DD">'</span><span style="color: #ECC48D">$lib/components/Header.svelte</span><span style="color: #D9F5DD">'</span><span style="color: #D6DEEB">;</span></span>
+<span class="line"><span style="color: #637777">//</span><span style="color: #637777; font-style: italic"> Our global css styles</span></span>
+<span class="line"><span style="color: #C792EA; font-style: italic">import</span><span style="color: #D6DEEB"> </span><span style="color: #D9F5DD">'</span><span style="color: #ECC48D">../global.css</span><span style="color: #D9F5DD">'</span><span style="color: #D6DEEB">;</span></span>
+<span class="line"><span style="color: #7FDBCA">&#x3C;/</span><span style="color: #CAECE6">script</span><span style="color: #7FDBCA">></span></span></code></pre>
+<p>Finally, we are ready to use Tailwind utility classes at the component and page markup level. For example, for a Project component, I applied some classes like this:</p>
+<pre is:raw="" class="astro-code Night Owl" style="background-color: #011627; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0"><code><span class="line"><span style="color: #7FDBCA">&#x3C;</span><span style="color: #CAECE6">div</span><span style="color: #7FDBCA">></span></span>
+<span class="line"><span style="color: #D6DEEB">  </span><span style="color: #7FDBCA">&#x3C;</span><span style="color: #CAECE6">div</span><span style="color: #7FDBCA"> </span><span style="color: #C5E478; font-style: italic">class</span><span style="color: #7FDBCA">=</span><span style="color: #D9F5DD">"</span><span style="color: #ECC48D">w-full flex filter brightness-105</span><span style="color: #D9F5DD">"</span><span style="color: #7FDBCA">></span></span>
+<span class="line"><span style="color: #D6DEEB">    </span><span style="color: #7FDBCA">&#x3C;</span><span style="color: #CAECE6">img</span><span style="color: #7FDBCA"> </span><span style="color: #C5E478; font-style: italic">class</span><span style="color: #7FDBCA">=</span><span style="color: #D9F5DD">"</span><span style="color: #ECC48D">object-cover</span><span style="color: #D9F5DD">"</span><span style="color: #7FDBCA"> </span><span style="color: #C5E478; font-style: italic">{src}</span><span style="color: #7FDBCA"> </span><span style="color: #C5E478; font-style: italic">alt</span><span style="color: #7FDBCA">=</span><span style="color: #D9F5DD">"</span><span style="color: #ECC48D">{project.image.caption}</span><span style="color: #D9F5DD">"</span><span style="color: #7FDBCA"> /></span></span>
+<span class="line"><span style="color: #D6DEEB">  </span><span style="color: #7FDBCA">&#x3C;/</span><span style="color: #CAECE6">div</span><span style="color: #7FDBCA">></span></span>
+<span class="line"><span style="color: #D6DEEB">  </span><span style="color: #7FDBCA">&#x3C;</span><span style="color: #CAECE6">div</span><span style="color: #7FDBCA"> </span><span style="color: #C5E478; font-style: italic">class</span><span style="color: #7FDBCA">=</span><span style="color: #D9F5DD">"</span><span style="color: #ECC48D">flex flex-col gap-2</span><span style="color: #D9F5DD">"</span><span style="color: #7FDBCA">></span><span style="color: #D6DEEB">...</span><span style="color: #7FDBCA">&#x3C;/</span><span style="color: #CAECE6">div</span><span style="color: #7FDBCA">></span></span>
+<span class="line"><span style="color: #7FDBCA">&#x3C;/</span><span style="color: #CAECE6">div</span><span style="color: #7FDBCA">></span></span></code></pre>
+<h2 id="sanity-as-cms">Sanity as CMS</h2>
+<p>Let’s remember that with Gatsby we access the data from a service via a Graphql data layer. Lots of tools have built Gatsby plugins to make the integration easier and Sanity has its own. For frameworks like Sveltekit, we must use the javascript client to send a GROQ query and fetch the data we need for the Website content. GROQ (Graph-Relational Object Queries) is a Sanity open-sourced language that allows us to filter and sort documents from the Sanity dataset. It’s similar to SQL which is the tool to query databases.</p>
+<p>To extract the Sanity data, I found the following flow very straightforward:</p>
+<h3 id="1-install-the-sanity-javascript-cli">1. Install the Sanity Javascript CLI</h3>
+<p>I installed the Sanity Javascript CLI library, which allows us to connect to the Sanity dataset and then query for the data needed to populate the Web Site contents.</p>
+<h3 id="2-define-a-query-using-the-groq-language">2. Define a query using the GROQ language</h3>
+<p>For any piece of data I need on my Web Site, I write a query that follows the GROQ rules. For example, to extract all the projects I need for the portfolio page, I wrote:</p>
+<pre is:raw="" class="astro-code Night Owl" style="background-color: #011627; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0"><code><span class="line"><span style="color: #D6DEEB">const query = groq`</span><span style="color: #D3423E">{</span></span>
+<span class="line"><span style="color: #D6DEEB">	</span><span style="color: #D9F5DD">"</span><span style="color: #ECC48D">projects</span><span style="color: #D9F5DD">"</span><span style="color: #D6DEEB">: </span><span style="color: #C792EA">*</span><span style="color: #D6DEEB">[_type</span><span style="color: #C792EA">==</span><span style="color: #D9F5DD">"</span><span style="color: #ECC48D">project</span><span style="color: #D9F5DD">"</span><span style="color: #D6DEEB">],</span></span>
+<span class="line"><span style="color: #D6DEEB">	</span><span style="color: #D9F5DD">"</span><span style="color: #ECC48D">seoItems</span><span style="color: #D9F5DD">"</span><span style="color: #D6DEEB">: </span><span style="color: #C792EA">*</span><span style="color: #D6DEEB">[_type</span><span style="color: #C792EA">==</span><span style="color: #D9F5DD">"</span><span style="color: #ECC48D">SEOItems</span><span style="color: #D9F5DD">"</span><span style="color: #D6DEEB"> </span><span style="color: #C792EA">&#x26;&#x26;</span><span style="color: #D6DEEB"> page</span><span style="color: #C792EA">==</span><span style="color: #D9F5DD">'</span><span style="color: #ECC48D">projects</span><span style="color: #D9F5DD">'</span><span style="color: #D6DEEB">]</span></span>
+<span class="line"><span style="color: #D3423E">}</span></span>
+<span class="line"><span style="color: #D6DEEB">`;</span></span></code></pre>
+<p>You may have noticed that I use a <strong>groq</strong> literal tag, which simply allows some syntax highlighting. Inside this literal tag, I’m writing the query to extract all the Projects as well as SEO information for the Projects page.</p>
+<h3 id="3-fetch-the-data">3. Fetch the data</h3>
+<p>I fetch the data using a server-side strategy. Sveltekit implements a loader function, which executes in the server. The loader API gives us some helpers to get information about navigation, session, routes, etc.
+Once we fetch the data, we can return it in a props object, which can be accessed on the client side or the page HTML. For example, for the same projects listing, I wrote:</p>
+<pre is:raw="" class="astro-code Night Owl" style="background-color: #011627; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0"><code><span class="line"></span>
+<span class="line"><span style="color: #7FDBCA">&#x3C;</span><span style="color: #CAECE6">script</span><span style="color: #7FDBCA"> </span><span style="color: #C5E478; font-style: italic">context</span><span style="color: #7FDBCA">=</span><span style="color: #D9F5DD">"</span><span style="color: #ECC48D">module</span><span style="color: #D9F5DD">"</span><span style="color: #7FDBCA">></span></span>
+<span class="line"><span style="color: #D6DEEB">	</span><span style="color: #C792EA; font-style: italic">import</span><span style="color: #D6DEEB"> client </span><span style="color: #C792EA; font-style: italic">from</span><span style="color: #D6DEEB"> </span><span style="color: #D9F5DD">'</span><span style="color: #ECC48D">$lib/utils/sanityClient</span><span style="color: #D9F5DD">'</span><span style="color: #D6DEEB">;</span></span>
+<span class="line"><span style="color: #D6DEEB">	</span><span style="color: #C792EA; font-style: italic">import</span><span style="color: #D6DEEB"> groq </span><span style="color: #C792EA; font-style: italic">from</span><span style="color: #D6DEEB"> </span><span style="color: #D9F5DD">'</span><span style="color: #ECC48D">groq</span><span style="color: #D9F5DD">'</span><span style="color: #D6DEEB">;</span></span>
+<span class="line"><span style="color: #D6DEEB">	</span><span style="color: #C792EA">const</span><span style="color: #C792EA; font-style: italic"> </span><span style="color: #82AAFF; font-style: italic">query</span><span style="color: #C792EA; font-style: italic"> </span><span style="color: #C792EA">=</span><span style="color: #C792EA; font-style: italic"> </span><span style="color: #82AAFF; font-style: italic">groq</span><span style="color: #D6DEEB">`</span><span style="color: #ECC48D; font-style: italic">{</span></span>
+<span class="line"><span style="color: #ECC48D; font-style: italic">		"projects": *[_type=="project"],</span></span>
+<span class="line"><span style="color: #ECC48D; font-style: italic">		"seoItems": *[_type=="SEOItems" &#x26;&#x26; page=='projects']</span></span>
+<span class="line"><span style="color: #ECC48D; font-style: italic">	}</span></span>
+<span class="line"><span style="color: #ECC48D; font-style: italic">	</span><span style="color: #D6DEEB">`</span><span style="color: #D6DEEB">;</span></span>
+<span class="line"><span style="color: #D6DEEB">	</span><span style="color: #C792EA; font-style: italic">export</span><span style="color: #D6DEEB"> </span><span style="color: #C792EA; font-style: italic">async</span><span style="color: #D6DEEB"> </span><span style="color: #C792EA">function</span><span style="color: #D6DEEB"> </span><span style="color: #82AAFF; font-style: italic">load</span><span style="color: #D9F5DD">(</span><span style="color: #D6DEEB">{ </span><span style="color: #D7DBE0">stuff</span><span style="color: #D6DEEB"> }</span><span style="color: #D9F5DD">)</span><span style="color: #D6DEEB"> {</span></span>
+<span class="line"><span style="color: #D6DEEB">		</span><span style="color: #C792EA">const</span><span style="color: #C792EA; font-style: italic"> </span><span style="color: #C792EA">{</span><span style="color: #C792EA; font-style: italic"> </span><span style="color: #82AAFF; font-style: italic">projects</span><span style="color: #5F7E97">,</span><span style="color: #C792EA; font-style: italic"> </span><span style="color: #82AAFF; font-style: italic">seoItems</span><span style="color: #C792EA; font-style: italic"> </span><span style="color: #C792EA">}</span><span style="color: #C792EA; font-style: italic"> </span><span style="color: #C792EA">=</span><span style="color: #C792EA; font-style: italic"> await </span><span style="color: #7FDBCA; font-style: italic">client</span><span style="color: #C792EA; font-style: italic">.</span><span style="color: #82AAFF; font-style: italic">fetch</span><span style="color: #D6DEEB">(</span><span style="color: #D7DBE0">query</span><span style="color: #D6DEEB">);</span></span>
+<span class="line"><span style="color: #D6DEEB">		</span><span style="color: #C792EA; font-style: italic">return</span><span style="color: #D6DEEB"> {</span></span>
+<span class="line"><span style="color: #D6DEEB">			props: {</span></span>
+<span class="line"><span style="color: #D6DEEB">				</span><span style="color: #D7DBE0">projects</span><span style="color: #5F7E97">,</span></span>
+<span class="line"><span style="color: #D6DEEB">				</span><span style="color: #D7DBE0">seoItems</span><span style="color: #5F7E97">,</span></span>
+<span class="line"><span style="color: #D6DEEB">				siteConfig: </span><span style="color: #7FDBCA; font-style: italic">stuff</span><span style="color: #C792EA; font-style: italic">.</span><span style="color: #BAEBE2">siteConfig</span></span>
+<span class="line"><span style="color: #D6DEEB">			}</span></span>
+<span class="line"><span style="color: #D6DEEB">		};</span></span>
+<span class="line"><span style="color: #D6DEEB">	}</span></span>
+<span class="line"><span style="color: #7FDBCA">&#x3C;/</span><span style="color: #CAECE6">script</span><span style="color: #7FDBCA">></span></span></code></pre>
+<p>Notice that this is all written inside a <strong>module</strong> context, a Svelte feature that allows us to use the props defined here, inside a regular <code>&#x3C;script></code> tag.</p>
+<h3 id="4-use-the-data-inside-the-page-html">4. Use the data inside the page HTML</h3>
+<p>Finally, we can use the data fetched from our Sanity dataset. Remember that we exposed a props object containing this data coming from the loader function. We need a <code>&#x3C;script></code> block, where we map that data to the page props we use inside the template, like this:</p>
+<pre is:raw="" class="astro-code Night Owl" style="background-color: #011627; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0"><code><span class="line"><span style="color: #7FDBCA">&#x3C;</span><span style="color: #CAECE6">script</span><span style="color: #7FDBCA">></span></span>
+<span class="line"><span style="color: #D6DEEB">	</span><span style="color: #C792EA; font-style: italic">export </span><span style="color: #C792EA">let</span><span style="color: #C792EA; font-style: italic"> </span><span style="color: #D7DBE0">projects</span><span style="color: #D6DEEB">;</span></span>
+<span class="line"><span style="color: #D6DEEB">	</span><span style="color: #C792EA; font-style: italic">export </span><span style="color: #C792EA">let</span><span style="color: #C792EA; font-style: italic"> </span><span style="color: #D7DBE0">seoItems</span><span style="color: #D6DEEB">;</span></span>
+<span class="line"><span style="color: #D6DEEB">	</span><span style="color: #C792EA; font-style: italic">export </span><span style="color: #C792EA">let</span><span style="color: #C792EA; font-style: italic"> </span><span style="color: #D7DBE0">siteConfig</span><span style="color: #D6DEEB">;</span></span>
+<span class="line"><span style="color: #7FDBCA">&#x3C;/</span><span style="color: #CAECE6">script</span><span style="color: #7FDBCA">></span></span>
+<span class="line"><span style="color: #D6DEEB">...</span></span>
+<span class="line"><span style="color: #7FDBCA">&#x3C;</span><span style="color: #CAECE6">div</span><span style="color: #7FDBCA"> </span><span style="color: #C5E478; font-style: italic">class</span><span style="color: #7FDBCA">=</span><span style="color: #D9F5DD">"</span><span style="color: #ECC48D">mt-16 projects</span><span style="color: #D9F5DD">"</span><span style="color: #7FDBCA">></span></span>
+<span class="line"><span style="color: #D6DEEB">	{#</span><span style="color: #C792EA; font-style: italic">each</span><span style="color: #D6DEEB"> projects </span><span style="color: #C792EA; font-style: italic">as</span><span style="color: #D6DEEB"> project}</span></span>
+<span class="line"><span style="color: #D6DEEB">		</span><span style="color: #7FDBCA">&#x3C;</span><span style="color: #CAECE6">div</span><span style="color: #7FDBCA"> </span><span style="color: #C5E478; font-style: italic">class</span><span style="color: #7FDBCA">=</span><span style="color: #D9F5DD">"</span><span style="color: #ECC48D">mb-16</span><span style="color: #D9F5DD">"</span><span style="color: #7FDBCA">>&#x3C;</span><span style="color: #C5E478">Project</span><span style="color: #7FDBCA"> </span><span style="color: #C5E478; font-style: italic">{</span><span style="color: #D6DEEB">project</span><span style="color: #C5E478; font-style: italic">}</span><span style="color: #7FDBCA"> />&#x3C;/</span><span style="color: #CAECE6">div</span><span style="color: #7FDBCA">></span></span>
+<span class="line"><span style="color: #D6DEEB">	{/</span><span style="color: #C792EA; font-style: italic">each</span><span style="color: #D6DEEB">}</span></span>
+<span class="line"><span style="color: #7FDBCA">&#x3C;/</span><span style="color: #CAECE6">div</span><span style="color: #7FDBCA">></span></span>
+<span class="line"><span style="color: #D6DEEB">...</span></span></code></pre>
+<p>Notice that we define three props, related to the props object returned in the loader function. You can also notice that each project is iterated inside a Svelte <code>each</code> block. This way we render the data extracted from the Sanity backend.</p>
+<h2 id="using-an-api-endpoint-to-send-email">Using an API Endpoint to send Email</h2>
+<p>In the Gatsby version, I didn’t implement a contact form. So I decided to do it now with Sveltekit. You can create API Endpoints, which are files that can handle server responses. So, you don’t need to create a separate backend for such a simple action as sending an email. This is another fantastic feature, similar to what NextJs does with API routes.</p>
+<p>I created an Endpoint called contact.js inside the routes directory. Here I wrote all the logic related to sending an email to me (the Web Site Owner) containing the contact information filled in by the visitor. Following is a fragment of this implementation.</p>
+<pre is:raw="" class="astro-code Night Owl" style="background-color: #011627; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0"><code><span class="line"><span style="color: #C792EA; font-style: italic">import</span><span style="color: #D6DEEB"> nodemailer </span><span style="color: #C792EA; font-style: italic">from</span><span style="color: #D6DEEB"> </span><span style="color: #D9F5DD">"</span><span style="color: #ECC48D">nodemailer</span><span style="color: #D9F5DD">"</span><span style="color: #D6DEEB">;</span></span>
+<span class="line"><span style="color: #C792EA">const</span><span style="color: #C792EA; font-style: italic"> </span><span style="color: #82AAFF; font-style: italic">transporter</span><span style="color: #C792EA; font-style: italic"> </span><span style="color: #C792EA">=</span><span style="color: #C792EA; font-style: italic"> </span><span style="color: #7FDBCA; font-style: italic">nodemailer</span><span style="color: #C792EA; font-style: italic">.</span><span style="color: #82AAFF; font-style: italic">createTransport</span><span style="color: #D6DEEB">(</span><span style="color: #C792EA">{</span></span>
+<span class="line"><span style="color: #C792EA; font-style: italic">  host</span><span style="color: #C792EA">:</span><span style="color: #C792EA; font-style: italic"> import.</span><span style="color: #7FDBCA; font-style: italic">meta</span><span style="color: #C792EA; font-style: italic">.</span><span style="color: #FAF39F; font-style: italic">env</span><span style="color: #C792EA; font-style: italic">.</span><span style="color: #82AAFF; font-style: italic">VITE_SMTP_HOST</span><span style="color: #C792EA">,</span></span>
+<span class="line"><span style="color: #C792EA; font-style: italic">  port</span><span style="color: #C792EA">:</span><span style="color: #C792EA; font-style: italic"> import.</span><span style="color: #7FDBCA; font-style: italic">meta</span><span style="color: #C792EA; font-style: italic">.</span><span style="color: #FAF39F; font-style: italic">env</span><span style="color: #C792EA; font-style: italic">.</span><span style="color: #82AAFF; font-style: italic">VITE_SMTP_PORT</span><span style="color: #C792EA">,</span></span>
+<span class="line"><span style="color: #C792EA; font-style: italic">  auth</span><span style="color: #C792EA">:</span><span style="color: #C792EA; font-style: italic"> </span><span style="color: #C792EA">{</span></span>
+<span class="line"><span style="color: #C792EA; font-style: italic">    user</span><span style="color: #C792EA">:</span><span style="color: #C792EA; font-style: italic"> import.</span><span style="color: #7FDBCA; font-style: italic">meta</span><span style="color: #C792EA; font-style: italic">.</span><span style="color: #FAF39F; font-style: italic">env</span><span style="color: #C792EA; font-style: italic">.</span><span style="color: #82AAFF; font-style: italic">VITE_SMTP_USER</span><span style="color: #C792EA">,</span></span>
+<span class="line"><span style="color: #C792EA; font-style: italic">    pass</span><span style="color: #C792EA">:</span><span style="color: #C792EA; font-style: italic"> import.</span><span style="color: #7FDBCA; font-style: italic">meta</span><span style="color: #C792EA; font-style: italic">.</span><span style="color: #FAF39F; font-style: italic">env</span><span style="color: #C792EA; font-style: italic">.</span><span style="color: #82AAFF; font-style: italic">VITE_SMTP_PASS</span><span style="color: #C792EA">,</span></span>
+<span class="line"><span style="color: #C792EA; font-style: italic">  </span><span style="color: #C792EA">},</span></span>
+<span class="line"><span style="color: #C792EA">}</span><span style="color: #D6DEEB">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #637777">//</span><span style="color: #637777; font-style: italic"> Response handler to manage email sending</span></span>
+<span class="line"><span style="color: #C792EA; font-style: italic">export</span><span style="color: #D6DEEB"> </span><span style="color: #C792EA; font-style: italic">async</span><span style="color: #D6DEEB"> </span><span style="color: #C792EA">function</span><span style="color: #D6DEEB"> </span><span style="color: #82AAFF; font-style: italic">post</span><span style="color: #D9F5DD">(</span><span style="color: #D7DBE0">request</span><span style="color: #D9F5DD">)</span><span style="color: #D6DEEB"> {</span></span>
+<span class="line"><span style="color: #D6DEEB">  </span><span style="color: #637777">//</span><span style="color: #637777; font-style: italic"> Here we use Nodemailer to send the message</span></span>
+<span class="line"><span style="color: #D6DEEB">}</span></span></code></pre>
+<p>Of course, I had to configure an Email Service. You can use, for example, Sendgrid or Mailgun.</p>
+<h2 id="ui-decisions">UI Decisions</h2>
+<p>I liked my Gatsby Website design. When creating it, I had thought about a clean and simple design the main purpose was to showcase myself as a Web Development professional, a blog, and a portfolio to present my projects. However, It seemed a little sad to me and for the redesign, I decided to add some decorations that make it a little more vivid. So you can see a Website that shows gradients, patterns, and illustrations throughout pages and components which I think, have indeed enhanced the presentation of the Website.
+Last but not least, Tailwind provides fantastic utility classes that helped me establish a consistent CSS structure and styles. Remember that Tailwind allows you to create a new theme, customizing tokens according to your design preferences like typography and color.</p>
+<h2 id="features-i-wish-sveltekit-had">Features I wish Sveltekit had</h2>
+<p>So far, I have made a fast review of the many things that Sveltekit allowed me to do to migrate my Website from Gatsby. I feel very happy with the final result. A faster site, without having to use plugins to accomplish one thing or another, thinking back to the days I used server-side rendering solutions, but with the new and great features a modern frontend framework has to offer.
+The tools I would’ve liked to have out of the box, nevertheless, are a sitemap and PWA generators. I think this has to be solved by oneself. But I’m sure as the framework evolves, it will be packed with these and more
+features that will make an even more enjoyable development experience. That’s the promise of Sveltekit.</p>
+<h2 id="final-thoughts">Final thoughts</h2>
+<p>So this was a fast overview of my Website remake. For now, my purpose is not to present you with a full tutorial on how to create a Website with Sveltekit, but to tell you about my experience using this beautiful framework. I obviously do recommend that you experiment with it to create amazing Websites and apps. Though I’m planning to create some tutorials which you may be interested in following in the future, you can now start learning from the Sveltekit docs and some links I write below.
+Also, I you want to discuss any thoughts about this post, you can write to me using the contact form, perfectly crafted with Sveltekit. Thanks for reading!</p>
+<h2 id="links-of-interest-about-svelte-and-sveltekit">Links of interest about Svelte and Sveltekit</h2>
+<ul>
+<li>
+<p>Svelte and Sveltekit by Scott Tolinski:
+<a href="https://www.youtube.com/watch?v=IKhtnhQKjxQ&#x26;t=354s">https://www.youtube.com/watch?v=IKhtnhQKjxQ&#x26;t=354s</a></p>
+</li>
+<li>
+<p>From React to Svelte by Syntax.fm podcast:
+<a href="https://syntax.fm/show/390/from-react-to-sveltekit">https://syntax.fm/show/390/from-react-to-sveltekit</a></p>
+</li>
+<li>
+<p>A Sveltekit crash course by James Quick:
+<a href="https://www.youtube.com/watch?v=UU7MgYIbtAk&#x26;pp=ugMICgJlcxABGAE%3D">https://www.youtube.com/watch?v=UU7MgYIbtAk&#x26;pp=ugMICgJlcxABGAE%3D</a></p>
+</li>
+<li>
+<p>Tailwind guide to integrating with Sveltekit:
+<a href="https://codechips.me/tailwindcss-sveltekit-the-easy-way/">https://codechips.me/tailwindcss-sveltekit-the-easy-way/</a></p>
+</li>
+<li>
+<p>Svelte and Sveltekit docs:
+<a href="https://svelte.dev">https://svelte.dev</a></p>
+</li>
+</ul>
+    </article>
+  </main>
+
+    <footer class="flex items-center justify-center bg-accent gradient relative">
+      <p class="opacity-90 text-accent font-mono tracking-wide w-full flex text-center items-center justify-center bg-gray-bold p-2 mt-0">
+        Built by Francisco Andrade A. &copy; 2023
+      </p>
+    </footer>
+  </body>
+</html>

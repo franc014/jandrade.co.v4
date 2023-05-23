@@ -1,5 +1,5 @@
 
-import { portableTextToHtml } from 'astro-sanity';
+import { portableTextToHtml,uriLooksSafe } from 'astro-sanity';
 import { urlForImage } from './urlForImage';
 
 const customComponents = {
@@ -18,8 +18,18 @@ const customComponents = {
           />
         </picture>
       `;
-    },
+    }
   },
+  marks: {
+    link: ({ children, value }) => {
+     
+        const href = value.href;
+        const rel = href.startsWith('/') ? undefined : 'noreferrer noopener'
+        return `<a href="${href}" rel="${rel}">${children}</a>`
+    
+    }
+    
+  }
 };
 
 export function sanityPortableText(portabletext) {

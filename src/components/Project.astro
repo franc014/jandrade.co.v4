@@ -1,0 +1,71 @@
+---
+import { urlForImage } from "../sanity/urlForImage";
+import PortableText from "./PortableText.astro";
+import Circle from "./icons/Circle.astro";
+import GithubIcon from "./icons/GithubIcon.astro";
+import ViewIcon from "./icons/ViewIcon.astro";
+const { project } = Astro.props;
+
+const projectImage = urlForImage(project.image.asset);
+---
+
+<div class="project">
+  <div class="card w-full flex filter brightness-105">
+    <img class="object-cover" src={projectImage} alt={project.image.caption} />
+  </div>
+  <div class="flex flex-col gap-2">
+    <h2 class="text-2xl">{project.title}</h2>
+    <h3 class="technlogies">Technologies</h3>
+    <div class="technologies">
+      {project.technologies.map((technology) => <span>{technology}</span>)}
+    </div>
+
+    <PortableText portableText={project.description} />
+
+    <div class="gap-4 flex items-end mt-8">
+      <div class="flex items-end">
+        <a href={project.repo}>
+          <Circle>
+            <GithubIcon />
+          </Circle>
+        </a>
+        <a href={project.repo}>Code</a>
+      </div>
+
+      <div class="flex items-end">
+        <a href={project.demo}>
+          <Circle>
+            <ViewIcon />
+          </Circle>
+        </a>
+        <a href={project.demo}>Website</a>
+      </div>
+    </div>
+
+    <style>
+      .technlogies {
+        @apply mb-0 mt-6 text-sm rounded bg-gray-light text-accent p-1  w-28 text-center -skew-x-12 font-normal;
+      }
+      .project {
+        --columns: auto-fit;
+        display: grid;
+        grid-template-columns: repeat(var(--columns), minmax(250px, 1fr));
+        gap: 4rem;
+      }
+
+      .technologies span {
+        @apply w-32 text-sm;
+      }
+
+      .technologies span::after {
+        @apply text-base-normal;
+        content: "\25C7";
+        margin: 0 0.5rem;
+      }
+      .technologies span:nth-last-child(1)::after {
+        content: "";
+        margin: 0;
+      }
+    </style>
+  </div>
+</div>

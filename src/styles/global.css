@@ -1,0 +1,316 @@
+ @tailwind base;
+ @tailwind components;
+
+
+
+
+ @font-face {
+     font-family: WorkSans;
+     font-weight: bold;
+     font-display: swap;
+     src: url("/fonts/WorkSans-Bold.ttf") format("truetype"),
+         url("/fonts/WorkSans-Bold.woff") format("truetype"),
+         url("/fonts/WorkSans-Bold.woff2") format("truetype");
+ }
+
+ @font-face {
+     font-family: WorkSans;
+     font-weight: bold;
+     font-display: swap;
+     font-style: italic;
+     src: url("/fonts/WorkSans-BoldItalic.ttf") format("truetype"),
+         url("/fonts/WorkSans-BoldItalic.woff") format("truetype"),
+         url("/fonts/WorkSans-BoldItalic.woff2") format("truetype");
+ }
+
+ @font-face {
+     font-family: WorkSans;
+     font-weight: normal;
+     font-display: swap;
+     font-style: normal;
+     src: url("/fonts/WorkSans-Regular.ttf") format("truetype"),
+         url("/fonts/WorkSans-Regular.woff") format("truetype"),
+         url("/fonts/WorkSans-Regular.woff2") format("truetype");
+ }
+
+ @font-face {
+     font-family: WorkSans;
+     font-weight: normal;
+     font-display: swap;
+     font-style: italic;
+     src: url("/fonts/WorkSans-Italic.ttf") format("truetype"),
+         url("/fonts/WorkSans-Italic.woff") format("truetype"),
+         url("/fonts/WorkSans-Italic.woff2") format("truetype");
+ }
+
+ @font-face {
+     font-family: "JetBrainsMono";
+     font-weight: normal;
+     font-display: swap;
+     font-style: italic;
+     src: url("/fonts/JetBrainsMono-MediumItalic.ttf") format("truetype"),
+         url("/fonts/JetBrainsMono-MediumItalic.woff") format("truetype"),
+         url("/fonts/JetBrainsMono-MediumItalic.woff2") format("truetype");
+ }
+
+@font-face {
+     font-family: "JetBrainsMono";
+     font-weight: normal;
+     font-display: swap;
+     font-style: normal;
+     src: url("/fonts/JetBrainsMono-Medium.ttf") format("truetype"),
+         url("/fonts/JetBrainsMono-Medium.woff") format("truetype"),
+         url("/fonts/JetBrainsMono-Medium.woff2") format("truetype");
+}
+
+ @font-face {
+     font-family: BauPro;
+     font-weight: bold;
+     font-display: swap;
+     src: url("/fonts/BauPro-Bold.ttf") format("truetype"),
+         url("/fonts/BauPro-Bold.woff") format("truetype"),
+         url("/fonts/BauPro-Bold.woff2") format("truetype");
+ }
+
+
+ @font-face {
+     font-family: BauPro;
+     font-weight: normal;
+     font-display: swap;
+     font-style: normal;
+     src: url("/fonts/BauPro.ttf") format("truetype"),
+         url("/fonts/BauPro.woff") format("truetype"),
+         url("/fonts/BauPro.woff2") format("truetype");
+ }
+
+  @font-face {
+      font-family: FugueRegular;
+      font-weight: bold;
+      font-display: swap;
+      src: url("/fonts/Fugue-Regular.ttf") format("truetype"),
+          url("/fonts/Fugue-Regular.woff") format("truetype"),
+          url("/fonts/Fugue-Regular.woff2") format("truetype");
+  }
+
+
+
+ :root {
+     --site-gradient: radial-gradient(circle,
+             #009fb7,
+             #0bb6ab,
+             #64c88f,
+             #afd470,
+             #fed766);
+
+     --card-gradient: linear-gradient(to left top,
+             #272727,
+             #363942,
+             #3f4d60,
+             #3f647d,
+             #357c99,
+             #1890a6,
+             #00a3ac,
+             #0bb6ab,
+             #52c497,
+             #8acf7f,
+             #c3d66b,
+             #fed766);
+
+     --button-gradient: radial-gradient(circle,
+             #fed766,
+             #afd470,
+             #64c88f,
+             #0bb6ab,
+             #009fb7);
+
+      --button-gradient: linear-gradient(to right, #272727 34% 0%, 36%, #fed766 32% 68%, 44%, #009fb7 100%);       
+     
+    --bg-pattern: url(/images/curtain.svg);
+     --pattern-size: 5.125rem;
+ }
+
+ ::selection {
+    @apply bg-accent;
+ }
+
+ body {
+     @apply bg-white-canvas font-sans3;
+ }
+
+
+
+h1 {
+    @apply text-4xl font-bold font-sans4 mb-6 tracking-wide text-gray-normal;
+}
+h1.underlined_title {
+    @apply flex flex-col max-w-fit;
+}
+
+h1.underlined_title::after {
+    content: url(/images/underline.svg);
+    @apply -mt-3 -ml-2;
+}
+
+ h2 {
+     @apply text-3xl font-bold font-sans4 text-gray-light;
+ }
+
+ h2.underlined_title {
+     @apply flex flex-col max-w-fit;
+ }
+
+ h2.underlined_title::after {
+     content: url(/images/underline.svg);
+     @apply -mt-3 -ml-2  ;
+ }
+
+ h3 {
+     @apply text-2xl font-bold font-sans4 tracking-wide text-gray-light;
+ }
+
+h4 {
+    @apply text-xl font-bold font-sans4 tracking-wide text-gray-light;
+}
+ 
+ p {
+     @apply mt-8 text-lg text-gray-light md:leading-8;
+ }
+
+ blockquote {
+     @apply relative bg-gray-bold my-8 text-white-canvas text-xl w-2/3 mx-auto p-6 italic shadow-md;
+     display: grid;
+     grid-template-columns: 1fr 3fr;
+ }
+
+ blockquote > *{
+     @apply text-white-touch !important;
+ }
+
+ blockquote:after {
+     @apply w-3 h-full;
+     content: '';
+     background-image: url(/images/dominos.svg), var(--site-gradient);
+     background-repeat: repeat;
+     background-size: 2rem;
+     position: absolute;
+     left: 0px;
+ }
+
+ blockquote::before {
+     @apply h-0 text-8xl font-mono pl-5 flex;
+     content: '\201C';
+     top: 0;
+     left: 0;
+ }
+
+ .home-cta a, article a {
+    @apply underline text-base-normal hover:text-base-normal/60;
+ }
+
+ .home-cta p {
+     @apply text-xl tracking-wide;
+ }
+ 
+
+ .service ul li{
+    @apply  text-lg text-gray-light/90 my-4 font-sans3;
+    display: grid;
+    grid-template-columns: 40px 1fr;
+   
+ }
+ .service ul li:before {
+    content: url(images/cube.svg);
+    width: 40px;
+    height: 40px;
+ }
+
+ .service ul li:first-child {
+     @apply mt-8;
+ }
+
+ .card {
+     position: relative;
+     padding: 1px;
+     border: 1px solid transparent;
+     background-clip: padding-box;
+ }
+
+ .card::before {
+     border-radius: inherit;
+     content: "";
+     position: absolute;
+     top: 0;
+     left: 0;
+     bottom: 0;
+     right: 0;
+     margin: -1px;
+     background-image: var(--card-gradient);
+     z-index: -1;
+ }
+
+ .card::after {
+     @apply shadow-2xl;
+     content: "";
+     position: absolute;
+     top: 9px;
+     left: 10px;
+
+     right: 0;
+
+     width: 100%;
+     height: 100%;
+     z-index: -2;
+
+     background-image: var(--bg-pattern), var(--site-gradient);
+     background-repeat: repeat;
+     background-size: 2rem;
+     border: 1px solid #a4a4a4;
+ }
+
+ p.card-title {
+     @apply text-gray-light font-bold;
+ }
+
+.wrapper {
+	@apply container mx-auto lg:px-20 px-10 xl:px-32 2xl:px-64;
+}
+
+ svg.icon {
+     @apply w-3 mr-2 fill-current;
+ }
+
+ svg.social-icon {
+     @apply w-5 fill-current text-gray-light;
+ }
+
+ .gradient {
+     background-image: var(--bg-pattern), var(--site-gradient);
+     background-size: var(--pattern-size);
+     background-position: top left;
+     background-clip: content-box;
+ }
+
+ article ol {
+    list-style: arabic;
+    @apply ml-11 my-4
+ }
+
+ article ol li{
+    @apply my-2 text-lg text-gray-normal
+ }
+
+
+
+ pre {
+    @apply px-8 py-12 mb-10 shadow-xl shadow-gray-lighter/40 rounded selection:bg-base-normal/40;
+ }
+
+ article {
+    @apply mb-20 font-sans2 ;
+ }
+
+ article p {
+    @apply mb-8 text-gray-light
+ }
+
+@tailwind utilities;  
