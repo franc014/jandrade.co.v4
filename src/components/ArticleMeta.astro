@@ -4,6 +4,6 @@ const { post, overrideClasses } = Astro.props;
 ---
 
 <p class={`italic ${overrideClasses && overrideClasses.join(" ")}`}>
-  <span class="text-gray-light">Published at:</span>
+  <span class="text-gray-light">Published on:</span>
   <span class="text-gray-bold">{formatDate(post.pubDate)}</span>
 </p>

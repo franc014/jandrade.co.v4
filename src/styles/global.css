@@ -151,8 +151,6 @@ h1.underlined_title::after {
     @apply -mt-3 -ml-2;
 }
 
-
-
  h2 {
      @apply text-3xl font-bold font-sans4 text-gray-light;
  }
@@ -170,6 +168,10 @@ h1.underlined_title::after {
      @apply text-2xl font-bold font-sans4 tracking-wide text-gray-light;
  }
 
+h4 {
+    @apply text-xl font-bold font-sans4 tracking-wide text-gray-light;
+}
+ 
  p {
      @apply mt-8 text-lg text-gray-light md:leading-8;
  }
@@ -273,7 +275,7 @@ h1.underlined_title::after {
 
 
  pre {
-    @apply px-8 pb-12;
+    @apply px-8 py-12 mb-10 shadow-xl shadow-gray-lighter/40 rounded selection:bg-base-normal/40;
  }
 
  article {
