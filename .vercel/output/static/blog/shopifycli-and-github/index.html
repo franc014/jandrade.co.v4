@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <title>Blog Post</title>
+  <link rel="stylesheet" href="/_astro/about.aaad6d6b.css" /></head>
+  <body class="relative">
+    <!-- <PageOrnament placement="bottom-0 right-0 rotate-180" /> -->
+    <div class="bg-accent gradient w-full h-3"></div>
+    <header class="wrapper astro-3EF6KSR2">
+  <div class="md:flex md:justify-between md:items-baseline text-lg pt-8 pb-5 md:pb-0 border-b border-gray-lighter/30 astro-3EF6KSR2">
+    <h1 class="md:text-left text-center text-2xl tracking-tighter italic font-bold font-mono astro-3EF6KSR2">
+      <a href="/" class="astro-3EF6KSR2">Francisco Andrade</a>
+    </h1>
+    <nav class="astro-3EF6KSR2">
+      <ul class="flex flex-wrap justify-center md:justify-between gap-2 astro-3EF6KSR2">
+        <li class="mr-4  astro-3EF6KSR2">
+                <a class="text-gray-normal relative block h-full font-mono  astro-3EF6KSR2" href="/about">
+                  About
+                </a>
+              </li><li class="mr-4  astro-3EF6KSR2">
+                <a class="text-gray-normal relative block h-full font-mono  astro-3EF6KSR2" href="/projects">
+                  Projects
+                </a>
+              </li><li class="mr-4  astro-3EF6KSR2">
+                <a class="text-gray-normal relative block h-full font-mono  astro-3EF6KSR2" href="/contact">
+                  Contact
+                </a>
+              </li>
+      </ul>
+    </nav>
+  </div>
+</header>
+    
+  <main class="wrapper py-20">
+    <article class="w-5/6" contenteditable="">
+      <h1>Shopify CLI and GitHub Theme Development Workflow</h1>
+<div class="mt-4 border-b border-white-touch my-12 flex justify-between items-baseline pb-8">
+  <p class="italic undefined">
+  <span class="text-gray-light">Published on:</span>
+  <span class="text-gray-bold">October 4, 2022</span>
+</p>
+  <a href="/blog">Back to the Blog index</a>
+</div>
+<p>The Shopify Command-line Interface (CLI) is a fantastic tool to accomplish lots of tasks when we develop on Shopify. For Theme Development, there’s no exception. Together with GitHub, we can nowadays have a great dev workflow to develop themes for the Shopify Store Front.
+If you’re developing solo or within a team, this post will help you set up your local dev environment, push your customizations to GitHub, and synchronize your updates with a test or production theme in the Shopify Editor.</p>
+<h2 id="shopify-cli-installation-and-sign-in">Shopify CLI installation and sign in</h2>
+<p>For different operating systems, Shopify Docs give you the necessary steps to install the CLI.
+After you’ve installed it, be sure to first identify the theme or themes you’re going to work on.</p>
+<h3 id="identify-the-store">Identify the store</h3>
+<p>Either you’re working inside your partner account or you have to ask for access to your client’s Shopify dashboard, your first step is to identify the store or stores you’re going to work on.
+Consider the following scenarios:</p>
+<h4 id="first-scenario-theme-customization">First scenario: Theme customization</h4>
+<p>To customize a theme, duplicate the current production theme first. Then, rename it using a suffix or prefix so you can identify it as a Development or Stage Theme. As an example, I will use a fictitious store called “Virtual Fits”. I named the development one <strong>VIRTUAL_FITS_DEV</strong>. With the CLI, we’ll download this theme to our computer, and later we will push it to a GitHub repository, so we have version control included. But we’ll see this in detail in a further section of this article.</p>
+<p><img src="https://res.cloudinary.com/dfpkdo5tf/image/upload/v1684804600/jandrade.co.v4/hfyly3iptk9we1cjn31c.png" alt="Duplicate current theme"></p>
+<p><img src="https://res.cloudinary.com/dfpkdo5tf/image/upload/v1684804600/jandrade.co.v4/xff5wynlqufyqk182uzn.png" alt="Duplicate current theme"></p>
+<h4 id="second-scenario-theme-development-from-scratch">Second scenario: Theme Development from Scratch</h4>
+<p>If you’re going to develop a theme from scratch, the first step is to create a DAWN theme copy from the CLI that will serve as a starter theme, like so:</p>
+<ol>
+<li>
+<p>In your local drive create a directory where you’re going to place all of your themes.</p>
+</li>
+<li>
+<p>Inside this directory, from the terminal run this command: <code>shopify theme init</code>.</p>
+</li>
+</ol>
+<p>This command will ask you for a project or theme name</p>
+<ol start="3">
+<li>
+<p>Initialize a Git repository in the theme directory: <code>git init</code></p>
+</li>
+<li>
+<p>Create a GitHub remote repo and set it up with your local one:
+<code>git remote add origin [your-remote-repo]</code></p>
+</li>
+<li>
+<p>Stage and commit your initial changes and push them to your remote repo.</p>
+</li>
+<li>
+<p>In your Shopify Theme Dashboard, in the Theme Library section, choose “Add theme” and then “Connect from GitHub”. You’ll be prompted to choose the repository and the branch you want to use for development or deployment purposes and the necessary permissions to accomplish this integration.</p>
+</li>
+</ol>
+<p><img src="https://res.cloudinary.com/dfpkdo5tf/image/upload/v1684805481/jandrade.co.v4/Screen_Shot_2022-08-29_at_5.21.16_PM.png" alt="Screen showing you can connect from GitHub from the Shopify Dashboard">
+<img src="https://res.cloudinary.com/dfpkdo5tf/image/upload/v1684805481/jandrade.co.v4/Screen_Shot_2022-08-29_at_5.22.15_PM.png" alt="Screen showing you have to choose your GitHub repo"></p>
+<p>These are the first steps to set up our workflow. Now we will log in to our stores before starting to work on the themes.</p>
+<h3 id="sign-in-to-a-development-store">Sign In to a development store</h3>
+<p>Previously we saw that for theme customization, we first made a copy of our current production theme. Now it’s time to download this copy to work on it locally and add version control. But first, we need to sign in to our Shopify store account, like so:</p>
+<p><code>shopify login --store [name-of-your-store]</code></p>
+<p>For our fictitious theme Virtual Fits, we’d log in like this:</p>
+<p><code>shopify login --store virtual-fits</code></p>
+<p>You’ll be prompted to fill in your Shopify Store dashboard authentication. Once you’ve completed this step, you’re ready to execute CLI commands to your chosen store. In fact, let’s download a copy of your development theme to work with it locally:</p>
+<ol>
+<li>
+<p>Make sure you’re working in the appropriate directory in your local drive.</p>
+</li>
+<li>
+<p>Execute the following command and choose the theme you want to work with. Remember to choose a copy of the current theme which is your development theme:</p>
+</li>
+</ol>
+<p><code>shopify theme pull</code></p>
+<p><img src="https://res.cloudinary.com/dfpkdo5tf/image/upload/v1684805481/jandrade.co.v4/Screen_Shot_2022-08-30_at_12.39.00_PM.png" alt="Downloading a theme from your Shopify store via the CLI"></p>
+<p>This will download all your chosen theme files from your Shopify store, including the configuration ones. So, any changes you’ve been making to the theme, including those using the Shopify Editor, for example, content edition within sections and blocks; will be reflected in your local environment.</p>
+<h2 id="start-your-development-environment">Start your development environment</h2>
+<p>Now, it’s time to start to work on your theme’s files! But first, I suggest you switch your work to a different branch other than the main one, so you can keep track of the changes or features you’ll be adding to the theme. Then you might create pull requests, and add other additional tasks as a CI/CD workflow. However, this last point is an advanced topic that will depend on the workflow you or your team have for your projects.</p>
+<p>To start your local theme copy run:</p>
+<p><code>shopify theme serve</code></p>
+<p>What makes CLI an awesome tool is that it replicates the whole production environment for the theme, including Shopify Editor. This is of great help for the developer for they can isolate the dev environment from the live one which is extremely important as you are free to manipulate the Editor features when you find it necessary for the theme customizations. In fact, many of the tasks will require that you customize the Editor, as well.
+While running the local environment, you’ll have access to three URLs similar to the ones in the picture below (it will depend on the name of the store and the identifier the CLI has given to the current theme customization session, the one at the end of the URL):</p>
+<p><img src="https://res.cloudinary.com/dfpkdo5tf/image/upload/v1684805481/jandrade.co.v4/Screen_Shot_2022-08-30_at_12.57.15_PM.png" alt="Terminal the local environment for Shopify development is running"></p>
+<p>Make a change to a CSS, Liquid, or Javascript code and verify it in your browser. It will be reloaded automatically. However, for any change you make in the Editor, you should reload your browser by yourself.</p>
+<h3 id="git-integration-when-customizing-your-theme">Git integration when customizing your theme</h3>
+<p>In a previous section, we added version control with Git and GitHub. This way we were also able to integrate it with our Shopify store.
+When customizing an existing theme, after pulling all files from the Shopify store, it’s recommended to add these files to a GitHub repository. We can also integrate this repository with the Shopify store, adding the theme via the GitHub integration as we learned before (Connect with GitHub).</p>
+<p>However, if you only want to set up Git for version control purposes, it’s ok to just push your changes via the Shopify CLI to your current dev store as we will see next.</p>
+<h3 id="pushing-your-changes-to-your-shopify-store">Pushing your changes to your Shopify Store</h3>
+<p>If you’re using GitHub to synchronize your local changes with your Shopify Store you don’t need to worry about anything else. If not, the way to do it is via the CLI, using the command:</p>
+<p><code>shopify theme push --only [files]</code></p>
+<p>This will take your files from your theme’s local copy to your development Shopify Store. Note that I’ve added the flag —only to specify just the files I want to push. This should be a best practice so you don’t mess up with your Shopify dev copy. The majority of times, you or another marketing or dev team member will separately work on content creation or customizations in your Shopify remote copy, and you won’t want to start all over again, replacing it with your fake content in your local environment!</p>
+<p>An example of pushing files would be:</p>
+<p><code>shopify theme push --only sections/header.liquid</code></p>
+<p>You may want to explore more options for push, in the following link:
+<a href="https://shopify.dev/themes/tools/cli/theme-commands#push">https://shopify.dev/themes/tools/cli/theme-commands#push</a></p>
+<h3 id="checking-your-theme">Checking your theme</h3>
+<p>Finally, Shopify has another fantastic tool that will help us to keep the quality of our theme code according to Shopify standards and best practices. You may want to run <a href="https://shopify.dev/themes/tools/theme-check">Shopify Theme Check</a>, to verify that any changes you’ve made to your theme files, don’t break them. Theme Check is a linter that will help you accomplish quality on your theme.</p>
+    </article>
+  </main>
+
+    <footer class="flex items-center justify-center bg-accent gradient relative">
+      <p class="opacity-90 text-accent font-mono tracking-wide w-full flex text-center items-center justify-center bg-gray-bold p-2 mt-0">
+        Built by Francisco Andrade A. &copy; 2023
+      </p>
+    </footer>
+  </body>
+</html>

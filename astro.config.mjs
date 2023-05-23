@@ -21,11 +21,13 @@ export default defineConfig({
       applyBaseStyles: false
     }
   }), sanity({
-    projectId: '4778um7r',
-    dataset: 'production',
-    apiVersion: '2023-05-01',
+    projectId: import.meta.env.VITE_SANITY_PROJECT_ID,
+    dataset: import.meta.env.VITE_SANITY_DATASET,
+    apiVersion: import.meta.env.VITE_SANITY_API_VERSION,
     useCdn: true
   }), svelte()],
   output: 'server',
-  adapter: vercel()
+  adapter: vercel({
+    imageService: true
+  })
 });

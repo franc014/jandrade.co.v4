@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <title>Blog Post</title>
+  <link rel="stylesheet" href="/_astro/about.aaad6d6b.css" /></head>
+  <body class="relative">
+    <!-- <PageOrnament placement="bottom-0 right-0 rotate-180" /> -->
+    <div class="bg-accent gradient w-full h-3"></div>
+    <header class="wrapper astro-3EF6KSR2">
+  <div class="md:flex md:justify-between md:items-baseline text-lg pt-8 pb-5 md:pb-0 border-b border-gray-lighter/30 astro-3EF6KSR2">
+    <h1 class="md:text-left text-center text-2xl tracking-tighter italic font-bold font-mono astro-3EF6KSR2">
+      <a href="/" class="astro-3EF6KSR2">Francisco Andrade</a>
+    </h1>
+    <nav class="astro-3EF6KSR2">
+      <ul class="flex flex-wrap justify-center md:justify-between gap-2 astro-3EF6KSR2">
+        <li class="mr-4  astro-3EF6KSR2">
+                <a class="text-gray-normal relative block h-full font-mono  astro-3EF6KSR2" href="/about">
+                  About
+                </a>
+              </li><li class="mr-4  astro-3EF6KSR2">
+                <a class="text-gray-normal relative block h-full font-mono  astro-3EF6KSR2" href="/projects">
+                  Projects
+                </a>
+              </li><li class="mr-4  astro-3EF6KSR2">
+                <a class="text-gray-normal relative block h-full font-mono  astro-3EF6KSR2" href="/contact">
+                  Contact
+                </a>
+              </li>
+      </ul>
+    </nav>
+  </div>
+</header>
+    
+  <main class="wrapper py-20">
+    <article class="w-5/6" contenteditable="">
+      <h1>Working with React Context in Shopify Hydrogen</h1>
+<div class="mt-4 border-b border-white-touch my-12 flex justify-between items-baseline pb-8">
+  <p class="italic undefined">
+  <span class="text-gray-light">Published on:</span>
+  <span class="text-gray-bold">October 11, 2022</span>
+</p>
+  <a href="/blog">Back to the Blog index</a>
+</div>
+<p>Shopify Hydrogen implements React Server Side Components throughout its architecture. This gives developers a powerful opinionated way to work with Graphql queries (API calls to Shopify Storefront API) and other benefits. But, as with any technology, we have to consider its restrictions and the right way to use it in our custom Storefronts, and this is the case when we want to use React Context. In this post, we are going to clarify this exciting aspect of the Hydrogen framework.</p>
+<h2 id="the-right-way-to-use-context-in-server-components">The right way to use Context in Server Components</h2>
+<p>I was trying to use Context in the “standard” way in Hydrogen. For a cart UI implementation, I needed to create a context that is available throughout the application, so its state, changing from open to closed, can be accessed from any page. This is a common pattern in this kind of e-commerce application.</p>
+<p><img src="https://res.cloudinary.com/dfpkdo5tf/image/upload/v1684842661/jandrade.co.v4/ezgif.com-optimize.gif" alt="&#x27;Gif image showing an slide-in ecommerce cart component&#x27;"></p>
+<p>I created the Context for this behavior like so:</p>
+<pre is:raw="" class="astro-code Night Owl" style="background-color: #011627; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0"><code><span class="line"><span style="color: #C792EA; font-style: italic">import</span><span style="color: #D6DEEB"> { useContext, createContext, useState } </span><span style="color: #C792EA; font-style: italic">from</span><span style="color: #D6DEEB"> </span><span style="color: #D9F5DD">"</span><span style="color: #ECC48D">react</span><span style="color: #D9F5DD">"</span><span style="color: #D6DEEB">;</span></span>
+<span class="line"><span style="color: #C792EA">const</span><span style="color: #C792EA; font-style: italic"> </span><span style="color: #82AAFF; font-style: italic">LocalStateContext</span><span style="color: #C792EA; font-style: italic"> </span><span style="color: #C792EA">=</span><span style="color: #C792EA; font-style: italic"> </span><span style="color: #82AAFF; font-style: italic">createContext</span><span style="color: #D6DEEB">();</span></span>
+<span class="line"><span style="color: #C792EA">const</span><span style="color: #C792EA; font-style: italic"> </span><span style="color: #82AAFF; font-style: italic">LocalStateProvider</span><span style="color: #C792EA; font-style: italic"> </span><span style="color: #C792EA">=</span><span style="color: #C792EA; font-style: italic"> </span><span style="color: #7FDBCA; font-style: italic">LocalStateContext</span><span style="color: #C792EA; font-style: italic">.</span><span style="color: #BAEBE2; font-style: italic">Provider</span><span style="color: #D6DEEB">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C792EA">function</span><span style="color: #D6DEEB"> </span><span style="color: #82AAFF; font-style: italic">CartStateProvider</span><span style="color: #D9F5DD">(</span><span style="color: #D6DEEB">{ </span><span style="color: #D7DBE0">children</span><span style="color: #D6DEEB"> }</span><span style="color: #D9F5DD">)</span><span style="color: #D6DEEB"> {</span></span>
+<span class="line"><span style="color: #D6DEEB">  </span><span style="color: #C792EA">const</span><span style="color: #C792EA; font-style: italic"> </span><span style="color: #C792EA">[</span><span style="color: #82AAFF; font-style: italic">cartOpen</span><span style="color: #5F7E97">,</span><span style="color: #C792EA; font-style: italic"> </span><span style="color: #82AAFF; font-style: italic">setCartOpen</span><span style="color: #C792EA">]</span><span style="color: #C792EA; font-style: italic"> </span><span style="color: #C792EA">=</span><span style="color: #C792EA; font-style: italic"> </span><span style="color: #82AAFF; font-style: italic">useState</span><span style="color: #D6DEEB">(</span><span style="color: #FF5874; font-style: italic">false</span><span style="color: #D6DEEB">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #D6DEEB">  </span><span style="color: #C792EA">function</span><span style="color: #D6DEEB"> </span><span style="color: #82AAFF; font-style: italic">toggleCart</span><span style="color: #D9F5DD">()</span><span style="color: #D6DEEB"> {</span></span>
+<span class="line"><span style="color: #D6DEEB">    </span><span style="color: #82AAFF; font-style: italic">setCartOpen</span><span style="color: #D6DEEB">(</span><span style="color: #C792EA">!</span><span style="color: #D7DBE0">cartOpen</span><span style="color: #D6DEEB">);</span></span>
+<span class="line"><span style="color: #D6DEEB">  }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #D6DEEB">  </span><span style="color: #C792EA">function</span><span style="color: #D6DEEB"> </span><span style="color: #82AAFF; font-style: italic">closeCart</span><span style="color: #D9F5DD">()</span><span style="color: #D6DEEB"> {</span></span>
+<span class="line"><span style="color: #D6DEEB">    </span><span style="color: #82AAFF; font-style: italic">setCartOpen</span><span style="color: #D6DEEB">(</span><span style="color: #FF5874">false</span><span style="color: #D6DEEB">);</span></span>
+<span class="line"><span style="color: #D6DEEB">  }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #D6DEEB">  </span><span style="color: #C792EA">function</span><span style="color: #D6DEEB"> </span><span style="color: #82AAFF; font-style: italic">openCart</span><span style="color: #D9F5DD">()</span><span style="color: #D6DEEB"> {</span></span>
+<span class="line"><span style="color: #D6DEEB">    </span><span style="color: #82AAFF; font-style: italic">setCartOpen</span><span style="color: #D6DEEB">(</span><span style="color: #FF5874">true</span><span style="color: #D6DEEB">);</span></span>
+<span class="line"><span style="color: #D6DEEB">  }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #D6DEEB">  </span><span style="color: #C792EA; font-style: italic">return</span><span style="color: #D6DEEB"> (</span></span>
+<span class="line"><span style="color: #D6DEEB">    </span><span style="color: #7FDBCA">&#x3C;</span><span style="color: #F78C6C">LocalStateProvider</span></span>
+<span class="line"><span style="color: #7FDBCA">      </span><span style="color: #C5E478; font-style: italic">value</span><span style="color: #C792EA">=</span><span style="color: #D3423E">{</span><span style="color: #7FDBCA">{ </span><span style="color: #D7DBE0">cartOpen</span><span style="color: #5F7E97">,</span><span style="color: #7FDBCA"> </span><span style="color: #D7DBE0">setCartOpen</span><span style="color: #5F7E97">,</span><span style="color: #7FDBCA"> </span><span style="color: #D7DBE0">toggleCart</span><span style="color: #5F7E97">,</span><span style="color: #7FDBCA"> </span><span style="color: #D7DBE0">closeCart</span><span style="color: #5F7E97">,</span><span style="color: #7FDBCA"> </span><span style="color: #D7DBE0">openCart</span><span style="color: #7FDBCA"> }</span><span style="color: #D3423E">}</span></span>
+<span class="line"><span style="color: #7FDBCA">    ></span></span>
+<span class="line"><span style="color: #D6DEEB">      </span><span style="color: #D3423E">{</span><span style="color: #D7DBE0">children</span><span style="color: #D3423E">}</span></span>
+<span class="line"><span style="color: #D6DEEB">    </span><span style="color: #7FDBCA">&#x3C;/</span><span style="color: #F78C6C">LocalStateProvider</span><span style="color: #7FDBCA">></span></span>
+<span class="line"><span style="color: #D6DEEB">  );</span></span>
+<span class="line"><span style="color: #D6DEEB">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #637777">//</span><span style="color: #637777; font-style: italic"> make a custom hook for accessing the cart local state</span></span>
+<span class="line"><span style="color: #C792EA">function</span><span style="color: #D6DEEB"> </span><span style="color: #82AAFF; font-style: italic">useCart</span><span style="color: #D9F5DD">()</span><span style="color: #D6DEEB"> {</span></span>
+<span class="line"><span style="color: #D6DEEB">  </span><span style="color: #C792EA">const</span><span style="color: #C792EA; font-style: italic"> </span><span style="color: #82AAFF; font-style: italic">all</span><span style="color: #C792EA; font-style: italic"> </span><span style="color: #C792EA">=</span><span style="color: #C792EA; font-style: italic"> </span><span style="color: #82AAFF; font-style: italic">useContext</span><span style="color: #D6DEEB">(</span><span style="color: #D7DBE0">LocalStateContext</span><span style="color: #D6DEEB">);</span></span>
+<span class="line"><span style="color: #D6DEEB">  </span><span style="color: #C792EA; font-style: italic">return</span><span style="color: #D6DEEB"> </span><span style="color: #D7DBE0">all</span><span style="color: #D6DEEB">;</span></span>
+<span class="line"><span style="color: #D6DEEB">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C792EA; font-style: italic">export</span><span style="color: #D6DEEB"> { CartStateProvider, useCart };</span></span></code></pre>
+<p>This Javascript file is a convenient way to create the context and expose its provider and a Custom Hook called <code>useCart()</code>. We can import the Provider into the <strong>App.server.jsx</strong> file, and use it after the Shopify Provider:</p>
+<pre is:raw="" class="astro-code Night Owl" style="background-color: #011627; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0"><code><span class="line"><span style="color: #C792EA; font-style: italic">import</span><span style="color: #D6DEEB"> renderHydrogen </span><span style="color: #C792EA; font-style: italic">from</span><span style="color: #D6DEEB"> </span><span style="color: #D9F5DD">"</span><span style="color: #ECC48D">@shopify/hydrogen/entry-server</span><span style="color: #D9F5DD">"</span><span style="color: #D6DEEB">;</span></span>
+<span class="line"><span style="color: #C792EA; font-style: italic">import</span><span style="color: #D6DEEB"> { Router, FileRoutes, ShopifyProvider } </span><span style="color: #C792EA; font-style: italic">from</span><span style="color: #D6DEEB"> </span><span style="color: #D9F5DD">"</span><span style="color: #ECC48D">@shopify/hydrogen</span><span style="color: #D9F5DD">"</span><span style="color: #D6DEEB">;</span></span>
+<span class="line"><span style="color: #C792EA; font-style: italic">import</span><span style="color: #D6DEEB"> { Suspense } </span><span style="color: #C792EA; font-style: italic">from</span><span style="color: #D6DEEB"> </span><span style="color: #D9F5DD">"</span><span style="color: #ECC48D">react</span><span style="color: #D9F5DD">"</span><span style="color: #D6DEEB">;</span></span>
+<span class="line"><span style="color: #C792EA; font-style: italic">import</span><span style="color: #D6DEEB"> { CartStateProvider } </span><span style="color: #C792EA; font-style: italic">from</span><span style="color: #D6DEEB"> </span><span style="color: #D9F5DD">"</span><span style="color: #ECC48D">./lib/cartState</span><span style="color: #D9F5DD">"</span><span style="color: #D6DEEB">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C792EA">function</span><span style="color: #D6DEEB"> </span><span style="color: #82AAFF; font-style: italic">App</span><span style="color: #D9F5DD">()</span><span style="color: #D6DEEB"> {</span></span>
+<span class="line"><span style="color: #D6DEEB">  </span><span style="color: #C792EA; font-style: italic">return</span><span style="color: #D6DEEB"> (</span></span>
+<span class="line"><span style="color: #D6DEEB">    </span><span style="color: #7FDBCA">&#x3C;</span><span style="color: #F78C6C">Suspense</span><span style="color: #7FDBCA"> </span><span style="color: #C5E478; font-style: italic">fallback</span><span style="color: #C792EA">=</span><span style="color: #D3423E">{</span><span style="color: #FF5874">null</span><span style="color: #D3423E">}</span><span style="color: #7FDBCA">></span></span>
+<span class="line"><span style="color: #D6DEEB">      </span><span style="color: #7FDBCA">&#x3C;</span><span style="color: #F78C6C">ShopifyProvider</span><span style="color: #7FDBCA">></span></span>
+<span class="line"><span style="color: #D6DEEB">        </span><span style="color: #7FDBCA">&#x3C;</span><span style="color: #F78C6C">CartStateProvider</span><span style="color: #7FDBCA">></span></span>
+<span class="line"><span style="color: #D6DEEB">          </span><span style="color: #7FDBCA">&#x3C;</span><span style="color: #F78C6C">Router</span><span style="color: #7FDBCA">></span></span>
+<span class="line"><span style="color: #D6DEEB">            </span><span style="color: #7FDBCA">&#x3C;</span><span style="color: #F78C6C">FileRoutes</span><span style="color: #7FDBCA"> /></span></span>
+<span class="line"><span style="color: #D6DEEB">          </span><span style="color: #7FDBCA">&#x3C;/</span><span style="color: #F78C6C">Router</span><span style="color: #7FDBCA">></span></span>
+<span class="line"><span style="color: #D6DEEB">        </span><span style="color: #7FDBCA">&#x3C;/</span><span style="color: #F78C6C">CartStateProvider</span><span style="color: #7FDBCA">></span></span>
+<span class="line"><span style="color: #D6DEEB">      </span><span style="color: #7FDBCA">&#x3C;/</span><span style="color: #F78C6C">ShopifyProvider</span><span style="color: #7FDBCA">></span></span>
+<span class="line"><span style="color: #D6DEEB">    </span><span style="color: #7FDBCA">&#x3C;/</span><span style="color: #F78C6C">Suspense</span><span style="color: #7FDBCA">></span></span>
+<span class="line"><span style="color: #D6DEEB">  );</span></span>
+<span class="line"><span style="color: #D6DEEB">}</span></span>
+<span class="line"><span style="color: #C792EA; font-style: italic">export</span><span style="color: #D6DEEB"> </span><span style="color: #C792EA; font-style: italic">default</span><span style="color: #D6DEEB"> </span><span style="color: #82AAFF; font-style: italic">renderHydrogen</span><span style="color: #D6DEEB">(</span><span style="color: #D7DBE0">App</span><span style="color: #D6DEEB">);</span></span></code></pre>
+<p>Everything looks so simple, right? But the compiler yells like this:</p>
+<p><img src="https://res.cloudinary.com/dfpkdo5tf/image/upload/v1684843008/jandrade.co.v4/Screen_Shot_2022-09-16_at_12.20.37_PM.png" alt="Error using a Cart UI Context as a Server Component"></p>
+<p>It’s a Server Side Rendering error having its origins in the application root file we finished editing an instant ago. If we investigate this error, there’s not a lot of quick information about it. Like me, you may be spending a considerable time looking for a guide to solve this problem. It was the official Hydrogen documentation that helped me to understand it:</p>
+<blockquote>
+<p>Currently, you can’t use “Context” inside server components because server context isn’t yet available in React. However, you can use “Context” inside client components.</p>
+</blockquote>
+<p>So, the way to solve it is to make that context Client side. Let’s decouple the <strong>cartState.js</strong> contents into their own files like so:</p>
+<h2 id="creating-the-context-cartuicontextclientjsx">Creating the context: CartUIContext.client.jsx</h2>
+<p>Now, the first step is to create the context for our Cart State:</p>
+<pre is:raw="" class="astro-code Night Owl" style="background-color: #011627; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0"><code><span class="line"><span style="color: #C792EA; font-style: italic">import</span><span style="color: #D6DEEB"> { createContext, useContext } </span><span style="color: #C792EA; font-style: italic">from</span><span style="color: #D6DEEB"> </span><span style="color: #D9F5DD">"</span><span style="color: #ECC48D">react</span><span style="color: #D9F5DD">"</span><span style="color: #D6DEEB">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C792EA">const</span><span style="color: #C792EA; font-style: italic"> </span><span style="color: #82AAFF; font-style: italic">CartUIContext</span><span style="color: #C792EA; font-style: italic"> </span><span style="color: #C792EA">=</span><span style="color: #C792EA; font-style: italic"> </span><span style="color: #82AAFF; font-style: italic">createContext</span><span style="color: #D6DEEB">();</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C792EA; font-style: italic">export</span><span style="color: #D6DEEB"> </span><span style="color: #C792EA; font-style: italic">default</span><span style="color: #D6DEEB"> </span><span style="color: #D7DBE0">CartUIContext</span><span style="color: #D6DEEB">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C792EA; font-style: italic">export</span><span style="color: #D6DEEB"> </span><span style="color: #C792EA">function</span><span style="color: #D6DEEB"> </span><span style="color: #82AAFF; font-style: italic">useCartUIContext</span><span style="color: #D9F5DD">()</span><span style="color: #D6DEEB"> {</span></span>
+<span class="line"><span style="color: #D6DEEB">  </span><span style="color: #C792EA">const</span><span style="color: #C792EA; font-style: italic"> </span><span style="color: #82AAFF; font-style: italic">context</span><span style="color: #C792EA; font-style: italic"> </span><span style="color: #C792EA">=</span><span style="color: #C792EA; font-style: italic"> </span><span style="color: #82AAFF; font-style: italic">useContext</span><span style="color: #D6DEEB">(</span><span style="color: #D7DBE0">CartUIContext</span><span style="color: #D6DEEB">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #D6DEEB">  </span><span style="color: #C792EA">if</span><span style="color: #D6DEEB"> (</span><span style="color: #C792EA">!</span><span style="color: #D7DBE0">context</span><span style="color: #D6DEEB">) {</span></span>
+<span class="line"><span style="color: #D6DEEB">    </span><span style="color: #C792EA; font-style: italic">throw</span><span style="color: #D6DEEB"> </span><span style="color: #7FDBCA">new</span><span style="color: #D6DEEB"> </span><span style="color: #82AAFF; font-style: italic">Error</span><span style="color: #D6DEEB">(</span><span style="color: #D9F5DD">"</span><span style="color: #ECC48D">No cart context found</span><span style="color: #D9F5DD">"</span><span style="color: #D6DEEB">);</span></span>
+<span class="line"><span style="color: #D6DEEB">  }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #D6DEEB">  </span><span style="color: #C792EA; font-style: italic">return</span><span style="color: #D6DEEB"> </span><span style="color: #D7DBE0">context</span><span style="color: #D6DEEB">;</span></span>
+<span class="line"><span style="color: #D6DEEB">}</span></span></code></pre>
+<p>We should name this file with a <strong>.client.jsx</strong> extension because is a Client Side Context. Note that this file exports the created context and also a custom hook called <strong>useCartUIContext</strong> that will be used in children components.</p>
+<p>The next step is to create the Provider we will use as a wrapper for the whole application, as we saw in the previous section. This time, as you might have guessed, this should also be a Client Side Component:</p>
+<pre is:raw="" class="astro-code Night Owl" style="background-color: #011627; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0"><code><span class="line"><span style="color: #C792EA; font-style: italic">import</span><span style="color: #D6DEEB"> CartContext </span><span style="color: #C792EA; font-style: italic">from</span><span style="color: #D6DEEB"> </span><span style="color: #D9F5DD">"</span><span style="color: #ECC48D">./CartUIContext.client</span><span style="color: #D9F5DD">"</span><span style="color: #D6DEEB">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C792EA; font-style: italic">import</span><span style="color: #D6DEEB"> { useState } </span><span style="color: #C792EA; font-style: italic">from</span><span style="color: #D6DEEB"> </span><span style="color: #D9F5DD">"</span><span style="color: #ECC48D">react</span><span style="color: #D9F5DD">"</span><span style="color: #D6DEEB">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C792EA; font-style: italic">export</span><span style="color: #D6DEEB"> </span><span style="color: #C792EA; font-style: italic">default</span><span style="color: #D6DEEB"> </span><span style="color: #C792EA">function</span><span style="color: #D6DEEB"> </span><span style="color: #82AAFF; font-style: italic">CartUIProvider</span><span style="color: #D9F5DD">(</span><span style="color: #D6DEEB">{ </span><span style="color: #D7DBE0">children</span><span style="color: #D6DEEB"> }</span><span style="color: #D9F5DD">)</span><span style="color: #D6DEEB"> {</span></span>
+<span class="line"><span style="color: #D6DEEB">  </span><span style="color: #C792EA">const</span><span style="color: #C792EA; font-style: italic"> </span><span style="color: #C792EA">[</span><span style="color: #82AAFF; font-style: italic">cartOpen</span><span style="color: #5F7E97">,</span><span style="color: #C792EA; font-style: italic"> </span><span style="color: #82AAFF; font-style: italic">setCartOpen</span><span style="color: #C792EA">]</span><span style="color: #C792EA; font-style: italic"> </span><span style="color: #C792EA">=</span><span style="color: #C792EA; font-style: italic"> </span><span style="color: #82AAFF; font-style: italic">useState</span><span style="color: #D6DEEB">(</span><span style="color: #FF5874; font-style: italic">false</span><span style="color: #D6DEEB">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #D6DEEB">  </span><span style="color: #C792EA">function</span><span style="color: #D6DEEB"> </span><span style="color: #82AAFF; font-style: italic">toggleCart</span><span style="color: #D9F5DD">()</span><span style="color: #D6DEEB"> {</span></span>
+<span class="line"><span style="color: #D6DEEB">    </span><span style="color: #82AAFF; font-style: italic">setCartOpen</span><span style="color: #D6DEEB">(</span><span style="color: #C792EA">!</span><span style="color: #D7DBE0">cartOpen</span><span style="color: #D6DEEB">);</span></span>
+<span class="line"><span style="color: #D6DEEB">  }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #D6DEEB">  </span><span style="color: #C792EA">function</span><span style="color: #D6DEEB"> </span><span style="color: #82AAFF; font-style: italic">closeCart</span><span style="color: #D9F5DD">()</span><span style="color: #D6DEEB"> {</span></span>
+<span class="line"><span style="color: #D6DEEB">    </span><span style="color: #82AAFF; font-style: italic">setCartOpen</span><span style="color: #D6DEEB">(</span><span style="color: #FF5874">false</span><span style="color: #D6DEEB">);</span></span>
+<span class="line"><span style="color: #D6DEEB">  }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #D6DEEB">  </span><span style="color: #C792EA">function</span><span style="color: #D6DEEB"> </span><span style="color: #82AAFF; font-style: italic">openCart</span><span style="color: #D9F5DD">()</span><span style="color: #D6DEEB"> {</span></span>
+<span class="line"><span style="color: #D6DEEB">    </span><span style="color: #82AAFF; font-style: italic">setCartOpen</span><span style="color: #D6DEEB">(</span><span style="color: #FF5874">true</span><span style="color: #D6DEEB">);</span></span>
+<span class="line"><span style="color: #D6DEEB">  }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #D6DEEB">  </span><span style="color: #C792EA; font-style: italic">return</span><span style="color: #D6DEEB"> (</span></span>
+<span class="line"><span style="color: #D6DEEB">    </span><span style="color: #7FDBCA">&#x3C;</span><span style="color: #F78C6C">CartContext.Provider</span></span>
+<span class="line"><span style="color: #7FDBCA">      </span><span style="color: #C5E478; font-style: italic">value</span><span style="color: #C792EA">=</span><span style="color: #D3423E">{</span><span style="color: #7FDBCA">{ </span><span style="color: #D7DBE0">cartOpen</span><span style="color: #5F7E97">,</span><span style="color: #7FDBCA"> </span><span style="color: #D7DBE0">setCartOpen</span><span style="color: #5F7E97">,</span><span style="color: #7FDBCA"> </span><span style="color: #D7DBE0">toggleCart</span><span style="color: #5F7E97">,</span><span style="color: #7FDBCA"> </span><span style="color: #D7DBE0">closeCart</span><span style="color: #5F7E97">,</span><span style="color: #7FDBCA"> </span><span style="color: #D7DBE0">openCart</span><span style="color: #7FDBCA"> }</span><span style="color: #D3423E">}</span></span>
+<span class="line"><span style="color: #7FDBCA">    ></span></span>
+<span class="line"><span style="color: #D6DEEB">      </span><span style="color: #D3423E">{</span><span style="color: #D7DBE0">children</span><span style="color: #D3423E">}</span></span>
+<span class="line"><span style="color: #D6DEEB">    </span><span style="color: #7FDBCA">&#x3C;/</span><span style="color: #F78C6C">CartContext.Provider</span><span style="color: #7FDBCA">></span></span>
+<span class="line"><span style="color: #D6DEEB">  );</span></span>
+<span class="line"><span style="color: #D6DEEB">}</span></span></code></pre>
+<p>This Provider exposes the Cart State and functions that will change it whenever an action in a child component is triggered. For example, on the navigation, we might have a button to open the Cart UI Component, where we might call toggleCart(), closeCart(), or openCart(), when clicking that button. The new Cart State will be preserved throughout the Website client navigation.</p>
+<p>As this is a Client Component, we can now use it in the App.server.jsx file:</p>
+<pre is:raw="" class="astro-code Night Owl" style="background-color: #011627; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0"><code><span class="line"><span style="color: #C792EA; font-style: italic">import</span><span style="color: #D6DEEB"> CartUIProvider </span><span style="color: #C792EA; font-style: italic">from</span><span style="color: #D6DEEB"> </span><span style="color: #D9F5DD">"</span><span style="color: #ECC48D">./components/CartUIProvider.client</span><span style="color: #D9F5DD">"</span><span style="color: #D6DEEB">;</span></span>
+<span class="line"><span style="color: #C792EA; font-style: italic">import</span><span style="color: #D6DEEB"> { CartProvider } </span><span style="color: #C792EA; font-style: italic">from</span><span style="color: #D6DEEB"> </span><span style="color: #D9F5DD">"</span><span style="color: #ECC48D">@shopify/hydrogen</span><span style="color: #D9F5DD">"</span><span style="color: #D6DEEB">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C792EA">function</span><span style="color: #D6DEEB"> </span><span style="color: #82AAFF; font-style: italic">App</span><span style="color: #D9F5DD">()</span><span style="color: #D6DEEB"> {</span></span>
+<span class="line"><span style="color: #D6DEEB">  </span><span style="color: #C792EA; font-style: italic">return</span><span style="color: #D6DEEB"> (</span></span>
+<span class="line"><span style="color: #D6DEEB">    </span><span style="color: #7FDBCA">&#x3C;</span><span style="color: #F78C6C">Suspense</span><span style="color: #7FDBCA"> </span><span style="color: #C5E478; font-style: italic">fallback</span><span style="color: #C792EA">=</span><span style="color: #D3423E">{</span><span style="color: #FF5874">null</span><span style="color: #D3423E">}</span><span style="color: #7FDBCA">></span></span>
+<span class="line"><span style="color: #D6DEEB">      </span><span style="color: #7FDBCA">&#x3C;</span><span style="color: #F78C6C">ShopifyProvider</span><span style="color: #7FDBCA">></span></span>
+<span class="line"><span style="color: #D6DEEB">        </span><span style="color: #7FDBCA">&#x3C;</span><span style="color: #F78C6C">CartUIProvider</span><span style="color: #7FDBCA">></span></span>
+<span class="line"><span style="color: #D6DEEB">          </span><span style="color: #7FDBCA">&#x3C;</span><span style="color: #F78C6C">CartProvider</span><span style="color: #7FDBCA">></span></span>
+<span class="line"><span style="color: #D6DEEB">            </span><span style="color: #7FDBCA">&#x3C;</span><span style="color: #F78C6C">Router</span><span style="color: #7FDBCA">></span></span>
+<span class="line"><span style="color: #D6DEEB">              </span><span style="color: #7FDBCA">&#x3C;</span><span style="color: #F78C6C">FileRoutes</span><span style="color: #7FDBCA"> /></span></span>
+<span class="line"><span style="color: #D6DEEB">            </span><span style="color: #7FDBCA">&#x3C;/</span><span style="color: #F78C6C">Router</span><span style="color: #7FDBCA">></span></span>
+<span class="line"><span style="color: #D6DEEB">          </span><span style="color: #7FDBCA">&#x3C;/</span><span style="color: #F78C6C">CartProvider</span><span style="color: #7FDBCA">></span></span>
+<span class="line"><span style="color: #D6DEEB">        </span><span style="color: #7FDBCA">&#x3C;/</span><span style="color: #F78C6C">CartUIProvider</span><span style="color: #7FDBCA">></span></span>
+<span class="line"><span style="color: #D6DEEB">      </span><span style="color: #7FDBCA">&#x3C;/</span><span style="color: #F78C6C">ShopifyProvider</span><span style="color: #7FDBCA">></span></span>
+<span class="line"><span style="color: #D6DEEB">    </span><span style="color: #7FDBCA">&#x3C;/</span><span style="color: #F78C6C">Suspense</span><span style="color: #7FDBCA">></span></span>
+<span class="line"><span style="color: #D6DEEB">  );</span></span>
+<span class="line"><span style="color: #D6DEEB">}</span></span></code></pre>
+<p>Note that I’m using a CartProvider from the <strong>hydrogen</strong> library and it exposes other state and functions to children components. What we recently have defined is a Provider to work on the Cart State related to the User Interface.</p>
+<h2 id="using-the-context-inside-children-components">Using the Context inside children components</h2>
+<p>Now, it’s time to use this context in our children components. My e-commerce example for the present article has a Cart component, which is actually the drawer at the right of the screen that expands and contracts to show the products ready for checkout. It uses CSS to translate the Cart drawer from a hidden state to its full appearance using translate transforms. The change on this CSS property value to open or close the Cart drawer, depends on its state given by the CartUIProvider, and this is when we should use the hook <strong>useCartUIContext()</strong>, like so:</p>
+<pre is:raw="" class="astro-code Night Owl" style="background-color: #011627; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0"><code><span class="line"><span style="color: #C792EA; font-style: italic">export</span><span style="color: #D6DEEB"> </span><span style="color: #C792EA">function</span><span style="color: #D6DEEB"> </span><span style="color: #82AAFF; font-style: italic">Cart</span><span style="color: #D9F5DD">()</span><span style="color: #D6DEEB"> {</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C792EA">const</span><span style="color: #C792EA; font-style: italic"> </span><span style="color: #C792EA">{</span><span style="color: #C792EA; font-style: italic"> </span><span style="color: #82AAFF; font-style: italic">cartOpen</span><span style="color: #5F7E97">,</span><span style="color: #C792EA; font-style: italic"> </span><span style="color: #82AAFF; font-style: italic">closeCart</span><span style="color: #C792EA; font-style: italic"> </span><span style="color: #C792EA">}</span><span style="color: #C792EA; font-style: italic"> </span><span style="color: #C792EA">=</span><span style="color: #C792EA; font-style: italic"> </span><span style="color: #82AAFF; font-style: italic">useCartUIContext</span><span style="color: #D6DEEB">();</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C792EA; font-style: italic">return</span><span style="color: #D6DEEB"> (</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #7FDBCA">&#x3C;</span><span style="color: #CAECE6">div</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C5E478; font-style: italic">className</span><span style="color: #C792EA">=</span><span style="color: #D3423E">{</span><span style="color: #D6DEEB">`</span><span style="color: #ECC48D">p-5 fixed bg-white h-full top-0 right-0 w-1/2</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #ECC48D">bottom-0 shadow-2xl z-10 grid cart </span><span style="color: #D3423E">${</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #D7DBE0">cartOpen</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C792EA">?</span><span style="color: #D3423E"> </span><span style="color: #D6DEEB">"</span><span style="color: #ECC48D">bg-neutral-100 translate-x-0</span><span style="color: #D6DEEB">"</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C792EA">:</span><span style="color: #D3423E"> </span><span style="color: #D6DEEB">"</span><span style="color: #ECC48D">bg-orange-200 translate-x-full</span><span style="color: #D6DEEB">"</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #D3423E">}</span><span style="color: #D6DEEB">`</span><span style="color: #D3423E">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #7FDBCA">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #7FDBCA">&#x3C;</span><span style="color: #CAECE6">header</span><span style="color: #7FDBCA"> </span><span style="color: #C5E478; font-style: italic">className</span><span style="color: #C792EA">=</span><span style="color: #D9F5DD">"</span><span style="color: #ECC48D">border-b border-stone-700 mb-8 pb-8</span><span style="color: #D9F5DD">"</span><span style="color: #7FDBCA">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #7FDBCA">&#x3C;</span><span style="color: #CAECE6">h3</span><span style="color: #7FDBCA"> </span><span style="color: #C5E478; font-style: italic">className</span><span style="color: #C792EA">=</span><span style="color: #D9F5DD">"</span><span style="color: #ECC48D">bg-red-600 text-white inline-block px-1 py-2 -skew-x-3 m-0 text-7xl</span><span style="color: #D9F5DD">"</span><span style="color: #7FDBCA">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #D6DEEB">Your Cart</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #7FDBCA">&#x3C;/</span><span style="color: #CAECE6">h3</span><span style="color: #7FDBCA">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #7FDBCA">&#x3C;/</span><span style="color: #CAECE6">header</span><span style="color: #7FDBCA">></span></span></code></pre>
+<p>This CartUI component is a Client Side Component, which uses the Provider state <strong>cartOpen</strong> to keep the drawer open or closed (<code>translate-x-0</code> or <code>translate-x-full</code> ).</p>
+<p>Another example of using the CartUIContext is a Close Button (a Client Component, of course) Component. We can expose the method <code>closeCart()</code> to make the drawer hide the Cart Product contents:</p>
+<pre is:raw="" class="astro-code Night Owl" style="background-color: #011627; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0"><code><span class="line"><span style="color: #C792EA; font-style: italic">export</span><span style="color: #D6DEEB"> </span><span style="color: #C792EA">function</span><span style="color: #D6DEEB"> </span><span style="color: #82AAFF; font-style: italic">Cart</span><span style="color: #D9F5DD">()</span><span style="color: #D6DEEB"> {</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C792EA">const</span><span style="color: #C792EA; font-style: italic"> </span><span style="color: #C792EA">{</span><span style="color: #C792EA; font-style: italic"> </span><span style="color: #82AAFF; font-style: italic">cartOpen</span><span style="color: #5F7E97">,</span><span style="color: #C792EA; font-style: italic"> </span><span style="color: #82AAFF; font-style: italic">closeCart</span><span style="color: #C792EA; font-style: italic"> </span><span style="color: #C792EA">}</span><span style="color: #C792EA; font-style: italic"> </span><span style="color: #C792EA">=</span><span style="color: #C792EA; font-style: italic"> </span><span style="color: #82AAFF; font-style: italic">useCartUIContext</span><span style="color: #D6DEEB">();</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C792EA">const</span><span style="color: #C792EA; font-style: italic"> </span><span style="color: #C792EA">{</span><span style="color: #C792EA; font-style: italic"> </span><span style="color: #82AAFF; font-style: italic">lines</span><span style="color: #5F7E97">,</span><span style="color: #C792EA; font-style: italic"> </span><span style="color: #82AAFF; font-style: italic">id</span><span style="color: #C792EA; font-style: italic"> </span><span style="color: #C792EA">}</span><span style="color: #C792EA; font-style: italic"> </span><span style="color: #C792EA">=</span><span style="color: #C792EA; font-style: italic"> </span><span style="color: #82AAFF; font-style: italic">useCart</span><span style="color: #D6DEEB">();</span></span>
+<span class="line"></span>
+<span class="line"></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C792EA; font-style: italic">return</span><span style="color: #D6DEEB"> (</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #7FDBCA">&#x3C;</span><span style="color: #CAECE6">div</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C5E478; font-style: italic">className</span><span style="color: #C792EA">=</span><span style="color: #D3423E">{</span><span style="color: #D6DEEB">`</span><span style="color: #ECC48D">p-5 fixed bg-white h-full top-0 right-0 w-1/2</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #ECC48D">bottom-0 shadow-2xl z-10 grid cart </span><span style="color: #D3423E">${</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #D7DBE0">cartOpen</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C792EA">?</span><span style="color: #D3423E"> </span><span style="color: #D6DEEB">"</span><span style="color: #ECC48D">bg-neutral-100 translate-x-0</span><span style="color: #D6DEEB">"</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C792EA">:</span><span style="color: #D3423E"> </span><span style="color: #D6DEEB">"</span><span style="color: #ECC48D">bg-orange-200 translate-x-full</span><span style="color: #D6DEEB">"</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #D3423E">}</span><span style="color: #D6DEEB">`</span><span style="color: #D3423E">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #7FDBCA">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #7FDBCA">&#x3C;</span><span style="color: #CAECE6">header</span><span style="color: #7FDBCA"> </span><span style="color: #C5E478; font-style: italic">className</span><span style="color: #C792EA">=</span><span style="color: #D9F5DD">"</span><span style="color: #ECC48D">border-b border-stone-700 mb-8 pb-8</span><span style="color: #D9F5DD">"</span><span style="color: #7FDBCA">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #D3423E">{</span><span style="color: #637777">/*</span><span style="color: #637777; font-style: italic"> &#x3C;Supreme>{me.name}'s Cart&#x3C;/Supreme> </span><span style="color: #637777">*/</span><span style="color: #D3423E">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #7FDBCA">&#x3C;</span><span style="color: #CAECE6">h3</span><span style="color: #7FDBCA"> </span><span style="color: #C5E478; font-style: italic">className</span><span style="color: #C792EA">=</span><span style="color: #D9F5DD">"</span><span style="color: #ECC48D">bg-red-600 text-white inline-block px-1 py-2 -skew-x-3 m-0 text-7xl</span><span style="color: #D9F5DD">"</span><span style="color: #7FDBCA">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #D6DEEB">Your Cart</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #7FDBCA">&#x3C;/</span><span style="color: #CAECE6">h3</span><span style="color: #7FDBCA">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #7FDBCA">&#x3C;/</span><span style="color: #CAECE6">header</span><span style="color: #7FDBCA">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #D3423E">{</span><span style="color: #637777">/*</span><span style="color: #637777; font-style: italic"> &#x3C;CloseButton onClick={closeCart} type="button"></span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #637777; font-style: italic">&#x26;times;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #637777; font-style: italic">&#x3C;/CloseButton> </span><span style="color: #637777">*/</span><span style="color: #D3423E">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #7FDBCA">&#x3C;</span><span style="color: #F78C6C">CloseButton</span><span style="color: #7FDBCA"> </span><span style="color: #C5E478; font-style: italic">closeCart</span><span style="color: #C792EA">=</span><span style="color: #D3423E">{</span><span style="color: #D7DBE0">closeCart</span><span style="color: #D3423E">}</span><span style="color: #7FDBCA"> /></span></span></code></pre>
+<pre is:raw="" class="astro-code Night Owl" style="background-color: #011627; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0"><code><span class="line"><span style="color: #C792EA">function</span><span style="color: #D6DEEB"> </span><span style="color: #82AAFF; font-style: italic">CloseButton</span><span style="color: #D9F5DD">(</span><span style="color: #D6DEEB">{ </span><span style="color: #D7DBE0">closeCart</span><span style="color: #D6DEEB"> }</span><span style="color: #D9F5DD">)</span><span style="color: #D6DEEB"> {</span></span>
+<span class="line"><span style="color: #D6DEEB">  </span><span style="color: #C792EA; font-style: italic">return</span><span style="color: #D6DEEB"> (</span></span>
+<span class="line"><span style="color: #D6DEEB">    </span><span style="color: #7FDBCA">&#x3C;</span><span style="color: #CAECE6">button</span></span>
+<span class="line"><span style="color: #7FDBCA">      </span><span style="color: #C5E478; font-style: italic">onClick</span><span style="color: #C792EA">=</span><span style="color: #D3423E">{</span><span style="color: #D7DBE0">closeCart</span><span style="color: #D3423E">}</span></span>
+<span class="line"><span style="color: #7FDBCA">      </span><span style="color: #C5E478; font-style: italic">type</span><span style="color: #C792EA">=</span><span style="color: #D9F5DD">"</span><span style="color: #ECC48D">button</span><span style="color: #D9F5DD">"</span></span>
+<span class="line"><span style="color: #7FDBCA">      </span><span style="color: #C5E478; font-style: italic">className</span><span style="color: #C792EA">=</span><span style="color: #D9F5DD">"</span><span style="color: #ECC48D">bg-stone-700 text-white text-5xl border-0 absolute z-10 right-0</span><span style="color: #D9F5DD">"</span></span>
+<span class="line"><span style="color: #7FDBCA">    ></span></span>
+<span class="line"><span style="color: #D6DEEB">      </span><span style="color: #82AAFF">&#x26;times;</span></span>
+<span class="line"><span style="color: #D6DEEB">    </span><span style="color: #7FDBCA">&#x3C;/</span><span style="color: #CAECE6">button</span><span style="color: #7FDBCA">></span></span>
+<span class="line"><span style="color: #D6DEEB">  );</span></span>
+<span class="line"><span style="color: #D6DEEB">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C792EA; font-style: italic">export</span><span style="color: #D6DEEB"> </span><span style="color: #C792EA; font-style: italic">default</span><span style="color: #D6DEEB"> </span><span style="color: #D7DBE0">CloseButton</span><span style="color: #D6DEEB">;</span></span></code></pre>
+<p>And finally, to open the cart, we can use it inside a button component placed on the navigation:</p>
+<pre is:raw="" class="astro-code Night Owl" style="background-color: #011627; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0"><code><span class="line"><span style="color: #C792EA; font-style: italic">import</span><span style="color: #D6DEEB"> { useCartUIContext } </span><span style="color: #C792EA; font-style: italic">from</span><span style="color: #D6DEEB"> </span><span style="color: #D9F5DD">"</span><span style="color: #ECC48D">./CartUIContext.client</span><span style="color: #D9F5DD">"</span><span style="color: #D6DEEB">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C792EA">function</span><span style="color: #D6DEEB"> </span><span style="color: #82AAFF; font-style: italic">OpenCartButton</span><span style="color: #D9F5DD">()</span><span style="color: #D6DEEB"> {</span></span>
+<span class="line"><span style="color: #D6DEEB">  </span><span style="color: #C792EA">const</span><span style="color: #C792EA; font-style: italic"> </span><span style="color: #C792EA">{</span><span style="color: #C792EA; font-style: italic"> </span><span style="color: #82AAFF; font-style: italic">openCart</span><span style="color: #C792EA; font-style: italic"> </span><span style="color: #C792EA">}</span><span style="color: #C792EA; font-style: italic"> </span><span style="color: #C792EA">=</span><span style="color: #C792EA; font-style: italic"> </span><span style="color: #82AAFF; font-style: italic">useCartUIContext</span><span style="color: #D6DEEB">();</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #D6DEEB">  </span><span style="color: #C792EA; font-style: italic">return</span><span style="color: #D6DEEB"> (</span></span>
+<span class="line"><span style="color: #D6DEEB">    </span><span style="color: #7FDBCA">&#x3C;</span><span style="color: #CAECE6">button</span><span style="color: #7FDBCA"> </span><span style="color: #C5E478; font-style: italic">type</span><span style="color: #C792EA">=</span><span style="color: #D9F5DD">"</span><span style="color: #ECC48D">button</span><span style="color: #D9F5DD">"</span><span style="color: #7FDBCA"> </span><span style="color: #C5E478; font-style: italic">onClick</span><span style="color: #C792EA">=</span><span style="color: #D3423E">{</span><span style="color: #D7DBE0">openCart</span><span style="color: #D3423E">}</span><span style="color: #7FDBCA">></span></span>
+<span class="line"><span style="color: #D6DEEB">      Cart</span></span>
+<span class="line"><span style="color: #D6DEEB">    </span><span style="color: #7FDBCA">&#x3C;/</span><span style="color: #CAECE6">button</span><span style="color: #7FDBCA">></span></span>
+<span class="line"><span style="color: #D6DEEB">  );</span></span>
+<span class="line"><span style="color: #D6DEEB">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C792EA; font-style: italic">export</span><span style="color: #D6DEEB"> </span><span style="color: #C792EA; font-style: italic">default</span><span style="color: #D6DEEB"> </span><span style="color: #D7DBE0">OpenCartButton</span><span style="color: #D6DEEB">;</span></span></code></pre>
+<pre is:raw="" class="astro-code Night Owl" style="background-color: #011627; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0"><code><span class="line"><span style="color: #C792EA; font-style: italic">import</span><span style="color: #D6DEEB"> { Link } </span><span style="color: #C792EA; font-style: italic">from</span><span style="color: #D6DEEB"> </span><span style="color: #D9F5DD">"</span><span style="color: #ECC48D">@shopify/hydrogen</span><span style="color: #D9F5DD">"</span><span style="color: #D6DEEB">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C792EA; font-style: italic">import</span><span style="color: #D6DEEB"> OpenCartButton </span><span style="color: #C792EA; font-style: italic">from</span><span style="color: #D6DEEB"> </span><span style="color: #D9F5DD">"</span><span style="color: #ECC48D">./OpenCartButton.client</span><span style="color: #D9F5DD">"</span><span style="color: #D6DEEB">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C792EA; font-style: italic">export</span><span style="color: #D6DEEB"> </span><span style="color: #C792EA">function</span><span style="color: #D6DEEB"> </span><span style="color: #82AAFF; font-style: italic">Nav</span><span style="color: #D9F5DD">()</span><span style="color: #D6DEEB"> {</span></span>
+<span class="line"><span style="color: #D6DEEB">  </span><span style="color: #C792EA; font-style: italic">return</span><span style="color: #D6DEEB"> (</span></span>
+<span class="line"><span style="color: #D6DEEB">    </span><span style="color: #7FDBCA">&#x3C;</span><span style="color: #CAECE6">nav</span><span style="color: #7FDBCA"> </span><span style="color: #C5E478; font-style: italic">className</span><span style="color: #C792EA">=</span><span style="color: #D9F5DD">"</span><span style="color: #ECC48D">m-0 p-0 flex items-center justify-self-end fs-xl</span><span style="color: #D9F5DD">"</span><span style="color: #7FDBCA">></span></span>
+<span class="line"><span style="color: #D6DEEB">      </span><span style="color: #7FDBCA">&#x3C;</span><span style="color: #F78C6C">Link</span></span>
+<span class="line"><span style="color: #7FDBCA">        </span><span style="color: #C5E478; font-style: italic">to</span><span style="color: #C792EA">=</span><span style="color: #D9F5DD">"</span><span style="color: #ECC48D">/products</span><span style="color: #D9F5DD">"</span></span>
+<span class="line"><span style="color: #7FDBCA">        </span><span style="color: #C5E478; font-style: italic">className</span><span style="color: #C792EA">=</span><span style="color: #D9F5DD">"</span><span style="color: #ECC48D">py-2 px-4 flex align-center relative uppercase font-bold bg-transparent border-0 cursor-pointer</span><span style="color: #D9F5DD">"</span></span>
+<span class="line"><span style="color: #7FDBCA">      ></span></span>
+<span class="line"><span style="color: #D6DEEB">        Products</span></span>
+<span class="line"><span style="color: #D6DEEB">      </span><span style="color: #7FDBCA">&#x3C;/</span><span style="color: #F78C6C">Link</span><span style="color: #7FDBCA">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #D6DEEB">      </span><span style="color: #7FDBCA">&#x3C;</span><span style="color: #F78C6C">Link</span></span>
+<span class="line"><span style="color: #7FDBCA">        </span><span style="color: #C5E478; font-style: italic">to</span><span style="color: #C792EA">=</span><span style="color: #D9F5DD">"</span><span style="color: #ECC48D">/orders</span><span style="color: #D9F5DD">"</span></span>
+<span class="line"><span style="color: #7FDBCA">        </span><span style="color: #C5E478; font-style: italic">className</span><span style="color: #C792EA">=</span><span style="color: #D9F5DD">"</span><span style="color: #ECC48D">py-2 px-4 flex align-center relative uppercase font-bold bg-transparent border-0 cursor-pointer</span><span style="color: #D9F5DD">"</span></span>
+<span class="line"><span style="color: #7FDBCA">      ></span></span>
+<span class="line"><span style="color: #D6DEEB">        Orders</span></span>
+<span class="line"><span style="color: #D6DEEB">      </span><span style="color: #7FDBCA">&#x3C;/</span><span style="color: #F78C6C">Link</span><span style="color: #7FDBCA">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #D6DEEB">      </span><span style="color: #7FDBCA">&#x3C;</span><span style="color: #F78C6C">OpenCartButton</span><span style="color: #7FDBCA"> /></span></span>
+<span class="line"><span style="color: #D6DEEB">    </span><span style="color: #7FDBCA">&#x3C;/</span><span style="color: #CAECE6">nav</span><span style="color: #7FDBCA">></span></span>
+<span class="line"><span style="color: #D6DEEB">  );</span></span>
+<span class="line"><span style="color: #D6DEEB">}</span></span></code></pre>
+<p>Notice that the navigation is a Server Component, but we can still use the OpenCartButton component (a Client Component) inside it. This type of composition is indeed allowed in React and we can use it seamlessly throughout the Storefront. In fact, this is how we could use the CartUIProvider in App.server.jsx which of course is a Server Component.</p>
+<p>This is all for now. I hope you have found this article useful in your journey developing with Hydrogen. In the following article about Shopify, I’ll be covering the steps to create a full Cart functionality which will use all the information learned today. See you then :-)</p>
+    </article>
+  </main>
+
+    <footer class="flex items-center justify-center bg-accent gradient relative">
+      <p class="opacity-90 text-accent font-mono tracking-wide w-full flex text-center items-center justify-center bg-gray-bold p-2 mt-0">
+        Built by Francisco Andrade A. &copy; 2023
+      </p>
+    </footer>
+  </body>
+</html>

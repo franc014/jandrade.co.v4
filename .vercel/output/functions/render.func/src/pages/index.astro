@@ -52,7 +52,7 @@ import Separator from "../components/Separator.astro";
       </div>
     </section>
 
-    <section class="py-12 relative services">
+    <section class="py-14 relative services">
       <div class="wrapper flex flex-col">
         <h2 class="underlined_title mb-2">Services</h2>
         <div>
@@ -66,9 +66,9 @@ import Separator from "../components/Separator.astro";
             })
           }
         </div>
-        <Separator classes="self-center my-10" />
+        <Separator classes="self-center mb-10" />
         <div
-          class="tech-grid flex justify-around pb-20 md:w-3/4 mx-auto items-center"
+          class="tech-grid flex justify-around pb-8 md:w-3/4 mx-auto items-center"
         >
           {
             techSection.technologies.map((technology) => {
@@ -87,6 +87,12 @@ import Separator from "../components/Separator.astro";
             })
           }
         </div>
+        <p class="pb-10 text-center w-3/4 mx-auto">
+          As a web developer, I'm committed to finding the best solutions for
+          your unique needs, including working with the technologies listed
+          above, new technologies or the ones you find convenient for your
+          project. Contact me today to learn more!
+        </p>
         <div class="justify-center flex mx-auto">
           <LinkButton link="/contact" name="Let's get in touch" size="md">
             <svg
