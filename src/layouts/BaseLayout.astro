@@ -2,6 +2,7 @@
 import "../styles/global.css";
 import { useSanityClient } from "astro-sanity";
 import Header from "../components/Header.astro";
+import SEO from "../components/SEO.astro";
 
 const confQuery = `
 *[_type=='siteConfiguration'][0]
@@ -17,22 +18,20 @@ const orderedMainNav = mainNav.sort((a, b) => {
   return a.nav_order - b.nav_order;
 });
 
-export interface Props {
-  title: string;
-}
-const { title } = Astro.props;
+const { seo } = Astro.props;
+/* console.log(
+  Astro.url.pathname,
+  Astro.site,
+  new URL(Astro.url.pathname, Astro.site)
+); */
 ---
 
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <title>{title}</title>
+    <SEO {...seo} />
   </head>
   <body class="relative">
-    <!-- <PageOrnament placement="bottom-0 right-0 rotate-180" /> -->
     <div class="bg-accent gradient w-full h-3"></div>
     <Header nav={orderedMainNav} />
     <slot />

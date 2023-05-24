@@ -26,7 +26,13 @@ import Overlay from "../components/Overlay.astro";
 import Separator from "../components/Separator.astro";
 ---
 
-<BaseLayout title="Francisco Andrade | Web Developer">
+<BaseLayout
+  seo={{
+    title: "Home page",
+    description: "Hire me, a professional Web Developer in Quito-Ecuador",
+    image: { src: "/images/curtain.svg", alt: "Curtain" },
+  }}
+>
   <PageOrnament placement="-top-24 left-0" />
   <main class="">
     <section class="pt-12 pb-14 relative">
