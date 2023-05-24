@@ -27,30 +27,43 @@ function generateEmail({email,name,message}) {
 
 
 export const post = async ({ request }) => {
-  const data = await request.json();
-  
-   if (data.masterLenina) {
-        return new Response(JSON.stringify({
-          message: 'Boop beep bop zzzzstt good bye'
-        }), {
-          status: 400
-        })
+
+  try {
+    
+    const data = await request.json();
+    
+    if (data.masterLenina) {
+          return new Response(JSON.stringify({
+            message: 'Boop beep bop zzzzstt good bye'
+          }), {
+            status: 400
+          })
+      }
+
+
+      const info = await transporter.sendMail({
+          from: `jandrade.co< ${import.meta.env.VITE_SMTP_USER}>`,
+          to: `Juan Andrade <jfandtec@gmail.com>`,
+          subject: 'New contact!',
+          html: generateEmail(data),
+      });
+    
+    
+    
+      return new Response(JSON.stringify({
+        message: 'Your message has been delivered. Thanks for contacting! 😀'
+      }), {
+        status: 200
+      })
+
+     } catch (error) {
+    
+      return new Response(JSON.stringify({
+        message: error
+      }), {
+        status: 400
+      })
+    
     }
-
-
-    const info = await transporter.sendMail({
-        from: `jandrade.co< ${import.meta.env.VITE_SMTP_USER}>`,
-        to: `Juan Andrade <jfandtec@gmail.com>`,
-        subject: 'New contact!',
-        html: generateEmail(data),
-    });
-  
-   
-  
-    return new Response(JSON.stringify({
-      message: 'Your message has been delivered. Thanks for contacting! 😀'
-    }), {
-      status: 200
-    })
   
 }
