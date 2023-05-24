@@ -219,7 +219,7 @@ h4 {
    
  }
  .service ul li:before {
-    content: url(images/cube.svg);
+    content: url(/images/cube.svg);
     width: 40px;
     height: 40px;
  }
