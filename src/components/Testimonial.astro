@@ -1,0 +1,52 @@
+---
+import PortableText from "./PortableText.astro";
+const { text, author } = Astro.props;
+import { urlForImage } from "../sanity/urlForImage";
+---
+
+<div
+  class="bg-white flex flex-col justify-between rounded shadow-xl shadow-gray-bold/50 border border-accent p-6 testimonial-card"
+>
+  <div class="testimonial mb-8">
+    <quote>
+      <PortableText portableText={text} />
+    </quote>
+  </div>
+  <div
+    class="author bg-white-canvas shadow-lg border border-gray-lighter/30 shadow-slate-100 p-2 rounded"
+  >
+    <picture class="rounded-full p-0">
+      <img
+        class="rounded-full border border-gray-lighter/30 w-16"
+        src={urlForImage(author.photo).url()}
+        alt="nop"
+      />
+    </picture>
+    <div>
+      <h3 class="text-sm">{author.name}</h3>
+      <p class="text-xs m-0">
+        {author.title}
+      </p>
+    </div>
+  </div>
+</div>
+
+<style>
+  .testimonial-card:nth-of-type(2n + 1) {
+    transform: skew(2deg);
+  }
+
+  .testimonial-card {
+    transform: skew(-2deg);
+    @apply bg-white-canvas;
+  }
+  .testimonial quote p {
+    @apply text-lg font-sans tracking-wide m-0 p-0;
+  }
+
+  .author {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    align-items: center;
+  }
+</style>

@@ -1,0 +1,27 @@
+---
+import FrontendDevComponent from "./FrontendDev.astro";
+import PlatformsComponent from "./Platforms.astro";
+const FrontendDev = FrontendDevComponent;
+const Platforms = PlatformsComponent;
+
+const icons = [
+  {
+    name: "default",
+    component: FrontendDev,
+  },
+  {
+    name: "frontend-dev-icon",
+    component: FrontendDev,
+  },
+  {
+    name: "platform-icon",
+    component: Platforms,
+  },
+];
+
+const { iconName } = Astro.props;
+let selectedIcon = icons.filter((icon) => icon.name === iconName);
+const Component = selectedIcon[0].component;
+---
+
+<Component />

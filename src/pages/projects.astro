@@ -1,0 +1,30 @@
+---
+import Project from "../components/Project.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { getProjects } from "../sanity/util";
+const projects = await getProjects();
+---
+
+<BaseLayout title="Francisco Andrade | Projects">
+  <main class="wrapper py-20">
+    <section>
+      <h1 class="underlined_title">Projects</h1>
+      <p>
+        Welcome to my personal projects page! Browse my latest creations and
+        experiments. Thanks for stopping by!
+      </p>
+
+      <div class="mt-16 projects">
+        {
+          projects.map((project) => (
+            <div class="mb-16">
+              <Project {project} />
+            </div>
+          ))
+        }
+      </div>
+    </section>
+  </main>
+</BaseLayout>
+
+<style></style>

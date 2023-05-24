@@ -1,0 +1,23 @@
+---
+const { link, name, size } = Astro.props;
+---
+
+<a
+  href={link}
+  class={`btn-${size} relative transition will-change-transform duration-1000 flex items-center bg-gray-normal bg-clip-padding text-accent font-mono rounded-md ring-1 ring-accent shadow-md shadow-gray-light no-underline;`}
+>
+  <slot />
+  {name}
+</a>
+
+<style>
+  a:hover {
+    @apply bg-gray-light scale-110 transition transform duration-75 will-change-transform;
+  }
+  .btn-sm {
+    @apply text-sm px-2 py-1;
+  }
+  .btn-md {
+    @apply text-lg px-3 py-2;
+  }
+</style>
