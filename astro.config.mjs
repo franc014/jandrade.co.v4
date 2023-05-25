@@ -3,9 +3,8 @@ import tailwind from '@astrojs/tailwind';
 import sanity from "astro-sanity";
 import svelte from '@astrojs/svelte';
 import nightOwl from './src/styles/night_owl.json';
-
-
 import vercel from "@astrojs/vercel/serverless";
+import sitemap from "@astrojs/sitemap";
 
 // https://astro.build/config
 export default defineConfig({
@@ -26,7 +25,7 @@ export default defineConfig({
     dataset: import.meta.env.VITE_SANITY_DATASET,
     apiVersion: import.meta.env.VITE_SANITY_API_VERSION,
     useCdn: true
-  }), svelte()],
+  }), svelte(), sitemap()],
   output: 'server',
   adapter: vercel()
 });

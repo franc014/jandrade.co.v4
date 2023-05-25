@@ -2,13 +2,13 @@
 import smartypants from "smartypants";
 
 const {
-  name = "Francisco Andrade",
+  name = import.meta.env.VITE_SITE_NAME,
   description,
   image,
   locale = "en",
   canonicalURL = new URL(Astro.url.pathname, Astro.site),
   og: _og = {},
-  twitter: _twitter = {},
+  twitter: _twitter = { handle: import.meta.env.VITE_SEO_TWITTER_HANDLE },
 } = Astro.props;
 
 const title = [Astro.props.title, name].filter(Boolean).join(" | ");
