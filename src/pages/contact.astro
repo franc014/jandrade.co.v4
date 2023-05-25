@@ -3,9 +3,13 @@ import Contact from "../components/svelte/Contact.svelte";
 import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 
-<BaseLayout title="Francisco Andrade | About">
+<BaseLayout seo={{
+  title: "Contact",
+  description: "Get in touch with me to discuss your web development needs. Contact me via email, or fill out the contact form.",
+  /* image: { src: "/images/curtain.svg", alt: "Curtain" }, */
+}}>
   <main class="wrapper py-20">
-    <h1 class="underlined_title">Contact</h1>
+    <h2 class="underlined_title">Contact</h2>
     <p>
       Get in touch with me to discuss your web development needs. Contact me via
       email, or fill out the contact form. 🙂
