@@ -5,7 +5,14 @@ import { getProjects } from "../sanity/util";
 const projects = await getProjects();
 ---
 
-<BaseLayout title="Francisco Andrade | Projects">
+<BaseLayout 
+
+seo={{
+  title: "Projects",
+  description: "Welcome to my personal projects page! Browse my latest creations and experiments. Thanks for stopping by!",
+  /* image: { src: "/images/curtain.svg", alt: "Curtain" }, */
+}}
+>
   <main class="wrapper py-20">
     <section>
       <h1 class="underlined_title">Projects</h1>

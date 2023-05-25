@@ -7,7 +7,11 @@ const posts = (await getCollection("blog")).sort((a, b) => {
 });
 ---
 
-<BaseLayout title="Blog">
+<BaseLayout seo={{
+  title: "Blog Index",
+  description: "From tutorials and case studies to industry news and analysis, I'll be covering a wide range of topics related to web development. If you have any questions or feedback, don't hesitate to reach out. Let's learn together!",
+  /* image: { src: "/images/curtain.svg", alt: "Curtain" }, */
+}}>
   <main class="wrapper py-20">
     <section>
       <h1 class="underlined_title mb-2">Blog index</h1>
