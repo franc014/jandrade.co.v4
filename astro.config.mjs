@@ -6,6 +6,8 @@ import nightOwl from './src/styles/night_owl.json';
 import vercel from "@astrojs/vercel/serverless";
 import sitemap from "@astrojs/sitemap";
 
+import partytown from "@astrojs/partytown";
+
 // https://astro.build/config
 export default defineConfig({
   site: 'https://www.jandrade.co',
@@ -25,7 +27,11 @@ export default defineConfig({
     dataset: import.meta.env.VITE_SANITY_DATASET,
     apiVersion: import.meta.env.VITE_SANITY_API_VERSION,
     useCdn: true
-  }), svelte(), sitemap()],
+  }), svelte(), sitemap(), partytown({
+    config: {
+      forward: ["dataLayer.push"] 
+    }
+  })],
   output: 'server',
   adapter: vercel()
 });

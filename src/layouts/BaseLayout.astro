@@ -31,6 +31,15 @@ const { seo } = Astro.props;
   <head>
     <SEO {...seo} />
   </head>
+
+  <script type="text/partytown" async src="https://www.googletagmanager.com/gtag/js?id=G-PW91H99WPE"></script>
+  <script type="text/partytown">
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-PW91H99WPE');
+  </script>
+
   <body class="relative">
     <div class="bg-accent gradient w-full h-3"></div>
     <Header nav={orderedMainNav} />
