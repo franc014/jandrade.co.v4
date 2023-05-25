@@ -3,12 +3,14 @@ import tailwind from '@astrojs/tailwind';
 import sanity from "astro-sanity";
 import svelte from '@astrojs/svelte';
 import nightOwl from './src/styles/night_owl.json';
-
-
 import vercel from "@astrojs/vercel/serverless";
+import sitemap from "@astrojs/sitemap";
+
+import partytown from "@astrojs/partytown";
 
 // https://astro.build/config
 export default defineConfig({
+  site: 'https://www.jandrade.co',
   markdown: {
     shikiConfig: {
       theme: nightOwl,
@@ -25,7 +27,11 @@ export default defineConfig({
     dataset: import.meta.env.VITE_SANITY_DATASET,
     apiVersion: import.meta.env.VITE_SANITY_API_VERSION,
     useCdn: true
-  }), svelte()],
+  }), svelte(), sitemap(), partytown({
+    config: {
+      forward: ["dataLayer.push"] 
+    }
+  })],
   output: 'server',
   adapter: vercel()
 });
