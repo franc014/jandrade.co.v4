@@ -28,7 +28,13 @@ const { link, name, size } = Astro.props;
 
   function animateLink(e) {
     const ln = e.currentTarget;
-    gsap.to(ln, { rotation: 360, duration: 1, skewX: -10 });
+    gsap.to(ln, {
+      rotation: 360,
+      skewX: -10,
+      backgroundColor: "coral",
+      borderRadius: "4rem",
+      duration: 2,
+    });
   }
 
   links.forEach((link) => {
