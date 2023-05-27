@@ -8,9 +8,9 @@ const { placement } = Astro.props;
   viewBox="0 0 507 506"
   fill="none"
   xmlns="http://www.w3.org/2000/svg"
-  class={`max-w-xs md:max-w-md lg:max-w-full absolute -z-40 ${placement}`}
+  class={`max-w-xs md:max-w-md lg:max-w-full absolute -z-40 ${placement} page-ornament`}
 >
-  <g opacity="0.08">
+  <g opacity=".08">
     <mask
       id="mask0_648_478"
       style="mask-type:luminance"
@@ -486,3 +486,27 @@ const { placement } = Astro.props;
     ></path>
   </g>
 </svg>
+
+<script>
+  import { gsap } from "gsap";
+  const po = document.querySelectorAll(".page-ornament > g path ");
+
+  console.log(po);
+
+  gsap.to(Array.from(po), {
+    duration: 2,
+    scale: 2,
+    stagger: {
+      amount: 1.5,
+      grid: "auto",
+      from: "edges",
+    },
+    ease: "power1.inOut",
+    delay: 1,
+    repeat: 2,
+    yoyo: true,
+    onComplete: function () {
+      console.log("done stagger");
+    },
+  });
+</script>
