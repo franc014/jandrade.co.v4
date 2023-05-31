@@ -133,6 +133,9 @@
     @apply bg-accent;
  }
 
+ html {
+    scroll-behavior: smooth;
+ }
  body {
      @apply bg-white-canvas font-sans3;
  }
@@ -312,5 +315,7 @@ h4 {
  article p {
     @apply mb-8 text-gray-light
  }
+
+
 
 @tailwind utilities;  
