@@ -24,6 +24,7 @@ import Testimonial from "../components/Testimonial.astro";
 import PageOrnament from "../components/PageOrnament.astro";
 import Overlay from "../components/Overlay.astro";
 import Separator from "../components/Separator.astro";
+import AnchorLink from "../components/AnchorLink.astro";
 ---
 
 <BaseLayout
@@ -39,7 +40,7 @@ import Separator from "../components/Separator.astro";
       <Overlay />
 
       <div class="bio-grid wrapper">
-        <div class="md:w-[97%] lg:max-w-lg place-self-center home-cta">
+        <div class="md:w-[97%] lg:max-w-lg self-center home-cta">
           <PortableText portableText={bio.short_bio} />
         </div>
         <div class="md:w-5/6 lg:w-9/12 xl:w-8/12 md:mx-auto">
@@ -60,52 +61,8 @@ import Separator from "../components/Separator.astro";
 
     <nav class="wrapper">
       <ul class="rounded flex gap-4 items-center">
-        <li
-          class="border rounded px-2 py-1 text-gray-light/80 shadow shadow-gray-lighter"
-        >
-          <a
-            href="#services"
-            class="flex items-center gap-2 text-xs tracking-wide"
-            ><svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="w-3 h-3"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244"
-              ></path>
-            </svg>
-            Services</a
-          >
-        </li>
-        <li
-          class="border rounded px-2 py-1 text-gray-light/80 shadow shadow-gray-lighter"
-        >
-          <a
-            href="#endorsements"
-            class="flex items-center gap-2 text-xs tracking-wide"
-            ><svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="w-3 h-3"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244"
-              ></path>
-            </svg>
-            Endorsements</a
-          >
-        </li>
+        <AnchorLink linkText="Services" />
+        <AnchorLink linkText="Endorsements" />
       </ul>
     </nav>
 

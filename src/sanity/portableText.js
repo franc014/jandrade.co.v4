@@ -25,7 +25,7 @@ const customComponents = {
      
         const href = value.href;
         const rel = href.startsWith('/') ? undefined : 'noreferrer noopener'
-        return `<a class="text-base-normal underline" href="${href}" rel="${rel}">${children}</a>`
+        return `<a class="text-base-normal hover:text-base-normal/60 underline" href="${href}" rel="${rel}">${children}</a>`
     
     }
     
