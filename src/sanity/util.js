@@ -53,7 +53,7 @@ export async function getFullBiography() {
 
 export async function getProjects() {
     const projectsQuery = `
-        *[_type=="project"]
+        *[_type=="project"] | order(_createdAt desc)
     `;
     
     return await useSanityClient().fetch(projectsQuery);

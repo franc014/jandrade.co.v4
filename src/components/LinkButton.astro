@@ -4,7 +4,7 @@ const { link, name, size } = Astro.props;
 
 <a
   href={link}
-  class={`btn-${size} relative transition will-change-transform duration-1000 flex items-center bg-gray-normal bg-clip-padding text-accent font-mono rounded-md ring-1 ring-accent shadow-md shadow-gray-light no-underline;`}
+  class={`btn-link btn-${size} relative transition will-change-transform duration-1000 flex items-center bg-gray-normal bg-clip-padding text-accent font-mono rounded-md ring-1 ring-accent shadow-md shadow-gray-light no-underline;`}
 >
   <slot />
   {name}
@@ -21,3 +21,24 @@ const { link, name, size } = Astro.props;
     @apply text-lg px-3 py-2;
   }
 </style>
+
+<script>
+  /* import { gsap } from "gsap";
+  const links = document.querySelectorAll(".btn-link");
+
+  function animateLink(e) {
+    const ln = e.currentTarget;
+    gsap.to(ln, {
+      rotation: 360,
+      skewX: -10,
+      backgroundColor: "coral",
+      borderRadius: "4rem",
+      duration: 2,
+    });
+  }
+
+  links.forEach((link) => {
+    link.addEventListener("mouseenter", animateLink);
+    link.addEventListener("mouseleave", animateLink);
+  }); */
+</script>

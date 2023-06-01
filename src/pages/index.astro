@@ -24,6 +24,7 @@ import Testimonial from "../components/Testimonial.astro";
 import PageOrnament from "../components/PageOrnament.astro";
 import Overlay from "../components/Overlay.astro";
 import Separator from "../components/Separator.astro";
+import AnchorLink from "../components/AnchorLink.astro";
 ---
 
 <BaseLayout
@@ -39,7 +40,7 @@ import Separator from "../components/Separator.astro";
       <Overlay />
 
       <div class="bio-grid wrapper">
-        <div class="md:w-[97%] lg:max-w-lg place-self-center home-cta">
+        <div class="md:w-[97%] lg:max-w-lg self-center home-cta">
           <PortableText portableText={bio.short_bio} />
         </div>
         <div class="md:w-5/6 lg:w-9/12 xl:w-8/12 md:mx-auto">
@@ -58,7 +59,14 @@ import Separator from "../components/Separator.astro";
       </div>
     </section>
 
-    <section class="py-14 relative services">
+    <nav class="wrapper">
+      <ul class="rounded flex gap-4 items-center">
+        <AnchorLink linkText="Services" />
+        <AnchorLink linkText="Endorsements" />
+      </ul>
+    </nav>
+
+    <section class="py-14 relative services" id="services">
       <div class="wrapper flex flex-col">
         <h2 class="underlined_title mb-2">Services</h2>
         <div>
@@ -113,10 +121,10 @@ import Separator from "../components/Separator.astro";
       </div>
     </section>
 
-    <section class="py-16 testimonials relative">
+    <section class="py-16 testimonials relative" id="endorsements">
       <div class="wrapper">
         <h2 class="underlined_title selection:bg-base-normal/40">
-          Testimonials
+          Endorsements
         </h2>
         <div class="flex flex-col md:grid grid-cols-2 gap-8">
           <p class="max-w-xs text-2xl selection:bg-base-normal/40">
