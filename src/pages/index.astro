@@ -277,3 +277,12 @@ import AnchorLink from "../components/AnchorLink.astro";
     }
   }
 </style>
+
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+  gsap.registerPlugin(ScrollTrigger);
+
+  const ex = document.querySelector(".testimonials");
+  gsap.to(ex, { rotation: 360, duration: 1, scrollTrigger: ex });
+</script>
