@@ -283,6 +283,30 @@ import AnchorLink from "../components/AnchorLink.astro";
   import { ScrollTrigger } from "gsap/ScrollTrigger";
   gsap.registerPlugin(ScrollTrigger);
 
-  const ex = document.querySelector(".testimonials");
-  gsap.to(ex, { rotation: 360, duration: 1, scrollTrigger: ex });
+  function animateOnScroll(element) {
+    gsap.from(element, {
+      x: -200,
+      opacity: 0,
+      duration: 1,
+      ease: "back",
+      scrollTrigger: {
+        trigger: element,
+        markers: true,
+        start: "top 85%",
+        end: "bottom 25%",
+        toggleActions: "restart pause resume pause",
+      },
+    });
+  }
+  const titles = document.querySelectorAll("h2");
+
+  const testimonials = document.querySelectorAll(".testimonial-card");
+
+  titles.forEach((title) => {
+    animateOnScroll(title);
+  });
+
+  testimonials.forEach((testimonial) => {
+    animateOnScroll(testimonial);
+  });
 </script>
