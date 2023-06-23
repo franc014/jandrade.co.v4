@@ -283,30 +283,42 @@ import AnchorLink from "../components/AnchorLink.astro";
   import { ScrollTrigger } from "gsap/ScrollTrigger";
   gsap.registerPlugin(ScrollTrigger);
 
-  function animateOnScroll(element) {
+  function animateOnScroll(element, moveX, rotation = 0) {
     gsap.from(element, {
-      x: -200,
+      x: moveX,
       opacity: 0,
       duration: 1,
+      rotation,
+      transformOrigin: "50% 50%",
       ease: "back",
       scrollTrigger: {
         trigger: element,
         markers: true,
         start: "top 85%",
         end: "bottom 25%",
+        /* scrub: 1, */
         toggleActions: "restart pause resume pause",
       },
     });
   }
   const titles = document.querySelectorAll("h2");
 
-  const testimonials = document.querySelectorAll(".testimonial-card");
+  const testimonialsEven = document.querySelectorAll(
+    ".testimonial-card:nth-of-type(even)"
+  );
+
+  const testimonialsOdd = document.querySelectorAll(
+    ".testimonial-card:nth-of-type(odd)"
+  );
 
   titles.forEach((title) => {
-    animateOnScroll(title);
+    animateOnScroll(title, -200);
   });
 
-  testimonials.forEach((testimonial) => {
-    animateOnScroll(testimonial);
+  testimonialsOdd.forEach((testimonial) => {
+    animateOnScroll(testimonial, -200, 5);
+  });
+  testimonialsEven.forEach((testimonial) => {
+    animateOnScroll(testimonial, 200, -5);
   });
 </script>
