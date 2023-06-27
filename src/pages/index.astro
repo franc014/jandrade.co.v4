@@ -35,12 +35,13 @@ import AnchorLink from "../components/AnchorLink.astro";
   }}
 >
   <PageOrnament placement="-top-24 left-0" />
-  <main class="">
+  <main>
     <section class="pt-12 pb-14 relative">
       <Overlay />
 
       <div class="bio-grid wrapper">
         <div class="md:w-[97%] lg:max-w-lg self-center home-cta">
+          <h2 class="visually-hidden">Presentation</h2>
           <PortableText portableText={bio.short_bio} />
         </div>
         <div class="md:w-5/6 lg:w-9/12 xl:w-8/12 md:mx-auto">
