@@ -6,6 +6,7 @@ const { link, name, size } = Astro.props;
   href={link}
   class={`btn-link btn-${size} relative transition will-change-transform duration-1000 flex items-center bg-gray-normal bg-clip-padding text-accent font-mono rounded-md ring-1 ring-accent shadow-md shadow-gray-light no-underline;`}
 >
+  <span class="visually-hidden">{name}</span>
   <slot />
   {name}
 </a>

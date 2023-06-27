@@ -8,17 +8,25 @@ const bio = await getFullBiography();
 const socialLinks = await getSocialLinks();
 ---
 
-<BaseLayout seo={{
-  title: "About",
-  description: "Francisco Andrade is a Web Developer based in Quito Ecuador who strives to provide the best solutions for your unique needs. Whether you require the use of cutting-edge technologies or prefer to work with more traditional tools, I am committed to helping you achieve your goals",
-  /* image: { src: "/images/curtain.svg", alt: "Curtain" }, */
-}}>
+<BaseLayout
+  seo={{
+    title: "About",
+    description:
+      "Francisco Andrade is a Web Developer based in Quito Ecuador who strives to provide the best solutions for your unique needs. Whether you require the use of cutting-edge technologies or prefer to work with more traditional tools, I am committed to helping you achieve your goals",
+    /* image: { src: "/images/curtain.svg", alt: "Curtain" }, */
+  }}
+>
   <main class="wrapper py-20">
     <section class="w-full md:w-3/4">
-      <h1 class="underlined_title">About</h1>
+      <h2 class="underlined_title">
+        About <span class="visually-hidden">Francisco</span>
+      </h2>
       <PortableText portableText={bio.full_bio} />
       <Separator classes="my-10" />
       <footer class="flex gap-4 items-center pb-12">
+        <h2 class="visually-hidden">
+          Links To Social Profiles And Download Resume
+        </h2>
         <div class="photo">
           <img
             class="rounded-full w-16 h-16 md:w-20 md:h-20 lg:w-32 lg:h-32 object-cover"

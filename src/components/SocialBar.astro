@@ -15,7 +15,10 @@ const { socialLinks, resume } = Astro.props;
           return (
             <Circle>
               <a href={item.link}>
-                <GithubIcon />
+                <>
+                  <span class="visually-hidden">Github Profile Link</span>
+                  <GithubIcon />
+                </>
               </a>
             </Circle>
           );
@@ -23,6 +26,7 @@ const { socialLinks, resume } = Astro.props;
           return (
             <Circle>
               <a href={item.link}>
+                <span class="visually-hidden">LinkedIn Profile Link</span>
                 <LinkedInIcon />
               </a>
             </Circle>
@@ -32,7 +36,7 @@ const { socialLinks, resume } = Astro.props;
     }
   </div>
   <div class="ml-4">
-    <LinkButton link={resume} name="Resume" size="sm">
+    <LinkButton link={resume} name="Dowload Resume" size="sm">
       <svg class="icon text-accent" viewBox="0 0 20 20">
         <polygon
           points="9 16.172 2.929 10.101 1.515 11.515 10 20 10.707 19.293 18.485 11.515 17.071 10.101 11 16.172 11 0 9 0"
