@@ -1,27 +1,37 @@
 ---
 import FrontendDevComponent from "./FrontendDev.astro";
 import PlatformsComponent from "./Platforms.astro";
-const FrontendDev = FrontendDevComponent;
-const Platforms = PlatformsComponent;
 
-const icons = [
+/* const icons = [
   {
     name: "default",
-    component: FrontendDev,
+    component: FrontendDevComponent,
   },
   {
     name: "frontend-dev-icon",
-    component: FrontendDev,
+    component: FrontendDevComponent,
   },
   {
     name: "platform-icon",
-    component: Platforms,
+    component: PlatformsComponent,
   },
-];
+]; */
 
+/* const { iconName } = Astro.props;
+let selectedIcon = icons.filter((icon) => icon.name === iconName); */
+//const Component = selectedIcon[0].component;
+
+function selectIcon(iconName) {
+  console.log(iconName);
+  switch (iconName) {
+    case "frontend-dev-icon":
+      return <FrontendDevComponent />;
+
+    default:
+      return <FrontendDevComponent />;
+  }
+}
 const { iconName } = Astro.props;
-let selectedIcon = icons.filter((icon) => icon.name === iconName);
-const Component = selectedIcon[0].component;
 ---
 
-<Component />
+{selectIcon(iconName)}
