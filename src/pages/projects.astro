@@ -21,7 +21,12 @@ const projects = await getProjects();
         experiments. Thanks for stopping by!
       </p>
 
-      <div class="mt-16 projects">
+      <section
+        class="mt-16 projects"
+        role="region"
+        aria-labelledby="projects-list"
+      >
+        <span class="visually-hidden" id="projects-list">Projects List</span>
         {
           projects.map((project) => (
             <div class="mb-16">
@@ -29,7 +34,7 @@ const projects = await getProjects();
             </div>
           ))
         }
-      </div>
+      </section>
     </section>
   </main>
 </BaseLayout>
