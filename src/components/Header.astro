@@ -16,8 +16,12 @@ const { nav } = Astro.props;
         ></a
       >
     </h1>
-    <nav>
-      <ul class="flex flex-wrap justify-center md:justify-between gap-2">
+    <nav aria-labelledby="main-nav">
+      <span hidden id="main-nav">Main Navigation</span>
+      <ul
+        class="flex flex-wrap justify-center md:justify-between gap-2"
+        role="list"
+      >
         {
           nav.map((item) => {
             const linkPath = `/${item.page_link}`;
@@ -25,10 +29,11 @@ const { nav } = Astro.props;
             return (
               <li class="mr-4 ">
                 <a
-                  class={`text-gray-normal relative block h-full font-mono ${
-                    Astro.url.pathname === linkPath ? "active" : ""
-                  }`}
+                  class="text-gray-normal relative block h-full font-mono"
                   href={linkPath}
+                  aria-current={`${
+                    Astro.url.pathname === linkPath ? true : false
+                  }`}
                 >
                   {item.text}
                 </a>
@@ -77,7 +82,7 @@ const { nav } = Astro.props;
     background-size: cover;
     background-position: center;
   }
-  ul li a.active::before {
+  ul li a[aria-current="true"]::before {
     content: "";
     position: absolute;
     left: 0;

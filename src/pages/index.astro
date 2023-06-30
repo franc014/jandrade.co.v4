@@ -60,8 +60,9 @@ import AnchorLink from "../components/AnchorLink.astro";
       </div>
     </section>
 
-    <nav class="wrapper">
-      <ul class="rounded flex gap-4 items-center">
+    <nav class="wrapper" aria-labelledby="home-nav">
+      <span id="home-nav" hidden>Home Navigation</span>
+      <ul class="rounded flex gap-4 items-center" role="list">
         <AnchorLink linkText="Services" />
         <AnchorLink linkText="Endorsements" />
       </ul>
@@ -94,7 +95,7 @@ import AnchorLink from "../components/AnchorLink.astro";
                       slot="tech-logo"
                       class="object-fit w-12 h-12 "
                       src={technology.icon.asset.url}
-                      alt={technology.name}
+                      alt={`${technology.name} logo`}
                     />
                   </TechnoItem>
                 </div>
