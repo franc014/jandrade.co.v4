@@ -305,7 +305,7 @@ h4 {
 
 
  pre {
-    @apply px-8 py-12 mb-10 shadow-xl shadow-gray-lighter/40 rounded selection:bg-base-normal/40;
+    @apply px-8 py-12 mb-20 shadow-xl shadow-gray-lighter/40 rounded selection:bg-base-normal/40;
  }
 
  article {
@@ -316,6 +316,24 @@ h4 {
     @apply mb-8 text-gray-light
  }
 
+ article p > img {
+
+    @apply mx-auto my-20;
+
+ }
+
+ article h2 {
+    @apply mt-10 my-14
+ }
+
+article .article-image{
+    @apply max-w-fit mx-auto my-20;
+}
+
+article ul {
+    list-style-type: disc;
+    padding-left: 1rem;
+}
 
 .visually-hidden:not(:focus):not(:active) { 
     /* shrink to a 1px square */

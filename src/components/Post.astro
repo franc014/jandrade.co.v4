@@ -2,15 +2,22 @@
 const { post } = Astro.props;
 import PortableText from "../components/PortableText.astro";
 import ArticleMeta from "./ArticleMeta.astro";
+import Separator from "./Separator.astro";
 ---
 
 <div class="post">
   <!-- <img class="w-8" src="/images/file-text.png" alt="post icon" /> -->
   <div class="post-content">
-    <h2 class="mb-4"><a href={`/blog/${post.slug}`}>{post.data.title}</a></h2>
+    <h2 class="mb-4">
+      <a
+        class="text-gray-normal/90 hover:text-base-normal/80"
+        href={`/blog/${post.slug}`}>{post.data.title}</a
+      >
+    </h2>
     <div class="excerpt">
       {post.data.excerpt}
     </div>
+    <Separator classes="mt-8 mb-2" />
     <ArticleMeta post={post.data} overrideClasses={["text-sm"]} />
   </div>
 </div>
