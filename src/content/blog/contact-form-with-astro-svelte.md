@@ -1,0 +1,246 @@
+---
+title: Create a contact form with Astro, Svelte, and Nodemailer
+tags: ["astro", "svelte", "nodemailer", "progressive enhancement"]
+excerpt: "Let's create an Astro contact form that uses Svelte Kit to let the users enter their information and send it to an API route that handles the email delivery via Nodemailer."
+pubDate: 2022-06-29 00:00
+---
+
+You may already have heard of Astro, which is by now a very popular technology among a huge quantity of frameworks.
+Astro is not just a SSG, but also allows us to create API routes to handle requests on the server. On those API routes, we can connect to databases or use third-party APIs or services; which in our case is to send the user's data to a Mail delivery service.
+You can follow this tutorial by [inspecting the source code](https://github.com/franc014/jandrade.co.v4) that will be used as an example. That code belongs to the Contact functionality of my personal Website you're currently in.
+
+In the following diagram, the solution is depicted showing its different parts:
+
+![Diagram showing the structure for a Form implementation using Astro, Svelte and Nodemailer](https://res.cloudinary.com/dfpkdo5tf/image/upload/v1688473196/jandrade.co.v4/evvg1owklmiuwcb5m7jh.png)
+
+Let's start by creating the form to collect the user's contact details.
+
+## Create the form as a Svelte component
+
+Astro allows you to create "[Islands of Interactivity](https://docs.astro.build/en/concepts/islands/#what-is-an-astro-island)". This means that until you need some kind of Javascript Interactivity, you could only use the Web platform. This “Progressive Enhancement” approach helps improve the Website performance and User Experience as the size of the bundled scripts is reduced.
+
+What is amazing is that when you really need to add Javascript, you can do it with just “vanilla” or use any supported framework, for example, React, Vue, or, in my case, Svelte. This is precisely how we can start creating our contact form: as a Svelte component, where all the client-side, data collection and submission is handled.
+
+First, let's create a contact route, which is the contact page the user will visit to send a message. In Astro the **pages** folder, under **src**, is the place we create the route files:
+
+<div class="card article-image">
+    <img src="https://res.cloudinary.com/dfpkdo5tf/image/upload/v1688474137/jandrade.co.v4/llwl3nfidfqu4gc4e5ii.png" alt="Root directory to place contact page in Astro">
+</div>
+
+And following is the code for the Contact page or route:
+
+```astro
+
+<BaseLayout seo={{
+  title: "Contact",
+  description: "Get in touch with me to discuss your web development needs. Contact me via email, or fill out the contact form.",
+  /* image: { src: "/images/curtain.svg", alt: "Curtain" }, */
+}}>
+  <main class="wrapper py-20">
+    <h1 class="underlined_title">Contact</h1>
+    <p>
+      Get in touch with me to discuss your web development needs. Contact me via
+      email, or fill out the contact form. 🙂
+    </p>
+    <div class="flex gap-2 mb-16 mt-4 items-center">
+      <svg
+        class="w-6 inline-block"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 20 20"
+        ><path
+          d="M18 2a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4c0-1.1.9-2 2-2h16zm-4.37 9.1L20 16v-2l-5.12-3.9L20 6V4l-10 8L0 4v2l5.12 4.1L0 14v2l6.37-4.9L10 14l3.63-2.9z"
+        ></path></svg
+      >
+      <span class="font-bold">Email:</span> jfandtec@gmail.com
+    </div>
+    <div
+      class="my-8 p-12 rounded-md shadow-lg md:w-5/6 text-gray-normal bg-white-canvas card"
+    >
+      <Contact client:only="svelte" />
+    </div>
+  </main>
+</BaseLayout>
+```
+
+## Embed the <Contact /> Svelte component into the Astro route
+
+The Svelte `<Contact>` component is embedded in the `/contact` Astro page. It has the directive `client:only` which means this will be rendered only on the Client, bypassing server-rendering.
+
+It includes another contact form component and placeholders to show error/success messages once the message has been handled on the server side (API route).
+
+```svelte
+<script>
+  import { fly, fade } from "svelte/transition";
+  import ContactForm from "./ContactForm.svelte";
+  let message = "";
+  let resSuccess;
+  let resError;
+
+  function wait(ms = 0) {
+    return new Promise((resolve, reject) => setTimeout(resolve, ms));
+  }
+
+  async function handleResult(event) {
+    resSuccess = !event.detail.error;
+    resError = !resSuccess;
+    message = event.detail.message;
+    await wait(4000);
+    message = "";
+  }
+</script>
+
+<ContactForm on:emailSent={handleResult} />
+{#if message !== ""}
+  <p
+    in:fly={{ x: -200, duration: 800 }}
+    out:fade
+    class:resSuccess
+    class:resError
+  >
+    {message}
+  </p>
+{/if}
+```
+
+Notice, that inside this component we can work with any Svelte feature we already know, so we can expand and enhance our applications. This, for me, is mind-blowing because, there's no need to configure or implement anything additional to integrate the tools I like to work with, as it's the case with other platforms like Wordpress. Astro makes it really seamless.
+
+## Create the API route (Server Endpoint) that will send the Email with contact information
+
+Now, we have to, somehow, handle the message submission to a Mail Service. Astro makes it again so much simple as creating an API route or Endpoint in which you define a function defined as a RESTFUL method.
+In my case, I created this API route inside the `src/pages/api` directory and called it `contact.json.js`.
+You may wonder why it contains the **.json** extension and it's because the **.js** extension will be removed during the build process, keeping the extension of the data you want to create. In my example, a **json** object with the response result will be created.
+
+I configured my Astro Website to run at runtime (setting the **output** option to true in the **astro.config.mjs** file configuration), so the **contact** endpoint will be executed at runtime, giving me [more capabilities](https://docs.astro.build/en/core-concepts/endpoints/#server-endpoints-api-routes) to handle the data submission request.
+
+[My endpoint](https://github.com/franc014/jandrade.co.v4/blob/main/src/pages/api/contact.json.js) has a post HTML method that exposes a request object and allows me to fetch the data submitted in the Svelte form that we'll review later in this Post.
+
+```javascript
+export const post = async ({ request }) => {
+
+  try {
+
+    const data = await request.json();
+    ...
+```
+
+In the example file, you may verify that I'm using [Nodemailer](https://nodemailer.com/about/) as a **Node.js** library to handle Mail Delivery. Of course, as a prerequisite, you have to configure a Mail Service like **Mailgun** or **Sendgrid**; and for development a test Mail service like **Mailtrap**.
+
+Notice that the Nodemailer object is set up with **.env** variables. [Astro comes with **.env** capabilities](https://docs.astro.build/en/guides/environment-variables/#default-environment-variables) already up and running. In your **development** environment, you can create a **.env.development** file, whose variables are all accessed by **server-side** code, except the ones prefixed with **PUBLIC\_**, available only in **client-side** code for security reasons. We should use **import.meta.env** to get the variables. **Vite**, the bundler Astro works with, uses the **import.meta** feature added in **ES2020**.
+
+As previously mentioned, after **Nodemailer** sends the message to the Mail Service, it will give us a success or error response that we can hand to the client, in this case, the `<Contact />` Svelte component.
+
+```javascript
+return new Response(
+  JSON.stringify({
+    message: "Your message has been delivered. Thanks for contacting! 😀",
+  }),
+  {
+    status: 200,
+  }
+);
+```
+
+## The Svelte form component
+
+Coming back to the client side, let's review the [form component](https://github.com/franc014/jandrade.co.v4/blob/main/src/components/svelte/ContactForm.svelte) created with Svelte. The asynchronous function `sendContact()` handles the user's data submission to the Endpoint we reviewed in the previous step:
+
+```javascript
+...
+const sendEmail = await fetch("/api/contact.json", {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+ const res = await sendEmail.json();
+...
+
+```
+
+Once received the response, we can decide on the way we give feedback to the user about the action performed. I created a Custom Event called `emailSent` that dispatches the response status and the message.
+But, where do we listen to this Custom Event? Let's remember that this form Component is part of the [`<Contact/>`](https://github.com/franc014/jandrade.co.v4/blob/main/src/components/svelte/Contact.svelte) component we talked about previously, and it's there where we can handle the `emailSent` event, to present a success or error message to the user:
+
+```javascript
+<script>
+  ...
+  let message = "";
+  let resSuccess;
+  let resError;
+
+  function wait(ms = 0) {
+    return new Promise((resolve, reject) => setTimeout(resolve, ms));
+  }
+
+  async function handleResult(event) {
+    resSuccess = !event.detail.error;
+    resError = !resSuccess;
+    message = event.detail.message;
+    await wait(4000);
+    message = "";
+  }
+</script>
+
+<ContactForm on:emailSent={handleResult} />
+
+ ...
+
+```
+
+The syntax you can see in the previous code snippet is related to Svelte reactivity. I set up the component state as three variables:
+`message`,`resSuccess` and`resError` that will change according to the success or failure response received from the server Endpoint.
+Based on these reactive state, we finally can show an alert to the user:
+
+```javascript
+{#if message !== ""}
+  <p
+    in:fly={{ x: -200, duration: 800 }}
+    out:fade
+    class:resSuccess
+    class:resError
+  >
+    {message}
+  </p>
+{/if}
+```
+
+[Svelte transitions](https://svelte.dev/tutorial/in-and-out) sparkle the activation/deactivation of the alert, making it even more appealing to the user.
+
+```javascript
+  <p
+    in:fly={{ x: -200, duration: 800 }}
+    out:fade
+    class:resSuccess
+    class:resError
+  >
+```
+
+This is, precisely, the mission of these "Islands" of interactivity: enhance our applications or websites with features that are part of other frameworks or libraries, without compromising the entire site's performance. Once again, I consider this a fantastic approach for building the Web.
+
+## A honey pot for bot protection
+
+Another nice piece of implementation you may have noticed is the use of a hidden field in the [form component](https://github.com/franc014/jandrade.co.v4/blob/main/src/components/svelte/ContactForm.svelte):
+
+`<input type="hidden" name="masterLenina" bind:value={data.masterLenina} />`
+
+A bot may fill this input field, and on the server side we can catch it up and stop the execution right away:
+
+```javascript
+...
+const data = await request.json();
+
+    if (data.masterLenina) {
+          return new Response(JSON.stringify({
+            message: 'Boop beep bop zzzzstt good bye'
+          }), {
+            status: 400
+          })
+      }
+...
+```
+
+Instead of messing up with captcha validators, we now have a fast and simple solution to protect our implementation from bots.
+
+## Conclusion
+
+We have made a fast review of a Contact form implementation using Astro and an "Island of Interactivity" with Svelte. As simple as it may seem, it is a powerful example of how we can leverage Astro's features along with the different implementations we can make for our websites and applications. I can not recommend enough this Progressive Enhancement approach for building UIs and I'm certain Astro has really nailed it.

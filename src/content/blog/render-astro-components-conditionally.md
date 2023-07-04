@@ -1,0 +1,219 @@
+---
+title: Render Astro Components Conditionally
+tags: ["Astro", "conditionally rendering", "Sanity"]
+excerpt: "In this post, I'll showcase an alternative method for conditionally rendering Astro components based on props in web pages. Rather than using traditional if or if/else statements, I'll demonstrate a different approach that avoids them while achieving the desired outcome."
+pubDate: 2022-07-04 00:00
+---
+
+Sometimes we need to conditionally display content on our Web pages. Most of the technologies allow us to use template tags or javascript conditional statements that enable us to choose what piece of content to render based on the input given. Of course, that content can be encapsulated in a Component. In this post, I want to show you how this relates to an implementation in which I render Astro components conditionally based on props, without resorting to the usual conditional statements if or if/else.
+
+## The use case
+
+On my [Website](www.jandrade.com) home page, I have a section showing professional services. Each service content comes from a Sanity CMS type called `serviceExcerpt`. Its definition is as follows (a Sanity document schema):
+
+```json
+export default {
+  name: "serviceExcerpt",
+  title: "Service Excerpt",
+  type: "document",
+  fields: [
+
+    {
+      name: "title",
+      title: "Title",
+      type: "string"
+    },
+    {
+      name: "description",
+      title: "Description",
+      type: "blockContent",
+    },
+    {
+      name: "icon_name",
+      title: "Icon Name",
+      type: "string",
+    },
+    {
+      name: "home_place_display",
+      title: "Home place display",
+      type: "string",
+    },
+  ],
+};
+
+```
+
+And the following is the CMS-generated UI for the Service:
+
+<div class="card article-image">
+<img src="https://res.cloudinary.com/dfpkdo5tf/image/upload/v1688487022/jandrade.co.v4/Pasted_image_20230629114430.png"
+alt="A screen shot of a Sanity, Service Excerpt Type UI for the user to fill a professional service ">
+</div>
+
+You may notice that when rendering the services on the home page, an icon related to each service is displayed. But that icon is not a raster image, is an SVG. Where does it come from, if I'm not allowing icon uploads for the service type?
+
+In fact, I'm not allowing uploads, because I want to use inline SVG icons in the markup. This will give me the opportunity to have each icon available for animations in order to enhance the user experience.
+
+So, each SVG is stored as an Astro component in the application folder and to render it we need some conditional logic based on the Icon Name input you can observe in the Service Excerpt UI.
+
+## Conditional rendering of components
+
+First, let me show you that on my home page, the services are displayed like this:
+
+```html
+<h2 class="underlined_title mb-2">Services</h2>
+<div>
+  { services.map((service) => { return (
+  <div class="mb-10 md:w-5/6 service ">
+    <Service service="{service}" />
+  </div>
+  ); }) }
+</div>
+...
+```
+
+Every service is looped through a map function and passed to a `<Service />` component. Let's check out this component:
+
+```html
+---
+import PortableText from "./PortableText.astro";
+import ServiceIcon from "./icons/ServiceIcon.astro";
+
+const { service } = Astro.props;
+---
+
+<ServiceIcon iconName="{service.icon_name}" />
+<h3 class="mb-2 mt-4">{service.title}</h3>
+<PortableText portableText="{service.description}" />
+
+<style>
+  h2 {
+    @apply h-10  mt-2 flex items-center;
+  }
+</style>
+```
+
+This component displays the Icon, the title, and the description of the service. I will focus on the `<ServiceIconComponent />` which works the logic behind the conditional display of the services' icons. Using if/else statements, we would have the following implementation to render the SVG icon component according to the `iconName` **prop** passed to it.
+
+```astro
+---
+import FrontendDevComponent from "./FrontendDev.astro";
+import PlatformsComponent from "./Platforms.astro";
+
+
+const icons = [
+  {
+    name: "default",
+    component: FrontendDevComponent,
+  },
+  {
+    name: "frontend-dev-icon",
+    component: FrontendDevComponent,
+  },
+  {
+    name: "platform-icon",
+    component: PlatformsComponent,
+  },
+];
+
+const { iconName } = Astro.props;
+let selectedIcon = icons.filter((icon) => icon.name === iconName);
+const Component = selectedIcon[0].component;
+---
+
+<Component />
+```
+
+In this component, first, I'm bringing in all the icon, and astro components, and placing them in an array of icon objects which points to which icon we're talking about. Each name should match the name entered in the Services UI CMS interface.
+
+```javascript
+import FrontendDevComponent from "./FrontendDev.astro";
+import PlatformsComponent from "./Platforms.astro";
+
+const icons = [
+  {
+    name: "default",
+    component: FrontendDevComponent,
+  },
+  {
+    name: "frontend-dev-icon",
+    component: FrontendDevComponent,
+  },
+  {
+    name: "platform-icon",
+    component: PlatformsComponent,
+  },
+];
+...
+
+```
+
+You can even note that there's a "default" icon in case, we don't provide an icon for any service in the CMS.
+
+The following lines, extract from the array the component based on the name of the icon, given in the `iconName` **prop**. The filter function is responsible for this.
+
+The last step is to render that component, and Astro makes it so easy. As I already have the reference to the selected icon component (`const Component = selectedIcon[0].component;`),
+I just had to place it in the Astro HTML markup section, as any other element or component, after the front matter fences:
+
+```html
+... <Component />
+```
+
+Let's remember that this component actually renders an SVG representing the icon we want to display for each service.
+
+## Svelte also makes it easy
+
+The paradigm of dynamically rendering components is also implemented beautifully in Svelte. They have a special element called `<svelte:component>`:
+
+> The `<svelte:component>` element renders a component dynamically, using the component constructor specified as the `this` property. When the property changes, the component is destroyed and recreated.
+
+This is similar to the implementation we described for Astro components. We switch the component we need to display based on an input or **prop**. In Svelte, we pass the filtered component to the **this** prop of `<svelte:component>` and voilà, we avoid any switch, or if-else statements we would need to conditionally render components.
+
+For our example, we would implement the icon service display, like this:
+
+```javascript
+<script>
+	import Jamstack from './Jamstack.svelte';
+	import FrontendDev from './FrontendDev.svelte';
+	import Platforms from './Platforms.svelte';
+	export let iconName = 'default';
+
+	const icons = [
+		{
+			name: 'default',
+			component: FrontendDev
+		},
+
+		{
+			name: 'wordpress-dev-icon',
+			component: FrontendDev
+		},
+		{
+			name: 'email-dev-icon',
+			component: FrontendDev
+		},
+		{
+			name: 'jamstack-dev-icon',
+			component: Jamstack
+		},
+		{
+			name: 'ui-implementation-icon',
+			component: FrontendDev
+		},
+		{
+			name: 'platform-icon',
+			component: Platforms
+		}
+	];
+
+	let selectedIcon = icons.filter((icon) => icon.name === iconName);
+</script>
+
+<svelte:component this={selectedIcon[0].component} />
+
+```
+
+## Conclusion
+
+I hope this post has given you a clue about how to solve a problem related to conditionally rendering components in Astro. We have also reviewed how this can be accomplished with Svelte, using the
+`<svelte:component>` special element; and I'm sure the same pattern could be implemented in other frameworks like React or View. Let me know, if you have an example using any of them.
