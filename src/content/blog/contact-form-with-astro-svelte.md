@@ -2,7 +2,7 @@
 title: Create a contact form with Astro, Svelte, and Nodemailer
 tags: ["astro", "svelte", "nodemailer", "progressive enhancement"]
 excerpt: "Let's create an Astro contact form that uses Svelte Kit to let the users enter their information and send it to an API route that handles the email delivery via Nodemailer."
-pubDate: 2022-06-29 00:00
+pubDate: 2023-06-29 00:00
 ---
 
 You may already have heard of Astro, which is by now a very popular technology among a huge quantity of frameworks.
