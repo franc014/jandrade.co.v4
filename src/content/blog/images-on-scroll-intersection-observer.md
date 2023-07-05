@@ -114,5 +114,5 @@ Explore what other intersecting things can be achieved using the Intersection Ob
 alt="This image shows a Scroll To Acept example using Intersection Observer">
 </div>
 
-Review the MDN documentation on the [Interception Observer API](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API) which also has some good examples you may as well want to study.
+I suggest reviewing the MDN documentation on the [Interception Observer API](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API) which has some good examples you may as well want to study.
 Finally, don't forget to reach out via the Github examples in this article, and my contact form. Let's learn more about Frontend Development!
