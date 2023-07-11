@@ -10,11 +10,14 @@ import {
   getTestimonials,
 } from "../sanity/util";
 
+import { getBlogPosts } from "../util";
+
 const bio = await getBiography();
 const socialLinks = await getSocialLinks();
 const services = await getServices();
 const techSection = await getTechnologies();
 const testimonials = await getTestimonials();
+const recentPosts = await getBlogPosts();
 
 import BioIllustration from "../components/BioIllustration.astro";
 import LinkButton from "../components/LinkButton.astro";
@@ -25,6 +28,7 @@ import PageOrnament from "../components/PageOrnament.astro";
 import Overlay from "../components/Overlay.astro";
 import Separator from "../components/Separator.astro";
 import AnchorLink from "../components/AnchorLink.astro";
+import Post from "../components/Post.astro";
 ---
 
 <BaseLayout
@@ -35,12 +39,13 @@ import AnchorLink from "../components/AnchorLink.astro";
   }}
 >
   <PageOrnament placement="-top-24 left-0" />
-  <main class="">
+  <main>
     <section class="pt-12 pb-14 relative">
       <Overlay />
 
       <div class="bio-grid wrapper">
         <div class="md:w-[97%] lg:max-w-lg self-center home-cta">
+          <h2 class="visually-hidden">Presentation</h2>
           <PortableText portableText={bio.short_bio} />
         </div>
         <div class="md:w-5/6 lg:w-9/12 xl:w-8/12 md:mx-auto">
@@ -59,10 +64,12 @@ import AnchorLink from "../components/AnchorLink.astro";
       </div>
     </section>
 
-    <nav class="wrapper">
-      <ul class="rounded flex gap-4 items-center">
+    <nav class="wrapper" aria-labelledby="home-nav">
+      <span id="home-nav" hidden>Home Navigation</span>
+      <ul class="rounded flex gap-4 items-center" role="list">
         <AnchorLink linkText="Services" />
         <AnchorLink linkText="Endorsements" />
+        <AnchorLink linkText="Recent Blog Posts" />
       </ul>
     </nav>
 
@@ -93,7 +100,7 @@ import AnchorLink from "../components/AnchorLink.astro";
                       slot="tech-logo"
                       class="object-fit w-12 h-12 "
                       src={technology.icon.asset.url}
-                      alt={technology.name}
+                      alt={`${technology.name} logo`}
                     />
                   </TechnoItem>
                 </div>
@@ -145,7 +152,29 @@ import AnchorLink from "../components/AnchorLink.astro";
       </div>
     </section>
 
-    <section class="py-16 relative bg-gray-light">
+    <section class="py-16 relative recent-posts-section" id="recent-blog-posts">
+      <div class="wrapper">
+        <h2 class="underlined_title">Recent Blog Posts</h2>
+        <div class="recent-posts">
+          {
+            recentPosts.map((post) => {
+              return (
+                <div>
+                  <Post post={post} />
+                </div>
+              );
+            })
+          }
+        </div>
+
+        <div class="justify-center flex mx-auto">
+          <LinkButton link="/blog" name="Read More posts" size="md" />
+        </div>
+      </div>
+      <PageOrnament placement="bottom-0 right-0 z-20 -rotate-180" />
+    </section>
+
+    <!-- <section class="py-16 relative bg-gray-light">
       <PageOrnament placement="bottom-0 right-0 z-20 -rotate-180" />
       <div class="wrapper">
         <div class="justify-center flex mx-auto">
@@ -160,7 +189,7 @@ import AnchorLink from "../components/AnchorLink.astro";
           </LinkButton>
         </div>
       </div>
-    </section>
+    </section> -->
 
     <!-- page decoration -->
   </main>
@@ -244,6 +273,21 @@ import AnchorLink from "../components/AnchorLink.astro";
     grid-template-columns: repeat(var(--columns), minmax(200px, 1fr));
     gap: 4rem;
     justify-items: center;
+  }
+
+  .recent-posts-section {
+    /* background-image: conic-gradient(
+      from 162deg at 96% 104%,
+      #fefdfa 40% 40%,
+      #4d4d4d 57% 94%
+    ); */
+  }
+
+  .recent-posts {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    @apply mb-10;
   }
 
   @media (max-width: 800px) {

@@ -168,7 +168,7 @@ h1.underlined_title::after {
  }
 
  h3 {
-     @apply text-2xl font-bold font-sans4 tracking-wide text-gray-light;
+     @apply text-2xl font-bold font-sans4 tracking-wide text-gray-light mb-6;
  }
 
 h4 {
@@ -293,6 +293,10 @@ h4 {
      background-clip: content-box;
  }
 
+ article ul {
+    @apply font-sans2 text-lg text-gray-light ml-6
+ }
+
  article ol {
     list-style: arabic;
     @apply ml-11 my-4
@@ -305,7 +309,7 @@ h4 {
 
 
  pre {
-    @apply px-8 py-12 mb-10 shadow-xl shadow-gray-lighter/40 rounded selection:bg-base-normal/40;
+    @apply px-8 py-12 mb-20 shadow-xl shadow-gray-lighter/40 rounded selection:bg-base-normal/40;
  }
 
  article {
@@ -316,6 +320,44 @@ h4 {
     @apply mb-8 text-gray-light
  }
 
+ article p > img {
+
+    @apply mx-auto my-20;
+
+ }
+
+ article h2 {
+    @apply mt-10 my-14
+ }
+
+article .article-image{
+    @apply max-w-fit mx-auto my-20;
+}
+
+article ul {
+    list-style-type: disc;
+    padding-left: 1rem;
+}
+
+.visually-hidden:not(:focus):not(:active) { 
+    /* shrink to a 1px square */
+    width: 1px;
+    height: 1px;
+
+    /* hide any resulting overflow */
+    overflow: hidden;
+
+    /* clip the element to remove any visual trace */
+    clip: rect(0 0 0 0);
+    /* for IE only */
+    clip-path: inset(50%);
+
+    /* remove from page flow so it doesn’t affect surrounding layout */
+    position: absolute;
+
+    /* ensure proper text announcement by screen readers */
+    white-space: nowrap;
+}
 
 
 @tailwind utilities;  

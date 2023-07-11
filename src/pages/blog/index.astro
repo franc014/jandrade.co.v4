@@ -3,15 +3,18 @@ import Post from "../../components/Post.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
 const posts = (await getCollection("blog")).sort((a, b) => {
-  return a.data.pubDate.valueOf() - b.data.pubDate.valueOf();
+  return b.data.pubDate.valueOf() - a.data.pubDate.valueOf();
 });
 ---
 
-<BaseLayout seo={{
-  title: "Blog Index",
-  description: "From tutorials and case studies to industry news and analysis, I'll be covering a wide range of topics related to web development. If you have any questions or feedback, don't hesitate to reach out. Let's learn together!",
-  /* image: { src: "/images/curtain.svg", alt: "Curtain" }, */
-}}>
+<BaseLayout
+  seo={{
+    title: "Blog Index",
+    description:
+      "From tutorials and case studies to industry news and analysis, I'll be covering a wide range of topics related to web development. If you have any questions or feedback, don't hesitate to reach out. Let's learn together!",
+    /* image: { src: "/images/curtain.svg", alt: "Curtain" }, */
+  }}
+>
   <main class="wrapper py-20">
     <section>
       <h1 class="underlined_title mb-2">Blog index</h1>
@@ -23,10 +26,6 @@ const posts = (await getCollection("blog")).sort((a, b) => {
 </BaseLayout>
 
 <style>
-  .posts {
-    @apply border-b border-slate-200;
-  }
-
   .posts div:last-of-type {
     @apply border-b-0;
   }

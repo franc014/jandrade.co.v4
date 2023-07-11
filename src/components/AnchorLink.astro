@@ -1,6 +1,7 @@
 ---
+import { slugify } from "../util";
 const { linkText } = Astro.props;
-const link = linkText.toLowerCase();
+const link = slugify(linkText);
 ---
 
 <li

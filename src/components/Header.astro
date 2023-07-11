@@ -9,10 +9,19 @@ const { nav } = Astro.props;
     <h1
       class="mt-0 mb-6 md:text-left text-center text-2xl tracking-tighter italic font-bold font-mono"
     >
-      <a href="/">Francisco Andrade</a>
+      <a href="/" class="flex flex-col"
+        >Francisco Andrade <span
+          class="self-end text-base tracking-normal visually-hidden"
+          >Website</span
+        ></a
+      >
     </h1>
-    <nav>
-      <ul class="flex flex-wrap justify-center md:justify-between gap-2">
+    <nav aria-labelledby="main-nav">
+      <span hidden id="main-nav">Main Navigation</span>
+      <ul
+        class="flex flex-wrap justify-center md:justify-between gap-2"
+        role="list"
+      >
         {
           nav.map((item) => {
             const linkPath = `/${item.page_link}`;
@@ -20,10 +29,11 @@ const { nav } = Astro.props;
             return (
               <li class="mr-4 ">
                 <a
-                  class={`text-gray-normal relative block h-full font-mono ${
-                    Astro.url.pathname === linkPath ? "active" : ""
-                  }`}
+                  class="text-gray-normal relative block h-full font-mono"
                   href={linkPath}
+                  aria-current={`${
+                    Astro.url.pathname === linkPath ? true : false
+                  }`}
                 >
                   {item.text}
                 </a>
@@ -72,7 +82,7 @@ const { nav } = Astro.props;
     background-size: cover;
     background-position: center;
   }
-  ul li a.active::before {
+  ul li a[aria-current="true"]::before {
     content: "";
     position: absolute;
     left: 0;

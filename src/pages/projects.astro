@@ -15,13 +15,18 @@ const projects = await getProjects();
 >
   <main class="wrapper py-20">
     <section>
-      <h1 class="underlined_title">Projects</h1>
+      <h2 class="underlined_title">Projects</h2>
       <p class="w-2/3">
         Welcome to my personal projects page! Browse my latest creations and
         experiments. Thanks for stopping by!
       </p>
 
-      <div class="mt-16 projects">
+      <section
+        class="mt-16 projects"
+        role="region"
+        aria-labelledby="projects-list"
+      >
+        <span class="visually-hidden" id="projects-list">Projects List</span>
         {
           projects.map((project) => (
             <div class="mb-16">
@@ -29,7 +34,7 @@ const projects = await getProjects();
             </div>
           ))
         }
-      </div>
+      </section>
     </section>
   </main>
 </BaseLayout>
