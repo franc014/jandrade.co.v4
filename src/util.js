@@ -17,6 +17,6 @@ export function slugify(string) {
 
 export async function getBlogPosts() {
 	return (await getCollection("blog")).sort((a, b) => {
-		return a.data.pubDate.valueOf() - b.data.pubDate.valueOf();
-	});
+		return  b.data.pubDate.valueOf() - a.data.pubDate.valueOf() ;
+	}).slice(0,5);
 }

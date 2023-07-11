@@ -168,7 +168,7 @@ h1.underlined_title::after {
  }
 
  h3 {
-     @apply text-2xl font-bold font-sans4 tracking-wide text-gray-light;
+     @apply text-2xl font-bold font-sans4 tracking-wide text-gray-light mb-6;
  }
 
 h4 {
@@ -291,6 +291,10 @@ h4 {
      background-size: var(--pattern-size);
      background-position: top left;
      background-clip: content-box;
+ }
+
+ article ul {
+    @apply font-sans2 text-lg text-gray-light ml-6
  }
 
  article ol {
