@@ -15,10 +15,8 @@ const { socialLinks, resume } = Astro.props;
           return (
             <Circle>
               <a href={item.link}>
-                <>
-                  <span class="visually-hidden">Github Profile Link</span>
-                  <GithubIcon />
-                </>
+                <span class="visually-hidden">Github Profile Link</span>
+                <GithubIcon />
               </a>
             </Circle>
           );
@@ -45,3 +43,8 @@ const { socialLinks, resume } = Astro.props;
     </LinkButton>
   </div>
 </div>
+
+<script>
+  import { scaleOnHover } from "../animations";
+  scaleOnHover(".circle-enclose");
+</script>

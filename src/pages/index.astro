@@ -75,7 +75,7 @@ import Post from "../components/Post.astro";
 
     <section class="py-14 relative services" id="services">
       <div class="wrapper flex flex-col">
-        <h2 class="underlined_title mb-2">Services</h2>
+        <h2 class="underlined_title mb-2 dont-animate">Services</h2>
         <div>
           {
             services.map((service) => {
@@ -323,29 +323,11 @@ import Post from "../components/Post.astro";
 </style>
 
 <script>
-  import { gsap } from "gsap";
-  import { ScrollTrigger } from "gsap/ScrollTrigger";
-  gsap.registerPlugin(ScrollTrigger);
+  import { slideInline, slideInBlock } from "../animations";
 
-  function animateOnScroll(element, moveX, rotation = 0) {
-    gsap.from(element, {
-      x: moveX,
-      opacity: 0,
-      duration: 1,
-      rotation,
-      transformOrigin: "50% 50%",
-      ease: "back",
-      scrollTrigger: {
-        trigger: element,
-        markers: true,
-        start: "top 85%",
-        end: "bottom 25%",
-        /* scrub: 1, */
-        toggleActions: "restart pause resume pause",
-      },
-    });
-  }
-  const titles = document.querySelectorAll("h2");
+  const titles = document.querySelectorAll("h2:not(.dont-animate)");
+  const h3s = document.querySelectorAll("h3:not(.dont-animate)");
+  const ctaTitle = document.querySelectorAll(".home-cta > p");
 
   const testimonialsEven = document.querySelectorAll(
     ".testimonial-card:nth-of-type(even)"
@@ -355,14 +337,20 @@ import Post from "../components/Post.astro";
     ".testimonial-card:nth-of-type(odd)"
   );
 
-  titles.forEach((title) => {
-    animateOnScroll(title, -200);
-  });
+  slideInline(ctaTitle, 200, -5);
+
+  /*  titles.forEach((title) => {
+    slideInline(title, 200);
+  }); */
+
+  /* h3s.forEach((title) => {
+    slideInBlock(title, 200);
+  }); */
 
   testimonialsOdd.forEach((testimonial) => {
-    animateOnScroll(testimonial, -200, 5);
+    slideInline(testimonial, -200, 5);
   });
   testimonialsEven.forEach((testimonial) => {
-    animateOnScroll(testimonial, 200, -5);
+    slideInline(testimonial, 200, -5);
   });
 </script>

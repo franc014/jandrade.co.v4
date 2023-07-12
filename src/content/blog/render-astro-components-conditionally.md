@@ -1,7 +1,7 @@
 ---
 title: Render Astro Components Conditionally
 tags: ["Astro", "conditionally rendering", "Sanity"]
-excerpt: "In this post, I'll showcase an alternative method for conditionally rendering Astro components based on props in web pages. Rather than using traditional if or if/else statements, I'll demonstrate a different approach that avoids them while achieving the desired outcome."
+excerpt: "In this post, I'll showcase an alternative method for conditionally rendering Astro components based on props in web pages. Rather than using conditional statements, I'll demonstrate a different approach that avoids them while achieving the desired outcome."
 pubDate: 2023-07-04 00:00
 ---
 

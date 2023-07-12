@@ -20,3 +20,4 @@ export async function getBlogPosts() {
 		return  b.data.pubDate.valueOf() - a.data.pubDate.valueOf() ;
 	}).slice(0,5);
 }
+

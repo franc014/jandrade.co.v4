@@ -29,12 +29,9 @@ const { link, name, size } = Astro.props;
 
   function animateLink(e) {
     const ln = e.currentTarget;
+    const scale = e.type === "mouseenter" ? 1.1 : 1;
     gsap.to(ln, {
-      rotation: 360,
-      skewX: -10,
-      backgroundColor: "coral",
-      borderRadius: "4rem",
-      duration: 2,
+      scale,
     });
   }
 

@@ -7,13 +7,13 @@ import Separator from "./Separator.astro";
 
 <div class="post">
   <!-- <img class="w-8" src="/images/file-text.png" alt="post icon" /> -->
-  <div class="post-content">
-    <h2 class="mb-4">
+  <div class="flex flex-col justify-between">
+    <h3 class="mb-4">
       <a
         class="text-gray-normal/90 hover:text-base-normal/80"
         href={`/blog/${post.slug}`}>{post.data.title}</a
       >
-    </h2>
+    </h3>
     <div class="excerpt">
       {post.data.excerpt}
     </div>
@@ -27,6 +27,7 @@ import Separator from "./Separator.astro";
     @apply py-4 grid gap-2;
     grid-template-columns: 1fr;
   }
+
   .excerpt {
     @apply text-gray-light/80 text-lg;
   }
