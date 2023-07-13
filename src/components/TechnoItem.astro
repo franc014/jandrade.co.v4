@@ -2,5 +2,15 @@
 const { keyText } = Astro.props;
 ---
 
-<slot name="tech-logo" />
-<span class="pt-2 text-gray-light text-sm italic">{keyText}</span>
+<div class="technology">
+    <slot name="tech-logo" />
+    <span class="pt-2 text-gray-light text-sm italic">{keyText}</span>
+</div>
+
+<script>
+    import { slideInline, slideInStagger } from "../animations";
+
+    const technologies = document.querySelectorAll(".technology");
+
+    slideInStagger(technologies, 10, "120deg");
+</script>

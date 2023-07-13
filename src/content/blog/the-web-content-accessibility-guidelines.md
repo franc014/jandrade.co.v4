@@ -5,7 +5,7 @@ excerpt: "In this post we'll learn about the WCAG specification, what is aimed a
 pubDate: 2023-07-11 00:00
 ---
 
-The WCAG, Web Content Accessibility Guidelines is a standard developed by the Web accessibility initiative of the W3C.
+The [WCAG, Web Content Accessibility Guidelines](https://www.w3.org/TR/WCAG21/) is a standard developed by the Web accessibility initiative of the W3C.
 Using this standard, businesses and organizations have measurable criteria to validate if their web products are accessible by people with disabilities and of course by those who don't but can benefit from a better and thorough user experience.
 They can also comply with state or local regulations about Web accessibility.
 
@@ -17,7 +17,7 @@ Each WCAG guideline is organized under 4 principles and in each guideline we can
 
 ## Principles
 
-The four principles (P.O.U.R) underlying WCAG are:
+The four [principles "P.O.U.R"](https://www.w3.org/TR/WCAG21/#perceivable) underlying WCAG are:
 
 ### Perceivable
 
@@ -140,7 +140,7 @@ Other reasons why WCAG is not enough:
 
 If the ARIA attributes you rely on to create a custom interactive component lack sufficient support, it can exclude many of your users, rendering your website or app inaccessible to them.
 
-# The conformance to WCAG represents the minimum level of compliance.
+### The conformance to WCAG represents the minimum level of compliance.
 
 Rather than considering WCAG as a final objective, it is more appropriate to view its requirements as a fundamental baseline for preventing accessibility issues.
 

@@ -75,7 +75,7 @@ import Post from "../components/Post.astro";
 
     <section class="py-14 relative services" id="services">
       <div class="wrapper flex flex-col">
-        <h2 class="underlined_title mb-2">Services</h2>
+        <h2 class="underlined_title mb-2 dont-animate">Services</h2>
         <div>
           {
             services.map((service) => {
@@ -108,7 +108,7 @@ import Post from "../components/Post.astro";
             })
           }
         </div>
-        <p class="pb-10 text-center w-3/4 mx-auto">
+        <p class="p-2 mb-10 text-center w-3/4 mx-auto any-stack">
           As a web developer, I'm committed to finding the best solutions for
           your unique needs, including working with the technologies listed
           above, new technologies or the ones you find convenient for your
@@ -134,7 +134,7 @@ import Post from "../components/Post.astro";
           Endorsements
         </h2>
         <div class="flex flex-col md:grid grid-cols-2 gap-8">
-          <p class="max-w-xs text-2xl selection:bg-base-normal/40">
+          <p class="max-w-sm text-2xl selection:bg-base-normal/40">
             Some kind words from colleagues I've had the pleasure of working
             with
           </p>
@@ -321,3 +321,44 @@ import Post from "../components/Post.astro";
     }
   }
 </style>
+
+<script>
+  import {
+    slideInline,
+    slideInStagger,
+    slideInlineHighlight,
+  } from "../animations";
+
+  /* const titles = document.querySelectorAll("h2:not(.dont-animate)");
+  const h3s = document.querySelectorAll("h3:not(.dont-animate)"); */
+  const ctaTitle = document.querySelectorAll(".home-cta > p");
+  const serviceList = document.querySelectorAll(".service ul li");
+  const anyStack = document.querySelector(".any-stack");
+
+  const testimonialsEven = document.querySelectorAll(
+    ".testimonial-card:nth-of-type(even)"
+  );
+
+  const testimonialsOdd = document.querySelectorAll(
+    ".testimonial-card:nth-of-type(odd)"
+  );
+
+  slideInline(ctaTitle, 200, -5);
+  slideInStagger(serviceList);
+  slideInline(anyStack, -200);
+
+  /*  titles.forEach((title) => {
+    slideInline(title, 200);
+  }); */
+
+  /* h3s.forEach((title) => {
+    slideInBlock(title, 200);
+  }); */
+
+  testimonialsOdd.forEach((testimonial) => {
+    slideInline(testimonial, -200, 5);
+  });
+  testimonialsEven.forEach((testimonial) => {
+    slideInline(testimonial, 200, -5);
+  });
+</script>
