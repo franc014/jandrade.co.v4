@@ -1,6 +1,9 @@
 import { gsap } from "gsap";
-  import { ScrollTrigger } from "gsap/ScrollTrigger";
-  gsap.registerPlugin(ScrollTrigger);
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import resolveConfig from "tailwindcss/resolveConfig";
+import tailwindConfig from "../tailwind.config";
+gsap.registerPlugin(ScrollTrigger);
+const fullConfig = resolveConfig(tailwindConfig);
 
 export function triggerSetUp(element) {
     return {
@@ -81,4 +84,51 @@ export function scaleOnHover(selector){
     el.addEventListener("mouseenter", animateElement);
     el.addEventListener("mouseleave", animateElement);
   });
+}
+
+export function bioIllustrationAnimation() {
+  
+  const tl = gsap.timeline();
+  const path = document.querySelector(".editor-lines");
+  const pathLength = path.getTotalLength();
+
+  const strokeColor = fullConfig.theme.colors.base.normal;
+  const initialFill = fullConfig.theme.colors.gray.lighter;
+
+  gsap.set(".editor-lines", {
+    strokeDasharray: `${pathLength}`,
+    strokeDashoffset: pathLength,
+    stroke: strokeColor,
+    strokeOpacity: 0.5,
+  });
+  tl.from(
+    ".editor-lines",
+    {
+      delay: 0.3,
+      duration: 4,
+      strokeDashoffset: -pathLength / 2,
+      ease: "sine",
+      fill: initialFill,
+      fillOpacity: 0.4,
+      opacity: gsap.utils.distribute({ base: 0.2, amount: 0.8 }),
+    },
+    "dashoffset-animation"
+  )
+    .to(".editor-lines", {
+      strokeDasharray: `${pathLength} 0`,
+      strokeDashoffset: 0,
+      stroke: "none",
+    })
+    .from(
+      ".editor-code",
+      {
+        x: -220,
+        ease: "elastic",
+        stagger: {
+          from: "center",
+          amount: 0.8,
+        },
+      },
+      "dashoffset-animation+=1"
+    );
 }
