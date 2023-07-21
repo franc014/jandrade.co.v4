@@ -10,14 +10,14 @@ import {
   getTestimonials,
 } from "../sanity/util";
 
-import { getBlogPosts } from "../util";
+import { getRecentBlogPosts } from "../util";
 
 const bio = await getBiography();
 const socialLinks = await getSocialLinks();
 const services = await getServices();
 const techSection = await getTechnologies();
 const testimonials = await getTestimonials();
-const recentPosts = await getBlogPosts();
+const recentPosts = await getRecentBlogPosts();
 
 import BioIllustration from "../components/BioIllustration.astro";
 import LinkButton from "../components/LinkButton.astro";

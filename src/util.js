@@ -21,3 +21,8 @@ export async function getBlogPosts() {
 	}).slice(0,5);
 }
 
+export async function getRecentBlogPosts() {
+	const posts = await getBlogPosts();
+	return posts.slice(0, 4);
+}
+
