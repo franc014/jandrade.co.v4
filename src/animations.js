@@ -8,11 +8,11 @@ const fullConfig = resolveConfig(tailwindConfig);
 export function triggerSetUp(element) {
     return {
         trigger: element,
-        start: "top 85%",
-        end: "bottom 55%",
+        start: "top 75%",
+        end: "bottom 25%",
         
         /* toggleActions: "play none resume reset", */
-       /*  markers: {startColor: "blue", endColor: "orange", fontSize: "20px"} */
+        /* markers: {startColor: "blue", endColor: "orange", fontSize: "20px"} */
     }
 }
 export function slideInline(element, moveX, rotation = 0) {
@@ -39,7 +39,7 @@ export function slideInlineHighlight(element, moveX, rotation = 0) {
     });
 }
 
-export function slideInStagger(elements,moveY=400,rotation='-5deg') {
+export function slideInStagger(elements,moveY=400,rotation='-5deg',trigger) {
   gsap.from(elements, {
       duration: .8,
       y: moveY,
@@ -51,7 +51,7 @@ export function slideInStagger(elements,moveY=400,rotation='-5deg') {
         from: "center",
         amount: 1,
       },
-      scrollTrigger: triggerSetUp(elements)
+      scrollTrigger: triggerSetUp(trigger)
     });
 }
 
@@ -92,7 +92,7 @@ export function bioIllustrationAnimation() {
   const path = document.querySelector(".editor-lines");
   const pathLength = path.getTotalLength();
 
-  const strokeColor = fullConfig.theme.colors.base.normal;
+  const strokeColor = fullConfig.theme.colors.accent;
   const initialFill = fullConfig.theme.colors.gray.lighter;
 
   gsap.set(".editor-lines", {

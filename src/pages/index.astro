@@ -76,17 +76,17 @@ import Post from "../components/Post.astro";
     <section class="py-14 relative services" id="services">
       <div class="wrapper flex flex-col">
         <h2 class="underlined_title mb-2 dont-animate">Services</h2>
-        <div>
-          {
-            services.map((service) => {
-              return (
-                <div class="mb-10 md:w-5/6 service ">
-                  <Service service={service} />
-                </div>
-              );
-            })
-          }
-        </div>
+
+        {
+          services.map((service) => {
+            return (
+              <div class="mb-10 md:w-5/6 service ">
+                <Service service={service} />
+              </div>
+            );
+          })
+        }
+
         <Separator classes="self-center mb-10" />
         <div
           class="tech-grid flex justify-around pb-8 md:w-3/4 mx-auto items-center"
@@ -333,6 +333,7 @@ import Post from "../components/Post.astro";
   const h3s = document.querySelectorAll("h3:not(.dont-animate)"); */
   const ctaTitle = document.querySelectorAll(".home-cta > p");
   const serviceList = document.querySelectorAll(".service ul li");
+  const serviceComponentWrapper = document.querySelector(".service");
   const anyStack = document.querySelector(".any-stack");
 
   const testimonialsEven = document.querySelectorAll(
@@ -344,7 +345,7 @@ import Post from "../components/Post.astro";
   );
 
   slideInline(ctaTitle, 200, -5);
-  slideInStagger(serviceList);
+  slideInStagger(serviceList, 200, "-2deg", serviceComponentWrapper);
   slideInline(anyStack, -200);
 
   /*  titles.forEach((title) => {

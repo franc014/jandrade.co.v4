@@ -216,7 +216,7 @@ h4 {
  
 
  .service ul li{
-    @apply  text-lg text-gray-light/90 my-4 font-sans3;
+    @apply  text-lg text-gray-light/90 my-4 font-sans3 will-change-transform;
     display: grid;
     grid-template-columns: 40px 1fr;
    
