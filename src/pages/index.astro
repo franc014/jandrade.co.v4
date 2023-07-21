@@ -80,7 +80,7 @@ import Post from "../components/Post.astro";
         {
           services.map((service) => {
             return (
-              <div class="mb-10 md:w-5/6 service ">
+              <div class="mb-10 md:w-5/6 service will-change-transform">
                 <Service service={service} />
               </div>
             );
@@ -128,7 +128,10 @@ import Post from "../components/Post.astro";
       </div>
     </section>
 
-    <section class="py-16 testimonials relative" id="endorsements">
+    <section
+      class="py-16 testimonials relative will-change-transform"
+      id="endorsements"
+    >
       <div class="wrapper">
         <h2 class="underlined_title selection:bg-base-normal/40">
           Endorsements

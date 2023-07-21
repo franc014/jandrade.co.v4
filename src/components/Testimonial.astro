@@ -20,6 +20,8 @@ import { urlForImage } from "../sanity/urlForImage";
         class="rounded-full border border-gray-lighter/30 w-16"
         src={urlForImage(author.photo).url()}
         alt=`${author.name} avatar`
+        width="64"
+        height="64"
       />
     </picture>
     <div>
@@ -38,7 +40,7 @@ import { urlForImage } from "../sanity/urlForImage";
 
   .testimonial-card {
     transform: skew(-2deg);
-    @apply bg-white-canvas;
+    @apply bg-white-canvas will-change-transform;
   }
   .testimonial quote p {
     @apply text-lg font-sans tracking-wide m-0 p-0;

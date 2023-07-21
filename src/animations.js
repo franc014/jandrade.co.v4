@@ -26,18 +26,7 @@ export function slideInline(element, moveX, rotation = 0) {
       scrollTrigger: triggerSetUp(element)
     });
 }
-export function slideInlineHighlight(element, moveX, rotation = 0) {
-  gsap.from(element, {
-      duration: 2,
-      x: moveX,
-      opacity: 0,
-      color: '#009FB7',
-      rotation,
-      transformOrigin: "50% 50%",
-      ease: "sine",
-      scrollTrigger: triggerSetUp(element)
-    });
-}
+
 
 export function slideInStagger(elements,moveY=400,rotation='-5deg',trigger) {
   gsap.from(elements, {
@@ -49,7 +38,7 @@ export function slideInStagger(elements,moveY=400,rotation='-5deg',trigger) {
      
       stagger: {
         from: "center",
-        amount: 1,
+        each: .2,
       },
       scrollTrigger: triggerSetUp(trigger)
     });
@@ -95,11 +84,11 @@ export function bioIllustrationAnimation() {
   const strokeColor = fullConfig.theme.colors.accent;
   const initialFill = fullConfig.theme.colors.gray.lighter;
 
-  gsap.set(".editor-lines", {
+  tl.set(".editor-lines", {
     strokeDasharray: `${pathLength}`,
     strokeDashoffset: pathLength,
     stroke: strokeColor,
-    strokeOpacity: 0.5,
+    strokeOpacity: 0.6,
   });
   tl.from(
     ".editor-lines",
