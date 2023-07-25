@@ -1,5 +1,6 @@
 ---
 import Circle from "./icons/Circle.astro";
+import CodepenIcon from "./icons/CodepenIcon.astro";
 import GithubIcon from "./icons/GithubIcon.astro";
 import LinkedInIcon from "./icons/LinkedInIcon.astro";
 import LinkButton from "./LinkButton.astro";
@@ -26,6 +27,15 @@ const { socialLinks, resume } = Astro.props;
               <a href={item.link}>
                 <span class="visually-hidden">LinkedIn Profile Link</span>
                 <LinkedInIcon />
+              </a>
+            </Circle>
+          );
+        } else if (item.icon_name === "codepen-icon") {
+          return (
+            <Circle>
+              <a href={item.link}>
+                <span class="visually-hidden">Codepen Profile Link</span>
+                <CodepenIcon />
               </a>
             </Circle>
           );
