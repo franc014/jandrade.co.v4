@@ -146,6 +146,6 @@ Rather than considering WCAG as a final objective, it is more appropriate to vie
 
 You want to meet the minimum requirements to be legally compliant and go a step further to **make your products inclusive**.
 
-# Conclusion
+## Conclusion
 
 I trust that this summary of WCAG has provided you with an understanding of its framework and how the success criteria can establish a foundation for enhancing the accessibility of our services. It is important to remember that our objective extends beyond mere legal compliance; we should strive to enhance usability and eliminate barriers that hinder access to our content.

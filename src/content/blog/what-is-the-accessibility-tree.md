@@ -136,6 +136,6 @@ On the other hand, an element will be excluded from the accessibility tree if:
 1. It lacks a meaningful role assignment.
 2. It has been intentionally removed from the accessibility tree using HTML, CSS, or ARIA directives.
 
-# Conclusion
+## Conclusion
 
 As crucial as understanding the DOM is for building visual UIs, learning about the Accessibility Tree will expand our capabilities to make those UI's more accessible to users who need to have other means to perceive the web content, and interact with it. It's also important to emphasize that while we can adopt several strategies to make the content accessible; for example using ARIA to set up elements' roles, names, descriptions, and properties, the most appropriate way is to resort to the semantics of each of the elements we use in our markup, leaving the rest of techniques as progressive enhancements.
