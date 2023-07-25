@@ -29,6 +29,6 @@ Check the following image for reference.
 
 ![This image shows the full ASCCI code structure to be included in the HTML markup](https://res.cloudinary.com/dfpkdo5tf/image/upload/v1690299838/jandrade.co.v4/Pasted_image_20230706125551.png)
 
-## CONCLUSION
+## Conclusion
 
 That's all for now folks. Now we have in our toolbox a new way to find ASCII icons or characters that we may need in our HTML projects. I hope you find it useful and if you have any questions or further suggestions, don't forget to drop me a line.
