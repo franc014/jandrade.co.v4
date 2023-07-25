@@ -278,17 +278,9 @@ import Post from "../components/Post.astro";
     justify-items: center;
   }
 
-  .recent-posts-section {
-    /* background-image: conic-gradient(
-      from 162deg at 96% 104%,
-      #fefdfa 40% 40%,
-      #4d4d4d 57% 94%
-    ); */
-  }
-
   .recent-posts {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     gap: 2rem;
     @apply mb-10;
   }
@@ -326,11 +318,7 @@ import Post from "../components/Post.astro";
 </style>
 
 <script>
-  import {
-    slideInline,
-    slideInStagger,
-    slideInlineHighlight,
-  } from "../animations";
+  import { slideInline, slideInStagger } from "../animations";
 
   /* const titles = document.querySelectorAll("h2:not(.dont-animate)");
   const h3s = document.querySelectorAll("h3:not(.dont-animate)"); */

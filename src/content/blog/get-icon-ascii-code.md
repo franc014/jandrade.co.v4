@@ -1,0 +1,34 @@
+---
+title: "Unleashing Creativity: Discovering Relevant ASCII Codes with this awesome tool"
+tags: ["shapecatcher", "ascii codes", "find ascii codes"]
+excerpt: "A very convenient way to add icons to our UI implementations is to use shapecatcher.com. We will discover how to generate and include ASCII icons with this great tool."
+pubDate: 2023-07-25 00:00
+---
+
+Implementing UI designs requires that we use icons, much of the time, for the different elements that compose it. There are lots of resources out there like Icomoon, FontAwesome, Lineicons, and so on. But, for icons that don't require many details, we can use ASCII characters; for example, this **x** symbol that can represent "to close" a modal or prompt, could be represented as `&nose;` .
+
+Remembering the ASCII codes for any icons we want to include in our markdown is not very straightforward; neither our search on the Internet could be productive. Fortunately, I discovered a tool that can help us find the appropriate icon in just one giant database, but we don't enter the search term in a search form, we can draw it!
+And this is cool, because sometimes we don't have the exact word to search for in our head, but we have the image model of it.
+This tool is called shaptecatcher.com
+
+## The process
+
+To show how easy and great this tool is, let's imagine that we need this anchor icon (anchor image) for our project(s). We can draw on the canvas of the application, the shape of the icon we want to find in their database, like so:
+
+<div class="card article-image">
+<img src="https://res.cloudinary.com/dfpkdo5tf/image/upload/v1690299622/jandrade.co.v4/Screen_Shot_2023-07-06_at_12.17.39_1.png" alt="Screen capture of shapecatcher.com application, showing a shape drawn in the canvas">
+</div>
+
+After clicking the "Recognize" button, we get a list of possible options for our drawn image. In this case, the anchor character or icon is shown first and is exactly what we wanted. Bellow there are more options in case we had another image in our head of what we need.
+
+## How to include an ASCII code in our HTML markup
+
+Maybe you already know how to render the ASCII code in your markup. If not, this is easy. Just include the code in the following format:
+Write **&** and **#** characters and then the ASCII code you get from shapecatcher.com, prepended with a lowercase **x**.
+Check the following image for reference.
+
+![This image shows the full ASCCI code structure to be included in the HTML markup](https://res.cloudinary.com/dfpkdo5tf/image/upload/v1690299838/jandrade.co.v4/Pasted_image_20230706125551.png)
+
+## CONCLUSION
+
+That's all for now folks. Now we have in our toolbox a new way to find ASCII icons or characters that we may need in our HTML projects. I hope you find it useful and if you have any questions or further suggestions, don't forget to drop me a line.
