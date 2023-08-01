@@ -1,0 +1,74 @@
+---
+title: How to get a random number between a range
+tags: ["javascript", "Math", "random"]
+excerpt: "This is going to be a short, but interesting one. We're going to learn how to get a random number in Javascript and even how to get that number between a range, for example, 100 and 200. You will find this post useful for any code you write in the future that needs random numbers. "
+pubDate: 2023-08-01 00:00
+---
+
+In many situations, when solving a problem in Javascript, you will need random numbers. For example, you may need to vary the questions in a quiz, so that students get a different one to avoid cheating or to personalize the test. Or for art generation, you may need random numbers to draw shapes that need them as parameters to convert them to random strokes or paths, or drawings on a canvas. Let's determine, first, how to get a random number, and then how to get it between two limits or a range.
+
+## How to get a random number
+
+Javascript has a built-in Math object which, as its name suggests, has properties and methods to perform mathematical calculations.
+One of those methods is **random()** which is precisely what we need to get a random number. Let's see what we get when we write, for example:
+
+```javascript
+const randomNumber = Math.random();
+```
+
+<div class="card article-image">
+<img src="https://res.cloudinary.com/dfpkdo5tf/image/upload/v1690903169/jandrade.co.v4/Pasted_image_20230713125126.png"
+alt="Screen shot showing the use of Math.random() in a browser console">
+</div>
+
+In the previous image, a decimal number is shown as the result of `Math.random()`, every time we execute it.
+
+To get a random number, let's say, between 0 and 10, we multiply that random number by 10, or if we want a number between 0 and 100, we multiply by 100. In the next example, we multiply `Math.random() * 3` to get numbers between 0 and 3:
+
+```javascript
+const randomNumber = Math.random() * 3;
+console.log(randomNumber);
+//will return numbers such as:
+//1.5400452489116285, 2.475445869584074, 1.5400452489116285
+```
+
+In the previous example, we get decimal numbers between 0 and 3. If we want to round them up, we can apply another Math method called `Math.floor()`.
+
+```javascript
+const randomNumber = Math.round(Math.floor() * 3);
+console.log(randomNumber);
+//will return numbers such us
+//0,2,1
+```
+
+That was the process of getting a random number.
+But, what if we want a range, other than the previous use case in which zero is the floor limit? Let's find out in the next section.
+
+## Random number between a range
+
+To get a random number between a range, we use the lower and the upper bounds like so:
+
+```javascript
+//random number between 12 and 29
+const lower = 12;
+const upper = 29;
+
+const random = Math.random() * (upper - lower);
+console.log(random);
+//will return a number such as:
+//4.2267006950929025, 10.412023833480829
+```
+
+If we execute the previous code, we will get random decimal numbers lower than the minimum bound (12). So we need to shift this number up to get the desired result:
+
+```javascript
+const random = Math.random() * (upper - lower) + lower;
+```
+
+The final step is. of course, round it out with `Math.floor();`:
+
+```javascript
+const random = Math.floor(Math.random() * (upper - lower) + lower);
+```
+
+And this is how you get random numbers in Javascript for the different implementations you may need to apply to. Thanks for reading this blog post, and see you the next week with another publication.

@@ -9,7 +9,8 @@ export default {
       sans2: ['Inter', 'sans-serif'],
       sans3: ['BauPro', 'sans-serif'],
       sans4: ['FugueRegular', 'sans-serif'],
-      mono:['JetBrainsMono','sans-serif']
+      mono: ['JetBrainsMono', 'sans-serif'],
+      legible: ['Atkinson','Inter','sans-serif']
       },
     },
     colors: {

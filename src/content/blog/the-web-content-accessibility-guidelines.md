@@ -1,7 +1,7 @@
 ---
 title: The Web Content Accessibility Guidelines (WCAG)
 tags: ["A11y", "WCAG"]
-excerpt: "In this post we'll learn about the WCAG specification, what is aimed at, its importance for accessibility assessments and finally we'll conclude if it guarantees having a thorough accessible experience for our audience. "
+excerpt: "In this post, we'll learn about the WCAG specification, what is aimed at, its importance for accessibility assessments, and finally, we'll conclude if it guarantees having a thorough accessible experience for our audience. "
 pubDate: 2023-07-11 00:00
 ---
 

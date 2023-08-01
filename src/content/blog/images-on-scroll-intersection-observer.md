@@ -1,7 +1,7 @@
 ---
 title: Show Images while scrolling with Intersection Observer
 tags: ["intersection observer", "scrolling", "javascript", "Astro"]
-excerpt: "Sometimes you might have a requirement for a Website to make images appear while scrolling. In this post I'll show you an implementation with Javascript Intersection Observer"
+excerpt: "Sometimes you might have a requirement for a Website to make images appear while scrolling. In this post, I'll show you an implementation with Javascript Intersection Observer"
 pubDate: 2023-07-03 00:00
 ---
 

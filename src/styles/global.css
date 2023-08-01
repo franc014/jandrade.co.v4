@@ -1,9 +1,6 @@
  @tailwind base;
  @tailwind components;
 
-
-
-
  @font-face {
      font-family: WorkSans;
      font-weight: bold;
@@ -92,7 +89,44 @@
           url("/fonts/Fugue-Regular.woff2") format("truetype");
   }
 
+   @font-face {
+       font-family: Atkinson;
+       font-weight: bold;
+       font-display: swap;
+       src: url("/fonts/Atkinson-Hyperlegible-Bold-102.ttf") format("truetype"),
+           url("/fonts/Atkinson-Hyperlegible-Bold-102.woff") format("truetype"),
+           url("/fonts/Atkinson-Hyperlegible-Bold-102a.woff2") format("truetype");
+   }
 
+   @font-face {
+       font-family: Atkinson;
+       font-weight: bold;
+       font-display: swap;
+       font-style: italic;
+       src: url("/fonts/Atkinson-Hyperlegible-BoldItalic-102.ttf") format("truetype"),
+           url("/fonts/Atkinson-Hyperlegible-BoldItalic-102.woff") format("truetype"),
+           url("/fonts/Atkinson-Hyperlegible-BoldItalic-102a.woff2") format("truetype");
+   }
+
+   @font-face {
+       font-family: Atkinson;
+       font-weight: normal;
+       font-display: swap;
+       font-style: normal;
+       src: url("/fonts/Atkinson-Hyperlegible-Regular-102.ttf") format("truetype"),
+           url("/fonts/Atkinson-Hyperlegible-Regular-102.woff") format("truetype"),
+           url("/fonts/Atkinson-Hyperlegible-Regular-102a.woff2") format("truetype");
+   }
+
+   @font-face {
+       font-family: Atkinson-Hyperlegible;
+       font-weight: normal;
+       font-display: swap;
+       font-style: italic;
+       src: url("/fonts/Atkinson-Hyperlegible-Italic.ttf") format("truetype"),
+           url("/fonts/Atkinson-Hyperlegible-Italic.woff") format("truetype"),
+           url("/fonts/Atkinson-Hyperlegible-Italic.woff2") format("truetype");
+   }
 
  :root {
      --site-gradient: radial-gradient(circle,
@@ -317,7 +351,7 @@ h4 {
  }
 
  article p {
-    @apply mb-8 text-gray-light
+    @apply mb-8 text-gray-light/80 leading-relaxed font-legible text-xl; 
  }
 
  article p > img {

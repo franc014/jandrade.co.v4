@@ -8,7 +8,7 @@ tags:
     "Accessibility API",
     "Accessibility API Mappings",
   ]
-excerpt: "Have you wondered how people with disabilities get to interact with the browser when they may not be able to see the graphical features? In this post we'll discover what the Accessibility tree is, and how Assistive technologies use it to expose the interface features to people with disabilities. "
+excerpt: "Have you wondered how people with disabilities get to interact with the browser when they may not be able to see the graphical features? In this post, we'll discover what the Accessibility tree is, and how Assistive technologies use it to expose the interface features to people with disabilities. "
 pubDate: 2023-07-20 00:00
 ---
 
