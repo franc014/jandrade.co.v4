@@ -125,8 +125,8 @@
 
       --button-gradient: linear-gradient(to right, #272727 34% 0%, 36%, #fed766 32% 68%, 44%, #009fb7 100%);       
      
-    --bg-pattern: url(/images/curtain.svg);
-     --pattern-size: 5.125rem;
+      --bg-pattern: url(/images/curtain.svg);
+      --pattern-size: 5.125rem;
  }
 
  ::selection {
