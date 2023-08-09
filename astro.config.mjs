@@ -5,8 +5,9 @@ import svelte from '@astrojs/svelte';
 import nightOwl from './src/styles/night_owl.json';
 import vercel from "@astrojs/vercel/serverless";
 import sitemap from "@astrojs/sitemap";
-
 import partytown from "@astrojs/partytown";
+
+import mdx from "@astrojs/mdx";
 
 // https://astro.build/config
 export default defineConfig({
@@ -29,9 +30,9 @@ export default defineConfig({
     useCdn: true
   }), svelte(), sitemap(), partytown({
     config: {
-      forward: ["dataLayer.push"] 
+      forward: ["dataLayer.push"]
     }
-  })],
+  }), mdx()],
   output: 'server',
   adapter: vercel()
 });
