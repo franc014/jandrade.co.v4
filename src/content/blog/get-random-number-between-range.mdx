@@ -5,6 +5,8 @@ excerpt: "This is going to be a short, but interesting one. We're going to learn
 pubDate: 2023-08-01 00:00
 ---
 
+import ArticleImage from "../../components/ArticleImage.astro";
+
 In many situations, when solving a problem in Javascript, you will need random numbers. For example, you may need to vary the questions in a quiz, so that students get a different one to avoid cheating or to personalize the test. Or for art generation, you may need random numbers to draw shapes that need them as parameters to convert them to random strokes or paths, or drawings on a canvas. Let's determine, first, how to get a random number, and then how to get it between two limits or a range.
 
 ## How to get a random number
@@ -16,10 +18,10 @@ One of those methods is **random()** which is precisely what we need to get a ra
 const randomNumber = Math.random();
 ```
 
-<div class="card article-image">
-<img src="https://res.cloudinary.com/dfpkdo5tf/image/upload/v1690903169/jandrade.co.v4/Pasted_image_20230713125126.png"
-alt="Screen shot showing the use of Math.random() in a browser console">
-</div>
+<ArticleImage
+  src="https://res.cloudinary.com/dfpkdo5tf/image/upload/v1690903169/jandrade.co.v4/Pasted_image_20230713125126.png"
+  alt="Screen shot showing the use of Math.random() in a browser console"
+/>
 
 In the previous image, a decimal number is shown as the result of `Math.random()`, every time we execute it.
 

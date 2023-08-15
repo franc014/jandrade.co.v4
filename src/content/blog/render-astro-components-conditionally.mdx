@@ -5,6 +5,8 @@ excerpt: "In this post, I'll showcase an alternative method for conditionally re
 pubDate: 2023-07-04 00:00
 ---
 
+import ArticleImage from "../../components/ArticleImage.astro";
+
 Sometimes we need to conditionally display content on our Web pages. Most of the technologies allow us to use template tags or javascript conditional statements that enable us to choose what piece of content to render based on the input given. Of course, that content can be encapsulated in a Component. In this post, I want to show you how this relates to an implementation in which I render Astro components conditionally based on props, without resorting to the usual conditional statements if or if/else.
 
 ## The use case
@@ -45,10 +47,10 @@ export default {
 
 And the following is the CMS-generated UI for the Service:
 
-<div class="card article-image">
-<img src="https://res.cloudinary.com/dfpkdo5tf/image/upload/v1688487022/jandrade.co.v4/Pasted_image_20230629114430.png"
-alt="A screen shot of a Sanity, Service Excerpt Type UI for the user to fill a professional service ">
-</div>
+<ArticleImage
+  src="https://res.cloudinary.com/dfpkdo5tf/image/upload/v1688487022/jandrade.co.v4/Pasted_image_20230629114430.png"
+  alt="A screen shot of a Sanity, Service Excerpt Type UI for the user to fill a professional service"
+/>
 
 You may notice that when rendering the services on the home page, an icon related to each service is displayed. But that icon is not a raster image, is an SVG. Where does it come from, if I'm not allowing icon uploads for the service type?
 

@@ -23,13 +23,9 @@ What is amazing is that when you really need to add Javascript, you can do it wi
 
 First, let's create a contact route, which is the contact page the user will visit to send a message. In Astro the **pages** folder, under **src**, is the place we create the route files:
 
-<div class="card article-image">
-    <img src="https://res.cloudinary.com/dfpkdo5tf/image/upload/v1688474137/jandrade.co.v4/llwl3nfidfqu4gc4e5ii.png" alt="Root directory to place contact page in Astro">
-</div>
-
 And following is the code for the Contact page or route:
 
-```astro
+```html
 
 <BaseLayout seo={{
   title: "Contact",
@@ -62,13 +58,13 @@ And following is the code for the Contact page or route:
 </BaseLayout>
 ```
 
-## Embed the <Contact /> Svelte component into the Astro route
+## Embed the `<Contact />` Svelte component into the Astro route
 
 The Svelte `<Contact>` component is embedded in the `/contact` Astro page. It has the directive `client:only` which means this will be rendered only on the Client, bypassing server-rendering.
 
 It includes another contact form component and placeholders to show error/success messages once the message has been handled on the server side (API route).
 
-```svelte
+```javascript
 <script>
   import { fly, fade } from "svelte/transition";
   import ContactForm from "./ContactForm.svelte";

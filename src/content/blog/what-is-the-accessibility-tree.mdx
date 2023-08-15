@@ -12,6 +12,8 @@ excerpt: "Have you wondered how people with disabilities get to interact with th
 pubDate: 2023-07-20 00:00
 ---
 
+import ArticleImage from "../../components/ArticleImage.astro";
+
 We know that HTML code is parsed by the browser into a Document Object Model (DOM) that it uses to paint the UI; a VISUAL software with which SIGHTED people can interact. But, have you wondered how people with disabilities get to interact with the same interface when they may not be able to see the graphical features? In this post, we'll discover what the Accessibility tree is, and how Assistive technologies use it to expose the interface features to people with disabilities.
 
 ## What is the DOM?
@@ -50,21 +52,24 @@ First, let's discover, as developers, how to inspect the Accessibility tree of a
 
 In the Developer Tools, there's a tab labeled **Accessibility**. Under this tab, we find the information the Accessibility tree exposes to assistive technology. The following is a screen capture of the MDN Website Accessibility tree in Chrome:
 
-<div class="card article-image">
-<img src="https://res.cloudinary.com/dfpkdo5tf/image/upload/v1689882825/jandrade.co.v4/acc-tree.png" alt="Screen capture of the Accessibility Tree in Chrome Dev Tools">
-</div>
+<ArticleImage
+  src="https://res.cloudinary.com/dfpkdo5tf/image/upload/v1689882825/jandrade.co.v4/acc-tree.png"
+  alt="Screen capture of the Accessibility Tree in Chrome Dev Tools"
+/>
 
 If we activate the checkbox "Enable full page accessibility tree", we have a new presentation of it (first we have to click the button "Reload DevTools"):
 
-<div class="card article-image">
-<img src="https://res.cloudinary.com/dfpkdo5tf/image/upload/v1689883262/jandrade.co.v4/Screen_Shot_2023-06-22_at_13.04.31.png" alt="Screen capture of the Accessibility Tree in Chrome Dev Tools that shows the A11y button to activate full page Accessibility Tree">
-</div>
+<ArticleImage
+  src="https://res.cloudinary.com/dfpkdo5tf/image/upload/v1689883262/jandrade.co.v4/Screen_Shot_2023-06-22_at_13.04.31.png"
+  alt="Screen capture of the Accessibility Tree in Chrome Dev Tools that shows the A11y button to activate full page Accessibility Tree"
+/>
 
 An A11y icon appears in the top, right side of the HTML inspector. If we click it, another view of the accessibility tree is displayed:
 
-<div class="card article-image">
-<img src="https://res.cloudinary.com/dfpkdo5tf/image/upload/v1689883442/jandrade.co.v4/Screen_Shot_2023-06-22_at_13.08.30.png" alt="Screen capture of the Full page Accessibility Tree">
-</div>
+<ArticleImage
+  src="https://res.cloudinary.com/dfpkdo5tf/image/upload/v1689883442/jandrade.co.v4/Screen_Shot_2023-06-22_at_13.08.30.png"
+  alt="Screen capture of the Full page Accessibility Tree"
+/>
 
 Usually, the browser provides four primary details regarding an element in the accessibility tree:
 
@@ -73,17 +78,19 @@ Usually, the browser provides four primary details regarding an element in the a
 It lets a screen reader user know **what an element is, which is also an indication of how it has to be used.** It typically comes from an HTML element’s semantics. It's also called **_implicit_** role.
 You can override an element’s implicit role by *explicitly* defining a new role using ARIA (using the **_role_** attribute)
 
-<div class="card article-image">
-<img src="https://res.cloudinary.com/dfpkdo5tf/image/upload/v1689883595/jandrade.co.v4/Screen_Shot_2023-06-22_at_13.17.10.png" alt="Screen capture showing the role of an element in the Accessibility Tree">
-</div>
+<ArticleImage
+  src="https://res.cloudinary.com/dfpkdo5tf/image/upload/v1689883595/jandrade.co.v4/Screen_Shot_2023-06-22_at_13.17.10.png"
+  alt="Screen capture showing the role of an element in the Accessibility Tree"
+/>
 
 ### Name
 
 The **accessible name *(accName)* identifies an element within an interface**. For example, the name of a link will be its text content. The accessible name identifies the link and helps to indicate what it does.
 
-<div class="card article-image">
-<img src="https://res.cloudinary.com/dfpkdo5tf/image/upload/v1689883766/jandrade.co.v4/Screen_Shot_2023-06-22_at_13.27.33.png" alt="Screen capture showing the Accessible Name of an element in the Accessibility Tree">
-</div>
+<ArticleImage
+  src="https://res.cloudinary.com/dfpkdo5tf/image/upload/v1689883766/jandrade.co.v4/Screen_Shot_2023-06-22_at_13.27.33.png"
+  alt="Screen capture showing the Accessible Name of an element in the Accessibility Tree"
+/>
 
 If an accessible name is not provided for a UI element or control in our markup, it won't be exposed to screen readers, leaving the element unidentified and its purpose unknown to users.
 

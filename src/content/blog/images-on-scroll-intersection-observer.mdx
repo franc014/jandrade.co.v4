@@ -5,12 +5,14 @@ excerpt: "Sometimes you might have a requirement for a Website to make images ap
 pubDate: 2023-07-03 00:00
 ---
 
+import ArticleImage from "../../components/ArticleImage.astro";
+
 Sometimes you might have a requirement for a Website to make images appear while scrolling. Of course, you could accomplish this implementation with the **scroll event** and some math operations so you can calculate the point where you want to start showing the images.
 
-<div class="card article-image">
-<img src="https://res.cloudinary.com/dfpkdo5tf/image/upload/v1688485550/jandrade.co.v4/slide-in-on-scroll.gif"
-alt="A GIF image showing a demo of images appearing just on scrolling">
-</div>
+<ArticleImage
+  src="https://res.cloudinary.com/dfpkdo5tf/image/upload/v1688485550/jandrade.co.v4/slide-in-on-scroll.gif"
+  alt="A GIF image showing a demo of images appearing just on scrolling"
+/>
 
 This feature is presented as an exercise in [Javascript30 course by Wes](https://javascript30.com/) which I absolutely recommend. In that exercise, [Wes uses the scroll event](https://github.com/wesbos/JavaScript30/blob/master/13%20-%20Slide%20in%20on%20Scroll/index-FINISHED.html), debouncing, and some calculations regarding the elements' coordinates. You can learn a lot from his implementation. However, I decided to use Intersection Observer.
 Feel free to review [my implementation](https://github.com/wesbos/JavaScript30/blob/master/13%20-%20Slide%20in%20on%20Scroll/index-FINISHED.html) corresponding to **this demo**, and of course, pull requests are welcome.
@@ -88,10 +90,10 @@ if (isIntersecting) {
 
 But, where does the boolean **isIntersecting** come from? Remember that showImage is the observer callback, and has a parameter called **payload**. This is an array of [IntersectionObserverEntry](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserverEntry) objects containing [many properties](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserverEntry#properties) describing the behavior of the intersection. The information on whether an image is intersecting is key for any implementation like the one in our example, but there are many others we may find useful for other requirements.
 
-<div class="card article-image">
-<img src="https://res.cloudinary.com/dfpkdo5tf/image/upload/v1688486178/jandrade.co.v4/Pasted_image_20220909175326.png"
-alt="It shows the isIntersecting property of the IntersectionObserverEntry object, in the browser console">
-</div>
+<ArticleImage
+  src="https://res.cloudinary.com/dfpkdo5tf/image/upload/v1688486178/jandrade.co.v4/Pasted_image_20220909175326.png"
+  alt="It shows the isIntersecting property of the IntersectionObserverEntry object, in the browser console"
+/>
 
 The payload will be handed to us whenever the observer detects or doesn't, an intersection between the observed images and the viewport. That's why when **isIntersecting** is true, we show the image adding the **active** class, and when not, we remove it.
 
@@ -109,10 +111,10 @@ You may notice that when showing or hiding the images, there's a transition appl
 
 Explore what other intersecting things can be achieved using the Intersection Observer API. I have [an example](https://github.com/franc014/svelte-exercies/blob/main/src/routes/scroll-to-accept.svelte) that uses Svelte to implement a "[Scroll to Accept](https://svelte-exercises.netlify.app/scroll-to-accept)" feature we have seen in many Websites on policy agreements or contracts, or other similar uses.
 
-<div class="card article-image">
-<img src="https://res.cloudinary.com/dfpkdo5tf/image/upload/v1688486567/jandrade.co.v4/scroll-to-accept.gif"
-alt="This image shows a Scroll To Acept example using Intersection Observer">
-</div>
+<ArticleImage
+  src="https://res.cloudinary.com/dfpkdo5tf/image/upload/v1688486567/jandrade.co.v4/scroll-to-accept.gif"
+  alt="This image shows a Scroll To Acept example using Intersection Observer"
+/>
 
 I suggest reviewing the MDN documentation on the [Interception Observer API](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API) which has some good examples you may as well want to study.
 Finally, don't forget to reach out via the Github examples in this article, and my contact form. Let's learn more about Frontend Development!

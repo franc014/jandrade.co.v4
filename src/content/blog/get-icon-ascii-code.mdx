@@ -5,6 +5,8 @@ excerpt: "A very convenient way to add icons to our UI implementations is to use
 pubDate: 2023-07-25 00:00
 ---
 
+import ArticleImage from "../../components/ArticleImage.astro";
+
 Implementing UI designs requires that we use icons, much of the time, for the different elements that compose it. There are lots of resources out there like Icomoon, FontAwesome, Lineicons, and so on. But, for icons that don't require many details, we can use ASCII characters; for example, this **x** symbol that can represent "to close" a modal or prompt, could be represented as `&nose;` .
 
 Remembering the ASCII codes for any icons we want to include in our markdown is not very straightforward; neither our search on the Internet could be productive. Fortunately, I discovered a tool that can help us find the appropriate icon in just one giant database, but we don't enter the search term in a search form, we can draw it!
@@ -15,9 +17,10 @@ This tool is called shaptecatcher.com
 
 To show how easy and great this tool is, let's imagine that we need this anchor icon (anchor image) for our project(s). We can draw on the canvas of the application, the shape of the icon we want to find in their database, like so:
 
-<div class="card article-image">
-<img src="https://res.cloudinary.com/dfpkdo5tf/image/upload/v1690299622/jandrade.co.v4/Screen_Shot_2023-07-06_at_12.17.39_1.png" alt="Screen capture of shapecatcher.com application, showing a shape drawn in the canvas">
-</div>
+<ArticleImage
+  src="https://res.cloudinary.com/dfpkdo5tf/image/upload/v1690299622/jandrade.co.v4/Screen_Shot_2023-07-06_at_12.17.39_1.png"
+  alt="Screen capture of shapecatcher.com application, showing a shape drawn in the canvas"
+/>
 
 After clicking the "Recognize" button, we get a list of possible options for our drawn image. In this case, the anchor character or icon is shown first and is exactly what we wanted. Bellow there are more options in case we had another image in our head of what we need.
 
