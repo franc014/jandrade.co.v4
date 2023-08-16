@@ -25,7 +25,10 @@ const { seo } = Astro.props;
 <html lang="en">
   <head>
     <SEO {...seo} />
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PW91H99WPE"
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=UA-63541892-1"
     ></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -34,7 +37,7 @@ const { seo } = Astro.props;
       }
       gtag("js", new Date());
 
-      gtag("config", "G-PW91H99WPE");
+      gtag("config", "UA-63541892-1");
     </script>
   </head>
 
