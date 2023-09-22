@@ -1,0 +1,672 @@
+---
+title: Create a Tailwind Mobile Header in Astro With A Svelte Island
+tags: ["Astro", "Tailwind", "Svelte", "Mobile"]
+excerpt: "This series are tutorials on how to create a simple Tailwind mobile header in Astro with the particularity of using a Svelte Island. This is a good example on how to combine these technologies to solve such a common problem we can find in many implementations."
+pubDate: 2023-09-22 00:00
+---
+
+import ArticleImage from "../../components/ArticleImage.astro";
+
+Welcome to this series of Tailwind-Astro-Svelte tutorials. We're going to implement a small Mobile Header based on those 
+technologies. Of course, you may find it easier or more difficult than lots of other approaches out there, but I think 
+it's interesting to learn new ways to solve common problems. So here we go!
+
+## Set up Tailwind in Astro
+
+First, let's  install Tailwind as an Anstro integration with the following command: 
+`npx astro add tailwind`
+
+This will generate a **tailwind.config.cjs** file and the **astro.config.mjs** also gets updated, including the Tailwind integration: 
+
+```javascript
+import { defineConfig } from 'astro/config';
+import tailwind from "@astrojs/tailwind";
+
+export default defineConfig({
+
+integrations: [tailwind()]
+
+});
+```
+
+This is all we have to do to get Tailwind working in our Astro installation. As a test, you can use a Tailwind utility class on any part of your pages or components, for example in the index.astro page, like the next example:
+
+```html
+---
+import Layout from "../layouts/Layout.astro";
+import Card from "../components/Card.astro";
+---
+<Layout title="Welcome to Astro.">
+
+<h1 class="bg-indigo-500">Hey</h1>
+
+<main>
+```
+
+I've installed the basic Astro template to start a new project. When you visit http://localhost:4321/, you can see the **h1** "Hey" heading with a tailwind `bg-indigo-500` Tailwind background color. 
+
+<ArticleImage alt="Screenshot of Tailwind test using a background color in h1 heading in index page"
+src="https://res.cloudinary.com/dfpkdo5tf/image/upload/v1694796288/jandrade.co.v4/Pasted_image_20230915114046.png" />
+
+## Creating the Header Astro Component
+
+Now, let's focus on the Header Astro Component. We're going to place this header before the `<main>` element of each page. 
+Let's go to the `Layout.astro` file and after the `<body>` opening tag, write a `<Header />` tag that will be the component we need to create. 
+
+```html
+<!doctype html>
+
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="description" content="Astro description" />
+	<meta name="viewport" content="width=device-width" />
+	<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+	<meta name="generator" content={Astro.generator} />
+	<title>{title}</title>
+</head>
+<body>
+	<Header />
+	<slot />
+</body>
+</html>
+```
+
+The `<slot>` in the `Layout.astro` file will allow us, for each Astro page that uses it, to insert the respective content in that Layout container or space.
+
+Of course, there will be an error because we haven't created the `<Header />` component and this is precisely 
+what we're going to do. Go to (or first create the folder), to the `/src/components` folder, and create a new file called `Header.astro`. Write a `<div>` tag with anything inside it and save the file.
+```html
+<div class="text-white bg-indigo-500">Hello Astro</div>
+```
+Import the Header component in the Layout file, so you can see that message on the screen. 
+
+`import Header from "../components/Header.astro";`
+
+Just don't forget to import it inside the frontmatter fences (---) at the top of the file.
+
+Once you get assured you've imported your Header component, let's create the navbar markup and a logo example. It will be a common pattern found in many other Websites. 
+In Header.astro, let's write: 
+
+```html
+<header class="bg-indigo-800">
+	<div class="container mx-auto bg-gray-400">
+		<div>
+			<div>Logo</div>
+			<nav>
+				<ul>
+					<li><a href="/">About</a></li>
+					<li><a href="/">Products</a></li>
+					<li><a href="/">Reviews</a></li>
+					<li><a href="/">Contact</a></li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</header>
+```
+
+I have added two `div` tags: one to be a `container` for the header layout and a child one that will help with the positioning of the Logo and navigation. This will result in something like this:
+
+
+<ArticleImage alt="Layout for the Header component" 
+src="https://res.cloudinary.com/dfpkdo5tf/image/upload/v1694799808/jandrade.co.v4/Screen_Shot_2023-09-15_at_12.43.07.png" />
+
+
+Let's stack the logo and the navigation using a flex column layout:
+
+```html
+<header class="bg-indigo-800">
+<div class="container mx-auto bg-gray-400">
+	<div class="flex flex-col items-center">
+		<div>Logo</div>
+		<nav class="">
+...
+```
+
+The `nav` element will have a with of 100% the width of the viewport, and each link's text will be centered:
+
+```html
+...
+<nav class="w-full">
+	<ul class="text-center">
+		<li><a href="/">About</a></li>
+		<li><a href="/">Products</a></li>
+		<li><a href="/">Reviews</a></li>
+		<li><a href="/">Contact</a></li>
+	</ul>
+</nav>
+...
+```
+
+## Adding the Menu and Close buttons
+
+As part of the navigation, we'll create  two buttons we need to open and close the navbar. 
+Let's add a `div` container with both buttons just before the `nav` element, and align it to the right (`self-end`)
+
+```html
+...
+<div class="self-end pt-2 pr-4 bg-violet-200">
+
+<button
+
+><svg
+
+xmlns="http://www.w3.org/2000/svg"
+
+fill="none"
+
+viewBox="0 0 24 24"
+
+stroke-width="1.5"
+
+stroke="currentColor"
+
+class="w-6 h-6"
+
+>
+
+<path
+
+stroke-linecap="round"
+
+stroke-linejoin="round"
+
+d="M3.75 5.25h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5"
+
+></path>
+
+</svg>
+
+</button>
+
+<button
+
+><svg
+
+xmlns="http://www.w3.org/2000/svg"
+
+fill="none"
+
+viewBox="0 0 24 24"
+
+stroke-width="1.5"
+
+stroke="currentColor"
+
+class="w-6 h-6"
+
+>
+
+<path
+
+stroke-linecap="round"
+
+stroke-linejoin="round"
+
+d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+
+></path>
+
+</svg>
+
+</button>
+
+</div>
+<nav class="bg-pink-50 w-full flex flex-col">
+
+<ul class="text-center">
+	<li><a href="/">About</a></li>
+	
+	<li><a href="/">Products</a></li>
+	
+	<li><a href="/">Reviews</a></li>
+	
+	<li><a href="/">Contact</a></li>
+</ul>
+
+</nav>
+
+```
+
+I'm using [heroicons](https://heroicons.com/) for the mobile buttons, but you can choose any other icons you are comfortable working with. 
+
+For the moment we have a mobile interface like this: 
+
+
+<ArticleImage alt="Mobile version first steps implementation" 
+src="https://res.cloudinary.com/dfpkdo5tf/image/upload/v1694813396/jandrade.co.v4/Pasted_image_20230915162942.png" />
+
+
+
+Of course, this is an initial approach to our problem. The next step is to make the mobile buttons interactive to open and close the menu. It's time for Svelte to enter the scene. 
+
+## Showing and Hiding the Menu
+
+As the menu inside the `nav` element has to be shown and hidden when clicking the menu and the close buttons, we have to convert them to **Svelte** components. These components are the islands of interactivity inside Astro, which I believe, is one of the star features of the framework. 
+
+Of course, we need to install the [Astro Svelte](https://docs.astro.build/en/guides/integrations-guide/svelte/#article) integration with the following command: 
+
+`npx astro add svelte`
+
+Follow the instructions in the command line and the installation is done quickly. You don't have to do anything else. 
+After that, copy the `nav` HTML markup from the `Header.astro` and paste it in a new `Menu.svelte` file you have to create inside the components folder. For a better organization, you may create a `svelte` folder inside the components one, too. I did exactly that and in the `Header` component, I imported the Svelte component, like so: 
+
+```html
+---
+import Menu from "./svelte/Menu.svelte";
+---
+<header class="bg-indigo-800">
+<div class="container mx-auto bg-gray-400">
+	<div class="flex flex-col items-center">
+		<div>Logo</div>
+		<Menu />
+	</div>
+</div>
+</header>
+```
+
+The `Menu` component should be now, like so:
+
+```html
+<nav class="bg-pink-50 w-full flex flex-col">
+
+<div class="self-end pt-2 pr-4">
+
+<button
+
+><svg
+
+xmlns="http://www.w3.org/2000/svg"
+
+fill="none"
+
+viewBox="0 0 24 24"
+
+stroke-width="1.5"
+
+stroke="currentColor"
+
+class="w-6 h-6"
+
+>
+
+<path
+
+stroke-linecap="round"
+
+stroke-linejoin="round"
+
+d="M3.75 5.25h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5"
+
+></path>
+
+</svg>
+
+</button>
+
+<button
+
+><svg
+
+xmlns="http://www.w3.org/2000/svg"
+
+fill="none"
+
+viewBox="0 0 24 24"
+
+stroke-width="1.5"
+
+stroke="currentColor"
+
+class="w-6 h-6"
+
+>
+
+<path
+
+stroke-linecap="round"
+
+stroke-linejoin="round"
+
+d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+
+></path>
+
+</svg>
+
+</button>
+
+</div>
+
+<ul class="text-center">
+
+<li><a href="/">About</a></li>
+
+<li><a href="/">Products</a></li>
+
+<li><a href="/">Reviews</a></li>
+
+<li><a href="/">Contact</a></li>
+
+</ul>
+
+</nav>
+```
+
+We're going to abstract the buttons into their own Svelte components. Create two new files, **CloseBtn.svelte** and **MenuBtn.svelte**, and copy the buttons' markup from the **Menu.svelte** component.
+
+```html
+<script>
+
+import MenuBtn from "./MenuBtn.svelte";
+
+import CloseBtn from "./CloseBtn.svelte";
+
+</script>
+
+  
+
+<div class="self-end pt-2 pr-4 bg-violet-200">
+
+<MenuBtn />
+
+<CloseBtn />
+
+</div>
+
+<nav class="bg-pink-50 w-full">
+
+<ul class="text-center">
+
+<li><a href="/">About</a></li>
+
+<li><a href="/">Products</a></li>
+
+<li><a href="/">Reviews</a></li>
+
+<li><a href="/">Contact</a></li>
+
+</ul>
+
+</nav>
+```
+
+Notice that as we're using Svelte inside `Menu.svelte`, we import the button components inside a `<script></script>` block, not inside `---` fences as we do in Astro components.
+
+If you take a look at your interface update, we have the same result as before we made the Svelte refactoring and we're good to go for the rest of the implementation.
+
+### Adding state to our Menu component
+
+To show and hide the `nav` element, we need some sort of data that tells us if it's closed or opened. This `state` data will be reactive and also used by the button components to "toggle" the menu. 
+
+So, let's add that state variable in the `Menu.svelte` component like so: 
+
+```html
+<script>
+
+import MenuBtn from "./MenuBtn.svelte";
+
+import CloseBtn from "./CloseBtn.svelte";
+
+let navIsOpen = true;
+
+</script>
+...
+
+```
+
+Then, the `nav` element that includes the menu items should react to this state variable whenever it changes. How do we change its visibility when it reacts to the `navIsOpen` variable? We can use CSS for this, activating a class when the change occurs. With Svelte we have a very convenient syntax for this which is `class:nameOfClass`. In the `nav` element let's create a "reacting" class like so:
+
+```html
+<nav class:navIsOpen class="bg-pink-50 w-full hidden">
+<ul class="text-center">
+	<li><a href="/">About</a></li>
+	<li><a href="/">Products</a></li>
+	<li><a href="/">Reviews</a></li>
+	<li><a href="/">Contact</a></li>
+</ul>
+</nav>
+```
+
+Notice that the **initial state** of this navbar is invisible and in CSS we represent this invisibility with the Tailwind utility class `hidden`. 
+
+But, when  the state variable `navIsOpen` changes to `true`, the navbar has to respond to this change and the way it does is by activating the `.navIsOpen` class, using CSS:
+
+```css
+<style>
+
+.navIsOpen {
+
+@apply block;
+
+}
+
+</style>
+```
+
+Change manually the variable `navIsOpen`, at the top of the file, to true or false to test how the navbar toggles on each change. This is how reactivity works in Svelte. 
+
+Don't forget that the `navIsOpen` state variable has the same name as the navbar class used to update its visibility. We can use this naming convention in Svelte, but we can also use another class name if we want, like so:
+
+```html
+<nav class:showNav={navIsOpen} class="bg-pink-50 w-full opacity-0">
+<ul class="text-center">
+<li><a href="/">About</a></li>
+<li><a href="/">Products</a></li>
+<li><a href="/">Reviews</a></li>
+<li><a href="/">Contact</a></li>
+</ul>
+</nav>
+```
+
+And, in CSS, we'd change the class used to make the navbar visible like this:
+
+```css
+.showNav {
+	@apply block;
+}
+```
+
+### Implementing the Menu and Close buttons
+
+So far, we can update manually the state of the navbar, but we need to update them whenever the user pushes the Close or Menu buttons, represented in our application as two separate components.
+Remember that the `navIsOpen` variable is reactive and it can be used to hide or show, not only the navbar but also the buttons at each respective state change. Let's make it clear implementing it right away
+
+#### Hide or show the buttons depending on state change
+
+Just to illustrate the reactivity between components, in the **MenuBtn** component create a `prop` called `navIsOpen`; the same name as the navbar state variable. Soon we will see how both relate:
+
+```javascript
+//Menu.svelte
+<script>
+
+import MenuBtn from "./MenuBtn.svelte";
+
+import CloseBtn from "./CloseBtn.svelte";
+
+  
+
+let navIsOpen = false;
+
+</script>
+
+  
+
+<div class="self-end pt-2 pr-4 bg-violet-200">
+
+<MenuBtn {navIsOpen} />
+
+<CloseBtn {navIsOpen} />
+
+</div>
+```
+
+
+```javascript
+<script>
+//MenuBtn.svelte
+export let navIsOpen;
+
+</script>
+```
+
+And in the `button` opening tag, set a class directive, as we did in the Menu component and a CSS utility class `block`
+
+```html
+<script>
+	export let navIsOpen;
+</script>
+<button class:navIsOpen class="block">
+...
+```
+
+In the `style` block of the component set the `navIsOpen` class so that the button is invisible:
+
+```css
+<style>
+
+.navIsOpen {
+
+@apply hidden;
+
+}
+
+</style>
+```
+
+This means that when the navigation is hidden, so is the menu button, under the MenuBtn component. 
+
+Conversely, we can create the same mechanism in the `CloseBtn` component to show it when the navigation is open:
+
+```javascript
+
+<script>
+
+export let navIsOpen;
+
+</script>
+
+<button class:navIsOpen class="hidden"
+...
+<style>
+
+.navIsOpen {
+
+@apply block;
+
+}
+
+</style>		
+```
+
+Test again setting the `navIsOpen` state variable in `Menu.svelte` component and see how all components react to it, closing and opening whenever a change is detected. 
+
+#### Implement the buttons' actions
+
+Of course, the buttons' actions are to hide and open the navbar. On each of the button components implement the **click** event that will trigger the expected behavior.
+
+Note: Remember to set the Svelte component `Menu.svelte` in the `Header.astro` component as a client-only component with the directive: `<Menu client:only="svelte"/>`  Remember that we don't need the Svelte components server-rendered.
+
+First things first. Let's set up the `navIsOpen` state variable in `Menu.svelte` to `false` to implement the click event on the `MenuBtn.svelte` component:
+
+```javascript
+//Menu.svelte
+...
+let navIsOpen = false;
+...
+```
+
+Next, let's set up the event `on:click` in the `MenuBtn.svelte` component:
+
+```javascript
+<script>
+export let navIsOpen;
+
+function toggleNavbar(e) {
+	console.log(e.currentTarget);
+}
+</script>
+
+<button class:navIsOpen class="block" on:click={toggleNavbar}
+
+>
+```
+
+The click event handler `toggleNavbar` is a function that we need to implement to activate the navigation which at the moment is `hidden`.  What we did in the previous code snippet is to log the button element. 
+
+#### Forwarding events to activate the navigation
+
+How do we get to activate the navigation from the button component if this is its direct child? We can use [Event Forwarding](https://learn.svelte.dev/tutorial/event-forwarding) which allows us to dispatch an event so that it can be "listened to" in another component in the **Svelte** tree, which, in this case, is its parent `Menu.svelte`. 
+
+To accomplish this, we need to import the Svelte dispatcher called `createEventDispatcher()` that we will be called inside the button `on:click` handler, like so:
+
+```javascript
+//MenuBtn.svelte
+
+<script>
+
+import { createEventDispatcher } from "svelte";
+
+export let navIsOpen;
+const dispatch = createEventDispatcher();
+
+function toggleNavbar(e) {
+	dispatch("openNavigation");
+}
+
+</script>
+...
+```
+
+Here we "dispatch" the custom event "openNavigation" in the `toggleNavbar` button handler.
+
+In the `Menu.svelte` component we'll listen to that custom event and update the `navIsOpen` state variable to `true`:
+
+```javascript
+<script>
+
+import MenuBtn from "./MenuBtn.svelte";
+import CloseBtn from "./CloseBtn.svelte";
+let navIsOpen = false;
+
+function toggleNavbar() {
+	navIsOpen = !navIsOpen;
+}
+</script>
+
+<div class="self-end pt-2 pr-4 bg-violet-200">
+<MenuBtn {navIsOpen} on:openNavigation={toggleNavbar} />
+```
+
+In fact, what we're doing is "toggling" the navigation by changing the "truthiness" of the `navIsOpen` state variable in the `toggleNavbar()` handler of the custom event `openNavigation`.
+
+For the `CloseBtn` component we have to proceed identically. In the `Menu.svelte` component, we will have the following: 
+
+```javascript
+<script>
+import MenuBtn from "./MenuBtn.svelte";
+import CloseBtn from "./CloseBtn.svelte";
+
+let navIsOpen = false;
+
+function toggleNavbar() {
+	navIsOpen = !navIsOpen;
+}
+</script>
+
+<div class="self-end pt-2 pr-4 bg-violet-200">
+<MenuBtn {navIsOpen} on:openNavigation={toggleNavbar} />
+<CloseBtn {navIsOpen} on:openNavigation={toggleNavbar} />
+</div>
+
+```
+
+Finally, we can use the buttons to close and open the navbar! Notice how reactivity plays seamlessly between components for hiding and showing the buttons and the navbar, with just a piece of state defined in the parent component `Menu.svelte`. And remember that we're doing all this as an Astro island! 
+Awesome! 
+
+<ArticleImage src="https://res.cloudinary.com/dfpkdo5tf/image/upload/v1695055150/jandrade.co.v4/toggle-menu.gif" alt="Gif representing the toggling of the mobile navbar"/>
+
+
+This way we're wrapping up. In the following post, we'll improve the UI implementation of our responsive navbar because as you have noted, there are some elements that are off and not looking well.
+See you then!
