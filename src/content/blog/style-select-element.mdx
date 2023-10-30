@@ -1,0 +1,91 @@
+---
+title: Style a select element with CSS
+tags: ["Astro", "Tailwind", "Svelte", "Mobile"]
+excerpt: "The goal of this post is to discover how we can style an HTML select element with CSS. 
+You may know that styling this element is kind of weird and we the most approachable way is the use of other html elements and CSS techniques. 
+Let's dig into it!"
+pubDate: 2023-10-30 00:00
+---
+import ArticleImage from "../../components/ArticleImage.astro";
+import Codepen from "../../components/Codepen.astro";
+
+## The constraints we face when styling a select element
+
+Let's admit it: styling `select` elements are not as straightforward as many others we're used to. We can apply paddings and margins, backgrounds, and borders, and still not be happy with the results. Of course, it all depends on the design we have to implement, and that could bring all kinds of challenges to us. 
+
+Different browsers have different default styles for `select` elements. Following, we have 2 image captures corresponding to  Chrome and Firefox (left Chrome, right Firefox) versions:
+
+
+<ArticleImage alt="Default browser styles for a select HTML element" src="https://res.cloudinary.com/dfpkdo5tf/image/upload/v1697822522/jandrade.co.v4/Screen_Shot_2023-10-20_at_12.19.20.png" />
+
+The difference is clear and of course, there will be different styles for different browsers. Maybe, we're okay with these styles, but the reality is that when we receive a design to be implemented, we can have a sketch showing something like this:
+
+
+<ArticleImage alt="A design of an app select element" src="https://res.cloudinary.com/dfpkdo5tf/image/upload/v1697822819/jandrade.co.v4/Screen_Shot_2023-10-20_at_12.26.32.png"/>
+
+While you are styling this design, you suppose that with basic CSS Knowledge, it will be relatively easy. But after the first try, you might become frustrated at not being able 
+to define one or more details the challenge brings with it. For example, looking at the "dropdown" arrow icon, 
+we can see it has more space on its right and we might opt for adding more padding: ` padding-right: 4rem;` Also, you might opt for increasing the font size of its options, believing it will also affect the size of the dropdown icon. 
+Try it, and you'll soon see that it's really a headache. 
+
+So we need to resort to another strategy that includes bringing in a new element to the scene to hide the default arrow. Let's see how it works.
+
+## Hide the dropdown icon, replace it with a span
+
+Check out [this pen](https://codepen.io/franc014/pen/oNmvJRe) where I've added some extra elements to transform 
+the `select` element's appearance. 
+The `span` placed after the combobox (select element), is used to hide the default dropdown icon. Later we'll replace it with a fully customized icon. 
+This span is then positioned absolutely with respect to the `div` parent element that also contains the `select` element. 
+It has a `lightcoral` `background-color` and is hiding the arrow completely. Does the combobox still work when we click the coral rectangle? 
+No. And that's given to the fact that as the span constitutes a layer over the combobox, the user can not interact with it (can not click it). 
+We have a simple solution for this: write another property for the `span` to disable pointer events directly over the element: `pointer-events: none`. Try commenting and uncommenting this property to test it. 
+
+<Codepen pen="oNmvJRe"/>
+
+
+## Creating the new arrow(s).
+
+As we have hidden the default dropdown icon, it's time to create our own customized version. In the [Codepen example](https://codepen.io/franc014/pen/oNmvJRe), I'm using
+`::before` and `::after` pseudo-elements and inside them I'm writing the properties that allow me to "draw" the arrow(s), like so: 
+
+```css
+
+.custom-arrow::before,
+.custom-arrow::after {
+  --size: 1rem;
+  content: '';
+  display: block;
+  position: absolute;
+  width: 0;
+  height: 0;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.custom-arrow::before {
+  border-left: var(--size) solid transparent;
+  border-right: var(--size) solid transparent;
+  border-bottom: var(--size) solid black;
+  top: 38%;
+}
+
+.custom-arrow::after {
+  border-left: var(--size) solid transparent;
+  border-right: var(--size) solid transparent;
+  border-top: var(--size) solid black;
+  top: 65%;
+}
+```
+
+
+If you are curious about how to generate the triangle icons, you may want to [check out this post](https://css-tricks.com/the-shapes-of-css/#aa-triangle-up-shape) in CSS Tricks that shows you how to create several shapes with just CSS. Awesome!
+
+Another approach is to use a CSS `clip-path` [polygon](https://developer.mozilla.org/en-US/docs/Web/CSS/basic-shape/polygon) to create the triangle(s). Please check this approach in the following Codepen.
+
+
+<Codepen pen="YzBKMNN"/>
+
+You can imagine, there could be many options to style your custom `select`  arrow icons. If you know about another approach, please [let me know](/contact)
+
+The rest of the custom select demo is a series of CSS code to make the `select` element nicer, including removing the default border, and adding background colors and border radii. Depending on the design you're implementing you can decorate it as you need, though. 
+
