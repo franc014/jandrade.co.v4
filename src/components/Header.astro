@@ -59,9 +59,12 @@ const { nav } = Astro.props;
     width: 100%;
     right: 10;
     height: 2px;
-    will-change: opacity;
+    will-change: transform;
     transition: transform 0.3s ease-in-out;
     transform: scale(0);
+    background-image: var(--button-gradient);
+    background-size: cover;
+    background-position: center;
   }
 
   @media (max-width: 800px) {
@@ -72,6 +75,7 @@ const { nav } = Astro.props;
 
   ul li a:hover::before {
     content: "";
+    will-change: transform;
     position: absolute;
     left: 0;
     width: 100%;
